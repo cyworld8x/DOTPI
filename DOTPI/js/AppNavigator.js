@@ -3,7 +3,10 @@ import { BackAndroid, StatusBar, Platform } from "react-native";
 import { variables, Drawer } from "native-base";
 
 import Home from "./components/home/";
-import CardTab from "./components/home/cardTab";
+
+import Post from "./components/home/post";
+import About from "./components/about/";
+
 
 
 class AppNavigator extends Component {

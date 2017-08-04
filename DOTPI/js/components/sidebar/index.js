@@ -27,8 +27,8 @@ const drawerImage = require("../../../img/unnamed.png");
 const datas = [
 
 	{
-		name: "Kiếm đồng",
-		route: "EarnMoney",
+		name: "Home",
+		route: "Home",
 		icon: "person",
 		bg: "#48525D",
 	},

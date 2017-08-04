@@ -23,7 +23,7 @@ import {
 } from "native-base";
 
 import styles from './styles';
-import CardTab from "./cardTab";
+import CategoryTab from "./categoryTab";
 
 class Home extends Component {
   constructor(props) {
@@ -62,11 +62,12 @@ class Home extends Component {
       );
     }
     var components = ('');
+    
     var components = this.state.dataSource.map((item)=>{    
         return(
        
-          <Tab key={item.id} heading={<TabHeading tabStyle={{color: this.getHexColor(item.id),backgroundColor: this.getHexColor(item.id)}}><Text>{item.name}</Text></TabHeading>}>
-            <CardTab url={item.url} />
+          <Tab tabBgColor={this.getHexColor(item.id)}  key={item.id} heading={<TabHeading tabStyle={{color: this.getHexColor(item.id),backgroundColor: this.getHexColor(item.id)}}><Text>{item.name}</Text></TabHeading>}>
+            <CategoryTab navigation={this.props.navigation} url={item.url} />
             {/* <Text>{item.url}</Text> */}
           </Tab>
 );
@@ -83,7 +84,7 @@ class Home extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{color:"#000"}>DOTPI</Title>
+            <Title style={{color:"#000"}}>DOTPI </Title>
           </Body>
           <Right />
         </Header>

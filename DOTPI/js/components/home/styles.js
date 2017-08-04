@@ -1,14 +1,17 @@
 const React = require("react-native");
 
-const { StyleSheet } = React;
+const { StyleSheet, Dimensions, Platform } = React;
+
+const deviceHeight = Dimensions.get("window").height;
+
+const deviceWidth = Dimensions.get("window").width;
 
 export default {
-  container: {
-     flex: 1,
-     color:'#FFF',
-        backgroundColor: '#DBDBD8'
-  } ,
-       header: {
+    container: {
+        flex: 1,
+       
+    } ,
+    header: {
         height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -27,7 +30,7 @@ export default {
         width: 30,
         height: 30
     },
-    productContainer: {
+    postContainer: {
         flexDirection: 'row',
         paddingVertical: 15,
         borderTopColor: '#F0F0F0',
@@ -41,12 +44,17 @@ export default {
         color: '#B10D65',
         fontSize: 20
     },
-    productImage: {
-        width: 80,
-        height: (80 * 452) / 361,
-        flex:1
+    postImage: {
+        width: deviceWidth/4,
+        height: deviceHeight/10,
+
     },
-    productInfo: {
+    image: {
+        width: deviceWidth/4,
+        height: deviceHeight/10,
+
+    },
+    postInfo: {
         justifyContent: 'space-between',
         marginLeft: 15,
         flex: 1

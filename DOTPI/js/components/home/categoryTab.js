@@ -20,36 +20,36 @@ const deviceWidth = Dimensions.get("window").width;
 const logo = require("../../../img/logo.png");
 const cardImage = require("../../../img/drawer-cover.png");
 
-class CardTab extends Component {
+class CategoryTab extends Component {
 	//eslint-disable-line
-	constructor(props) {
-       super(props);
+    constructor(props) {
+        super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            listProducts: ds,
+            listPosts: ds,
             refreshing: false,
             isLoading: true,
             page: 1
         };
-          this.arr = [];
-	}
+        this.arr = [];
+    }
    
 	componentDidMount() {
-    var url = this.props.url+"/"+this.state.page;
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-          this.arr = responseJson;
-        this.setState({
-          isLoading: false,
-          listProducts:  this.state.listProducts.cloneWithRows(this.arr),
-        }, function () {
-          // do something with new state
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        var url = this.props.url + "/" + this.state.page;
+        return fetch(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.arr = responseJson;
+                this.setState({
+                    isLoading: false,
+                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
+                }, function () {
+                    // do something with new state
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
   
     
 		// return fetch(url)
@@ -67,6 +67,8 @@ class CardTab extends Component {
 		// 		console.error(error);
 		// 	});
   }
+
+  
  
   render() {
      if (this.state.isLoading) {
@@ -101,35 +103,35 @@ class CardTab extends Component {
     // );
 
     
-        const {
-            container, header, wrapper, backStyle, titleStyle,
-            productContainer, productImage, productInfo, lastRowInfo,
-            txtName, txtPrice, txtMaterial, txtColor, txtShowDetail
-         } = styles;
-        const { category } = this.props;
+        const { root } = this.props;
         return (
-            <View style={container}>
-                <View style={wrapper}>
-                    <View style={header}>
+            <View style={styles.container}>
+                <View style={styles.wrapper}>
+                    <View style={styles.header}>
                         <TouchableOpacity >
-                            <Image  style={backStyle} />
+                            <Image  style={styles.backStyle} />
                         </TouchableOpacity>
-                        <Text style={titleStyle}>AAAA</Text>
+                        <Text style={styles.titleStyle}>AAAA</Text>
                         <View style={{ width: 30 }} />
                     </View>
                     <ListView 
                         removeClippedSubviews={false}
-                        dataSource={this.state.listProducts}
-                        renderRow={product => (
-                            <View style={productContainer}>
-                                 <Image style={productImage} source={{ uri: product.image }} /> 
-                                <View style={productInfo}>
-                                    <Text style={txtName}>{product.name}</Text>
-                                    <View style={lastRowInfo}>
-                                        <Text style={txtColor}>Colo {product.title}</Text>
+                        dataSource={this.state.listPosts}
+                        renderRow={post => (
+                            <View style={styles.postContainer}>
+                                 <TouchableOpacity onPress={() =>  this.props.navigation.navigate('Post', {post:post} )}>
+                                           
+                                       
+                                <Image style={styles.postImage} source={{ uri: post.image }} /> 
+                               
+                                 </TouchableOpacity>
+                                  <View style={styles.postInfo}>
+                                    <Text style={styles.txtName}>{post.name}</Text>
+                                    <View style={styles.lastRowInfo}>
+                                        <Text style={styles.txtColor}>Colo {post.title}</Text>
                                         <View style={{ backgroundColor: '#fff', height: 16, width: 16, borderRadius: 8 }} />
                                         <TouchableOpacity >
-                                            <Text style={txtShowDetail}>SHOW DETAILS</Text>
+                                            <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -150,5 +152,6 @@ class CardTab extends Component {
             </View>
         );
     }
+    
 }
-export default CardTab;
+export default CategoryTab;
