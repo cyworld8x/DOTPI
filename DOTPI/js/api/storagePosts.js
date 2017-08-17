@@ -1,35 +1,45 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
-const addPost = async (post) => {
-        
+const deletePost = async (post) => {
         
         let result =await getPosts();
-        let posts = JSON.parse(result);
-        let existed = checkExistPost(post, posts);
-        if(post !=null && post.length > 0 && existed) {
-               return true;
-        } else {
-            
-            if(posts.length >= 20) {
-                posts.slice(19, 1);             
-                
-            }
-             posts.push(post);
-           
-        }
-            
+        
+        let posts =result!=null? JSON.parse(result):[];
+       
+        posts = checkExistPost(post, posts);
+       
+        
         try {
-            
-            await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts),(err, result) => { console.log(result); });
+
+            await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts), (err, result) => { console.log(result); });
         } catch (error) {
             console.error(error);
             return false;
         }
+        return posts;
+};
 
+const addPost = async (post) => {
+        
+        let result =await getPosts();
+        
+        let posts =result!=null? JSON.parse(result):[];
+       
+        posts = checkExistPost(post, posts);
+        
+        if (posts.length >= 2) {
+            posts = posts.slice(0, 1);
+        }
+        posts.push(post);
+        try {
+
+            await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts), (err, result) => { console.log(result); });
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
         return true;
-        
-        
 };
 const getPosts = async () => {
         try {
@@ -43,18 +53,20 @@ const getPosts = async () => {
         
     }
     
-const checkExistPost = (obj, list)=>{
-        var i;
-        for (i = 0; i < list.length; i++) {
-            if (list[i].postid == obj.postid) {
-                return true;
+const checkExistPost = (obj, list) => {
+    if (list != null && list.length >= 0) {
+        list.map((item) => {
+            if (item.postid != obj.postid) {
+                return item;
             }
-        }
+        })
+    }
 
-        return false;
-    };
+    return [];
+};
 module.exports =
 {
     getPosts: getPosts,
-    addPost: addPost
+    addPost: addPost,
+    deletePost:deletePost
 } ;
