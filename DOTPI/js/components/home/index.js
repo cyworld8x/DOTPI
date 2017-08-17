@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { ActivityIndicator,StyleSheet} from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -33,68 +33,68 @@ class Home extends Component {
     }
   }
   // eslint-disable-line
- 	componentDidMount() {
-		return fetch('http://api.dotpi.tk/category')
-			.then((response) => response.json())
-			.then((responseJson) => {
-				
-				this.setState({
-					isLoading: false,
-					dataSource: responseJson,
-				}, function () {
-					// do something with new state
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+  componentDidMount() {
+    return fetch('http://api.dotpi.tk/category')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function () {
+          // do something with new state
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-   getHexColor(id) {
-        return '#'+ ('000000' + Math.floor(id*1000).toString(16)).slice(-6);
-    }
+  getHexColor(id) {
+    return '#' + ('000000' + Math.floor(id * 1000).toString(16)).slice(-6);
+  }
   render() {
-     if (this.state.isLoading) {
+    if (this.state.isLoading) {
       return (
-        <View style={{flex: 1, paddingTop: 20}}>
+        <View style={{ flex: 1, paddingTop: 20 }}>
           <ActivityIndicator />
         </View>
       );
     }
     var components = ('');
-    
-    var components = this.state.dataSource.map((item)=>{    
-        return(
-       
-          <Tab tabBgColor={this.getHexColor(item.id)}  key={item.id} heading={<TabHeading tabStyle={{color: this.getHexColor(item.id),backgroundColor: this.getHexColor(item.id)}}><Text>{item.name}</Text></TabHeading>}>
-            <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
-            {/* <Text>{item.url}</Text> */}
-          </Tab>
-);
-   });
+
+    var components = this.state.dataSource.map((item) => {
+      return (
+
+        <Tab  tabBgColor={this.getHexColor(item.id)} key={item.id} heading={<TabHeading tabStyle={{  color: this.getHexColor(item.id), backgroundColor: this.getHexColor(item.id) }}><Text>{item.name}</Text></TabHeading>}>
+          <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
+          {/* <Text>{item.url}</Text> */}
+        </Tab>
+      );
+    });
     return (
-      <Container style={{backgroundColor:'#FFF'}} >
-        <Header style={{backgroundColor:'#FFF'}}>
+      <Container style={{ backgroundColor: '#FFF' }} >
+        <Header style={{ backgroundColor: '#FFF' }}>
           <Left>
             <Button
               transparent
               onPress={() => this.props.navigation.navigate("DrawerOpen")}
             >
-              <Icon style={{color:"#000"}} name="menu" />
+              <Icon style={{ color: "#000" }} name="menu" />
             </Button>
           </Left>
           <Body>
-            <Title style={{color:"#000"}}>DOTPI </Title>
+            <Title style={{ color: "#000" }}>DOTPI </Title>
           </Body>
           <Right />
         </Header>
         <Content>
-        <Tabs renderTabBar={()=> <ScrollableTab />}>
-         
-           {components} 
-        </Tabs>
+          <Tabs  renderTabBar={() => <ScrollableTab />}>
+
+            {components}
+          </Tabs>
         </Content>
-          <Footer>
+        {/* <Footer>
           <FooterTab>
             <Button>
               <Icon name="apps" />
@@ -109,8 +109,8 @@ class Home extends Component {
               <Icon name="person" />
             </Button>
           </FooterTab>
-        </Footer>
-       
+        </Footer> */}
+
       </Container>
     );
   }
