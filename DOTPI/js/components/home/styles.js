@@ -16,7 +16,8 @@ export default {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 5
+        padding: 5,
+       
     },
     wrapper: {
         backgroundColor: '#fff',
@@ -57,6 +58,11 @@ export default {
     postInfo: {
         justifyContent: 'space-between',
         marginLeft: 15,
+        flex: 1
+    },
+    savedPostInfo: {
+        justifyContent: 'space-between',
+        
         flex: 1
     },
     lastRowInfo: {
