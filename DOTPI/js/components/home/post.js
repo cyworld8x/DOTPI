@@ -13,7 +13,8 @@ import {
     Body,
     Fab,
     DeckSwiper,
-    IconNB
+    IconNB,
+    Toast
 } from 'native-base';
 const deviceHeight = Dimensions.get("window").height;
 
@@ -39,7 +40,12 @@ class Post extends Component {
     async savePost(post){
        
         var result =await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-        
+        Toast.show({
+            text: 'Bài viết đã được lưu để xem sau!',
+            position: 'bottom',
+            type: 'success',
+            duration: 1000
+        })
     }
 
     componentDidMount() {
@@ -55,7 +61,7 @@ class Post extends Component {
                         isLoading: false,
                         post: responseJson[0],
                     }, function () {
-                        // do something with new state
+                        
                     });
                   
                 }
