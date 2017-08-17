@@ -32,6 +32,12 @@ const datas = [
 		icon: "person",
 		bg: "#48525D",
 	},
+	{
+		name: "Tin đã lưu",
+		route: "SavedPosts",
+		icon: "person",
+		bg: "#48525D",
+	},
 
 	{
 		name: "Cài đặt",

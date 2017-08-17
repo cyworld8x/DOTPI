@@ -6,12 +6,14 @@ import SideBar from "./components/sidebar";
 import CategoryTab from "./components/home/categoryTab";
 import Post from "./components/home/post";
 import About from "./components/about";
+import SavedPosts from "./components/home/savedPosts";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },
         CategoryTab: { screen: CategoryTab },
         About: { screen: About },
-        Post: { screen: Post }
+        Post: { screen: Post },
+        SavedPosts:{ screen: SavedPosts }
     },
     {
         initialRouteName: "Home",

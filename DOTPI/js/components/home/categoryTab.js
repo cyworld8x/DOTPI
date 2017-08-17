@@ -111,7 +111,7 @@ class CategoryTab extends Component {
                         <TouchableOpacity >
                             <Image  style={styles.backStyle} />
                         </TouchableOpacity>
-                        <Text style={styles.titleStyle}>AAAA</Text>
+                        <Text style={styles.titleStyle}>{this.props.name}</Text>
                         <View style={{ width: 30 }} />
                     </View>
                     <ListView 
@@ -128,11 +128,9 @@ class CategoryTab extends Component {
                                   <View style={styles.postInfo}>
                                     <Text style={styles.txtName}>{post.name}</Text>
                                     <View style={styles.lastRowInfo}>
-                                        <Text style={styles.txtColor}>Colo {post.title}</Text>
+                                        <Text style={styles.txtColor}>{post.title}</Text>
                                         <View style={{ backgroundColor: '#fff', height: 16, width: 16, borderRadius: 8 }} />
-                                        <TouchableOpacity >
-                                            <Text style={styles.txtShowDetail}>SHOW DETAILS</Text>
-                                        </TouchableOpacity>
+                                        
                                     </View>
                                 </View>
                             </View>

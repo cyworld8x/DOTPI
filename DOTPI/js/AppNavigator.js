@@ -6,7 +6,7 @@ import Home from "./components/home/";
 
 import Post from "./components/home/post";
 import About from "./components/about/";
-
+import SavedPosts from "./components/home/savedPosts";
 
 
 class AppNavigator extends Component {

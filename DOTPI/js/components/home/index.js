@@ -67,7 +67,7 @@ class Home extends Component {
         return(
        
           <Tab tabBgColor={this.getHexColor(item.id)}  key={item.id} heading={<TabHeading tabStyle={{color: this.getHexColor(item.id),backgroundColor: this.getHexColor(item.id)}}><Text>{item.name}</Text></TabHeading>}>
-            <CategoryTab navigation={this.props.navigation} url={item.url} />
+            <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
             {/* <Text>{item.url}</Text> */}
           </Tab>
 );
