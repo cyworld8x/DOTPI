@@ -9,6 +9,7 @@ import Home from "./components/home/";
 import About from "./components/about/";
 import Post from "./components/home/post";
 import SavedPosts from "./components/home/savedPosts";
+import ListPosts from "./components/home/listPosts";
 const AppNavigator = StackNavigator(
     {
         Drawer: { screen: Drawer },
@@ -16,7 +17,7 @@ const AppNavigator = StackNavigator(
         About:{ screen: About },
         Post:{ screen: Post },
         SavedPosts:{ screen: SavedPosts },
-        
+        ListPosts:{screen:ListPosts}
     },
     {
         initialRouteName: "Drawer",

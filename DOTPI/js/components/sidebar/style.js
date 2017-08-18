@@ -8,15 +8,23 @@ const deviceWidth = Dimensions.get("window").width;
 export default {
   sidebar: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#60c49e"
   },
   drawerCover: {
     alignSelf: "stretch",
     // resizeMode: 'cover',
-    height: deviceHeight / 3.5,
+    height: deviceHeight,
     width: null,
     position: "relative",
-    marginBottom: 10
+    marginBottom: 0
+  },
+  drawerHeaderCover: {
+    alignSelf: "stretch",
+    // resizeMode: 'cover',
+    height: deviceHeight/5,
+    width: null,
+    position: "relative",
+    marginBottom: 0
   },
   drawerImage: {
     position: "absolute",
@@ -57,6 +65,13 @@ export default {
     fontWeight: Platform.OS === "ios" ? "500" : "400",
     fontSize: 16,
     marginLeft: 20
+  },
+  textSlideBar: {
+   
+    fontSize: 20,
+    fontFamily:'monospace',
+    marginLeft: 20,
+    color: "whitesmoke"
   },
   badgeText: {
     fontSize: Platform.OS === "ios" ? 13 : 11,

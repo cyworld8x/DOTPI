@@ -20,7 +20,7 @@ const deviceWidth = Dimensions.get("window").width;
 const logo = require("../../../img/logo.png");
 const cardImage = require("../../../img/drawer-cover.png");
 
-class CategoryTab extends Component {
+class ListPosts extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
@@ -35,19 +35,17 @@ class CategoryTab extends Component {
     }
 
     componentDidMount() {
-
-        this.getPosts(1)
-            .then(responseJson => {
-                responseJson = responseJson==null?[]:responseJson;
-                this.arr = responseJson;
-                this.setState({
-                    isLoading: false,
-                    refreshing: false,
-                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
-                }, function () {
-                    // do something with new state
-                });
-            });
+        
+        var responseJson = this.getPosts(1);
+        responseJson = responseJson == null ? [] : responseJson;
+        this.arr = responseJson;
+        this.setState({
+            isLoading: false,
+            refreshing: false,
+            listPosts: this.state.listPosts.cloneWithRows(this.arr),
+        }, function () {
+            // do something with new state
+        });
 
     }
 
@@ -56,33 +54,27 @@ class CategoryTab extends Component {
         const newPage = this.state.page + 1;
         
         this.setState({ refreshing: true, isLoading: false });
-       
-        // Toast.show({
-        //                                     text: 'Page:'+ newPage,
-        //                                     position: 'bottom',
-        //                                     type: 'success',
-        //                                     duration: 1000
-        //                                 }) ;
-        this.getPosts(newPage).then(responseJson => {
-            responseJson = responseJson==null?[]:responseJson;
+        var responseJson = this.getPosts(newPage);
+          responseJson = responseJson==null?[]:responseJson;
             this.arr = this.arr.concat(responseJson);
             
             this.setState({
                 isLoading: false,
                 refreshing: false,
-                page: newPage,
+                page:newPage,
                 listPosts: this.state.listPosts.cloneWithRows(this.arr),
             }, function () {
                 // do something with new state
             });
-        });
     }
 
     getPosts(page) {
-        var url = this.props.url + "/" + page;
+        var list = [];
+        for(var i = page*10; i< page*10 + 10; i++){
+            list.push({image:'https://maxcdn.icons8.com/Share/icon/color/Gaming//pokecoin1600.png', name: 'Name' + 1, title: 'Title'+ i});
+        }
         
-        return fetch(url)
-            .then((response) => response.json());
+        return list;
     }
 
   refreshControl(){
@@ -125,18 +117,18 @@ class CategoryTab extends Component {
         //   </Container>
         // );
 
-
+        
         const { root } = this.props;
         return (
-            <View style={styles.container}>
+             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    {/* <View style={styles.header}>
+                    <View style={styles.header}>
                         <TouchableOpacity >
                             <Image style={styles.backStyle} />
                         </TouchableOpacity>
                         <Text style={styles.titleStyle}>{this.props.name}</Text>
                         <View style={{ width: 30 }} />
-                    </View> */}
+                    </View>
                     <ListView
                         enableEmptySections={true}
                         removeClippedSubviews={false}
@@ -150,16 +142,15 @@ class CategoryTab extends Component {
 
                                 </TouchableOpacity>
                                 <View style={styles.postInfo}>
-                                    <Text style={styles.txtName}>{post.name}</Text>
+                                   
                                     <View style={styles.lastRowInfo}>
                                         <Text style={styles.txtColor}>{post.title}</Text>
-                                        <View style={{ backgroundColor: '#fff', height: 16, width: 16, borderRadius: 8 }} />
-
+                                       
                                     </View>
                                 </View>
                             </View>
                         )}
-                       
+                        onEndReachedThreshold={2}
                         onEndReached={this.onRefresh.bind(this)}
                     />
                 </View>
@@ -168,4 +159,4 @@ class CategoryTab extends Component {
     }
 
 }
-export default CategoryTab;
+export default ListPosts;

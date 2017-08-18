@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
 import {
   Container,
   Header,
@@ -21,10 +21,10 @@ import {
   Content
 
 } from "native-base";
-
+const  {height} = Dimensions.get('window');
 import styles from './styles';
 import CategoryTab from "./categoryTab";
-
+import ListPosts from "./listPosts";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -61,57 +61,75 @@ class Home extends Component {
         </View>
       );
     }
-    var components = ('');
-
-    var components = this.state.dataSource.map((item) => {
-      return (
-
-        <Tab  tabBgColor={this.getHexColor(item.id)} key={item.id} heading={<TabHeading tabStyle={{  color: this.getHexColor(item.id), backgroundColor: this.getHexColor(item.id) }}><Text>{item.name}</Text></TabHeading>}>
-          <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
-          {/* <Text>{item.url}</Text> */}
-        </Tab>
-      );
-    });
+   
     return (
-      <Container style={{ backgroundColor: '#FFF' }} >
-        <Header style={{ backgroundColor: '#FFF' }}>
+      <View style={{flex:1}} >
+        <Header  hasTabs style={{ backgroundColor: '#34B089' }}>
           <Left>
             <Button
               transparent
               onPress={() => this.props.navigation.navigate("DrawerOpen")}
             >
-              <Icon style={{ color: "#000" }} name="menu" />
+              <Icon style={{ color: "#FFF" }} name="menu" />
             </Button>
           </Left>
-          <Body>
-            <Title style={{ color: "#000" }}>DOTPI </Title>
-          </Body>
-          <Right />
+            <Body>
+              <Title style={{ color: "#FFF" }}>MÓN ĂN NGON</Title>
+            </Body>
+            <Right />
+          
         </Header>
-        <Content>
-          <Tabs  renderTabBar={() => <ScrollableTab />}>
+         <Tabs renderTabBar={() => <ScrollableTab />}>
+          {this.state.dataSource.map((item) => {
+            return (
 
-            {components}
-          </Tabs>
-        </Content>
-        {/* <Footer>
-          <FooterTab>
-            <Button>
-              <Icon name="apps" />
-            </Button>
-            <Button>
-              <Icon name="camera" />
-            </Button>
-            <Button active>
-              <Icon active name="navigate" />
-            </Button>
-            <Button>
-              <Icon name="person" />
-            </Button>
-          </FooterTab>
-        </Footer> */}
+              <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} 
+              tabStyle={{ backgroundColor: this.getHexColor(item.id)}} key={item.id*item.id/100} heading={item.name}>
+                <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
+              </Tab>
+            );
+          })}
+        </Tabs> 
+         
+     
+      </View>
+      // <Container style={{ backgroundColor: '#FFF' }} >
+      //   <Header hasTabs style={{ backgroundColor: '#FFF' }}>
+      //     <Left>
+      //       <Button
+      //         transparent
+      //         onPress={() => this.props.navigation.navigate("DrawerOpen")}
+      //       >
+      //         <Icon style={{ color: "#000" }} name="menu" />
+      //       </Button>
+      //     </Left>
+      //     <Body>
+      //       <Title style={{ color: "#000" }}>DOTPI </Title>
+      //     </Body>
+      //     <Right />
+      //   </Header>
+      //   <Content>
+         
+         
+      //   </Content>
+      //   {/* <Footer>
+      //     <FooterTab>
+      //       <Button>
+      //         <Icon name="apps" />
+      //       </Button>
+      //       <Button>
+      //         <Icon name="camera" />
+      //       </Button>
+      //       <Button active>
+      //         <Icon active name="navigate" />
+      //       </Button>
+      //       <Button>
+      //         <Icon name="person" />
+      //       </Button>
+      //     </FooterTab>
+      //   </Footer> */}
 
-      </Container>
+      // </Container>
     );
   }
 }

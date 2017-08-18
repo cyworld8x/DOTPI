@@ -9,8 +9,7 @@ const deviceWidth = Dimensions.get("window").width;
 export default {
     container: {
         flex: 1,
-       
-    } ,
+    },
     header: {
         height: 50,
         flexDirection: 'row',
@@ -24,7 +23,7 @@ export default {
         shadowColor: '#2E272B',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
-        margin: 10,
+        margin: 5,
         paddingHorizontal: 10
     },
     backStyle: {
@@ -61,8 +60,7 @@ export default {
         flex: 1
     },
     savedPostInfo: {
-        justifyContent: 'space-between',
-        
+        justifyContent: 'space-between',        
         flex: 1
     },
     lastRowInfo: {

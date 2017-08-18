@@ -33,12 +33,12 @@ const datas = [
 		bg: "#48525D",
 	},
 	{
-		name: "Tin đã lưu",
+		name: "TIN ĐÃ LƯU",
 		route: "SavedPosts",
 		icon: "person",
 		bg: "#48525D",
 	},
-
+	
 	{
 		name: "Cài đặt",
 		route: "NHTypography",
@@ -59,8 +59,9 @@ class SideBar extends Component {
 	render() {
 		return (
 			<Container>
-				<Content bounces={false} style={{ flex: 1, backgroundColor: "#fff", top: -1 }}>
+				<Content bounces={false} style={{ flex: 1, backgroundColor: "#60c49e", top: -1 }}>
 					<Image source={drawerCover} style={styles.drawerCover}>
+					<View  style={styles.drawerHeaderCover}>
 						<Image square style={styles.drawerImage} source={drawerImage} />
 						<Right style={styles.drawerProfile}>
 									
@@ -73,16 +74,17 @@ class SideBar extends Component {
 										
 										</Button>
 								</Right>
-					</Image>
+					</View>
 					<List
 						dataArray={datas}
 						renderRow={data =>
 							<ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)}>
-								<Left>
-									<Icon active name={data.icon} style={{ color: "#777", fontSize: 26, width: 30 }} />
-									<Text style={styles.text}>
+								<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
+									<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
+									<Text style={styles.textSlideBar}>
 										{data.name}
 									</Text>
+									
 								</Left>
 								{data.types &&
 									<Right style={{ flex: 1 }}>
@@ -99,6 +101,7 @@ class SideBar extends Component {
 									</Right>}
 							</ListItem>}
 					/>
+					</Image>
 				</Content>
 			</Container>
 		);

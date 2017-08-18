@@ -88,7 +88,7 @@ class SavedPosts extends Component {
                         <TouchableOpacity >
                             <Image  style={styles.backStyle} />
                         </TouchableOpacity>
-                        <Text style={styles.titleStyle}>Danh sách đã lưu</Text>
+                        <Text style={styles.titleStyle}>Tin đã lưu</Text>
                         <View style={{ width: 30 }} />
                     </View>
                     <ListView 
