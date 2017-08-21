@@ -24,17 +24,35 @@ export default {
     height: deviceHeight/5,
     width: null,
     position: "relative",
+    
     marginBottom: 0
   },
-  drawerImage: {
-    position: "absolute",
+  drawerSlidebar: {
+    
     // left: (Platform.OS === 'android') ? 30 : 40,
     left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
     // top: (Platform.OS === 'android') ? 45 : 55,
     top: Platform.OS === "android" ? deviceHeight / 13 : deviceHeight / 12,
+    flexDirection:'row',
+    
+  },
+  drawerLogoSlidebar: {
+   
     width: 80,
     height: 80,
+    right:5,
     resizeMode: "cover"
+  },
+
+  drawerIconSlidebar: {
+    top:10,
+    left:5,
+    borderRadius:5,
+    width: 60,
+    height: 60,
+    resizeMode: "cover",
+    borderColor:'#FFF',
+    borderWidth:2
   },
   drawerProfile: {
     

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, StyleSheet } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList, TouchableOpacity, RefreshControl, StyleSheet } from "react-native";
 
 import {
     Container, Header, Title, Content, Button,
@@ -24,9 +24,9 @@ class ListPosts extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+       
         this.state = {
-            listPosts: ds,
+            listPosts: [],
             refreshing: false,
             isLoading: true,
             page: 1
@@ -36,7 +36,7 @@ class ListPosts extends Component {
 
     componentDidMount() {
         
-        var responseJson = this.getPosts(1);
+        let responseJson = this.getPosts(1);
         responseJson = responseJson == null ? [] : responseJson;
         this.arr = responseJson;
         this.setState({
@@ -47,6 +47,21 @@ class ListPosts extends Component {
             // do something with new state
         });
 
+    }
+
+    preProcessList(posts){
+        var convertedPosts = [];
+        if(posts!=null && posts.length>0){
+            for(var i = 1; i<=post.length; i++){
+                if (i % 1 == 0) {
+                    if(i<post.length){
+                        convertedPosts.push({ id: post[i].postid+'-'+ posts[i+1].postid, left: post[i], right: posts[i++] })
+                    }
+                    
+                }                
+            }
+            return convertedPosts;
+        }
     }
 
     onRefresh() {
@@ -122,37 +137,33 @@ class ListPosts extends Component {
         return (
              <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <View style={styles.header}>
-                        <TouchableOpacity >
-                            <Image style={styles.backStyle} />
-                        </TouchableOpacity>
-                        <Text style={styles.titleStyle}>{this.props.name}</Text>
-                        <View style={{ width: 30 }} />
-                    </View>
-                    <ListView
-                        enableEmptySections={true}
-                        removeClippedSubviews={false}
-                        dataSource={this.state.listPosts}
-                        renderRow={post => (
-                            <View style={styles.postContainer}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post })}>
+                    
+                    <View style={styles.listPostContainer}>
+                        <SectionList
+                           
+                            dataSource={this.state.listPosts}
+                            renderItem={post => (
+                                <View style={styles.postContainer}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post })}>
 
 
-                                    <Image style={styles.postImage} source={{ uri: post.image }} />
+                                        <Image style={styles.postImage} source={{ uri: post.image }} />
 
-                                </TouchableOpacity>
-                                <View style={styles.postInfo}>
-                                   
-                                    <View style={styles.lastRowInfo}>
-                                        <Text style={styles.txtColor}>{post.title}</Text>
-                                       
+                                    </TouchableOpacity>
+                                    <View style={styles.postInfo}>
+                                    
+                                        <View style={styles.lastRowInfo}>
+                                            <Text style={styles.txtColor}>{post.title}</Text>
+                                        
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        )}
-                        onEndReachedThreshold={2}
-                        onEndReached={this.onRefresh.bind(this)}
-                    />
+                            )}
+                            onEndReachedThreshold={2}
+                            onEndReached={this.onRefresh.bind(this)}
+                           
+                        />
+                    </View>
                 </View>
             </View>
         );

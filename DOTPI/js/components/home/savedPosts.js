@@ -15,7 +15,6 @@ import { Container,Header,  Title, Content, Button,
 Toast } from 'native-base';
 
 import styles from './styles';
-import HTMLView from 'react-native-htmlview';
 
 const deviceWidth = Dimensions.get("window").width;
 

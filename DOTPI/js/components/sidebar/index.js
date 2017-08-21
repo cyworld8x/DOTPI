@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
 
+import Favorite from "./favorite";
 import {
 	Content,
 	Text,
 	List,
 	ListItem,
 	Icon,
+	Title,
 	Container,
 	Left,
 	Right,
@@ -22,27 +24,44 @@ import styles from "./style";
 
 const drawerCover = require("../../../img/drawer-cover.png");
 
-const drawerImage = require("../../../img/unnamed.png");
+const drawerImage = require("../../../img/logo.png");
 
 const datas = [
 
 	{
-		name: "Home",
+		name: "MÓN ĂN NGON",
 		route: "Home",
-		icon: "person",
+		icon: "home",
 		bg: "#48525D",
 	},
 	{
-		name: "TIN ĐÃ LƯU",
+		name: "DANH SÁCH YÊU THÍCH",
 		route: "SavedPosts",
-		icon: "person",
+		icon: "bookmarks",
 		bg: "#48525D",
 	},
-	
 	{
-		name: "Cài đặt",
+		name: "MỜI BẠN BÈ",
+		route: "SavedPosts",
+		icon: "md-person-add",
+		bg: "#48525D",
+	},
+	{
+		name: "CÀI ĐẶT",
 		route: "NHTypography",
 		icon: "settings",
+		bg: "#48525D",
+	},
+	{
+		name: "PHIÊN BẢN",
+		route: "NHTypography",
+		icon: "md-information-circle",
+		bg: "#48525D",
+	},
+	{
+		name: "ĐIỀU KHOẢN SỬ DỤNG",
+		route: "NHTypography",
+		icon: "lock",
 		bg: "#48525D",
 	},
 ];
@@ -62,18 +81,22 @@ class SideBar extends Component {
 				<Content bounces={false} style={{ flex: 1, backgroundColor: "#60c49e", top: -1 }}>
 					<Image source={drawerCover} style={styles.drawerCover}>
 					<View  style={styles.drawerHeaderCover}>
-						<Image square style={styles.drawerImage} source={drawerImage} />
-						<Right style={styles.drawerProfile}>
-									
-									<Button iconLeft rounded success
-												>
-												  <Icon name='home' />
-											<Text style={styles.text}>
-										
-										</Text>
-										
-										</Button>
-								</Right>
+						<View style={styles.drawerSlidebar}>
+							<Image square style={styles.drawerLogoSlidebar} source={drawerImage} />
+							<Favorite/>
+						</View>
+						
+						{/* <Right style={styles.drawerProfile}>
+
+							<Button iconLeft rounded success
+							>
+								<Icon name='home' />
+								<Text style={styles.text}>
+
+								</Text>
+
+							</Button>
+						</Right> */}
 					</View>
 					<List
 						dataArray={datas}
@@ -81,9 +104,9 @@ class SideBar extends Component {
 							<ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)}>
 								<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
 									<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
-									<Text style={styles.textSlideBar}>
+									<Title >
 										{data.name}
-									</Text>
+									</Title>
 									
 								</Left>
 								{data.types &&

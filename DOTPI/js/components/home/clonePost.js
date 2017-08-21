@@ -69,15 +69,16 @@ const htmlStyle = `<style>
             font-size: 32px
         }
         img {
-            width:100%;
+            width:100% !important;
+            height:auto !important;
+        }
+        iframe {
+            width:100% !important;
+            height:auto !important;
         }
         td {
             display: block !important;
             width: 95% !important;
-        }
-        img {
-            width:100%;
-            radius:5px;
         }
         hr {
             width: 98%;
@@ -107,7 +108,7 @@ const htmlStyle = `<style>
             flex-direction: column;
         }
 </style>`;
-class Post extends Component {
+class ClonePost extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
@@ -307,7 +308,7 @@ class Post extends Component {
                                 {
                                     return (<TouchableOpacity key={post.id} onPress={() => {  
                                           //this.refresh(post.api);
-                                             this.props.navigation.navigate('ClonePost',{post:post})
+                                             this.props.navigation.navigate('Post',{post:post})
                                         }}>
                                                     <View  style={styles.postContent}>
 
@@ -330,23 +331,6 @@ class Post extends Component {
              </View>
                 );
     }
-    renderNode(node, index, siblings, parent, defaultRenderer) {
-        if (node.name == 'img') {
-            const src = node.attribs.src;
-            
-            return (
-  
-                <Image style={{
-                    flex: 1,
-                    alignSelf: 'cover',
-                    height: deviceWidth * 2 / 3,
-                    width: deviceWidth,
-                    borderWidth: 1,
-                    borderRadius: 75
-                }} source={{ uri: src, cache: 'only-if-cached' }} resizeMode="contain" />
-            )
-        }
-    }
 }
 
-export default Post;
+export default ClonePost;

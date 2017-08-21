@@ -63,7 +63,7 @@ class Home extends Component {
     }
    
     return (
-      <View style={{flex:1}} >
+      <View style={{flex:1,backgroundColor: '#34B089'}} >
         <Header  hasTabs style={{ backgroundColor: '#34B089' }}>
           <Left>
             <Button
@@ -93,43 +93,7 @@ class Home extends Component {
          
      
       </View>
-      // <Container style={{ backgroundColor: '#FFF' }} >
-      //   <Header hasTabs style={{ backgroundColor: '#FFF' }}>
-      //     <Left>
-      //       <Button
-      //         transparent
-      //         onPress={() => this.props.navigation.navigate("DrawerOpen")}
-      //       >
-      //         <Icon style={{ color: "#000" }} name="menu" />
-      //       </Button>
-      //     </Left>
-      //     <Body>
-      //       <Title style={{ color: "#000" }}>DOTPI </Title>
-      //     </Body>
-      //     <Right />
-      //   </Header>
-      //   <Content>
-         
-         
-      //   </Content>
-      //   {/* <Footer>
-      //     <FooterTab>
-      //       <Button>
-      //         <Icon name="apps" />
-      //       </Button>
-      //       <Button>
-      //         <Icon name="camera" />
-      //       </Button>
-      //       <Button active>
-      //         <Icon active name="navigate" />
-      //       </Button>
-      //       <Button>
-      //         <Icon name="person" />
-      //       </Button>
-      //     </FooterTab>
-      //   </Footer> */}
-
-      // </Container>
+     
     );
   }
 }

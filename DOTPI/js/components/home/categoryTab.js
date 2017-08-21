@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, StyleSheet } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList,TouchableOpacity, RefreshControl, StyleSheet } from "react-native";
 
 import {
-    Container, Header, Title, Content, Button,
+    Header, Title, Content, Button,
     Icon,
-    Card,
-    CardItem, Text, View, Thumbnail,
-    Left,
-    Right,
-    Body,
+    Text, View, Thumbnail,
+   
     Toast
 } from 'native-base';
 
 import styles from './styles';
-import HTMLView from 'react-native-htmlview';
-
 const deviceWidth = Dimensions.get("window").width;
 
 const logo = require("../../../img/logo.png");
-const cardImage = require("../../../img/drawer-cover.png");
 
 class CategoryTab extends Component {
     //eslint-disable-line
@@ -32,6 +26,7 @@ class CategoryTab extends Component {
             page: 1
         };
         this.arr = [];
+        this.preProcessList = this.preProcessList.bind(this);
     }
 
     componentDidMount() {
@@ -39,12 +34,13 @@ class CategoryTab extends Component {
         this.getPosts(1)
             .then(responseJson => {
                 responseJson = responseJson==null?[]:responseJson;
-                this.arr = responseJson;
+                
+                this.arr = responseJson;                
                 this.setState({
                     isLoading: false,
                     refreshing: false,
                     listPosts: this.state.listPosts.cloneWithRows(this.arr),
-                }, function () {
+                }, function () {                   
                     // do something with new state
                 });
             });
@@ -65,6 +61,7 @@ class CategoryTab extends Component {
         //                                 }) ;
         this.getPosts(newPage).then(responseJson => {
             responseJson = responseJson==null?[]:responseJson;
+            //responseJson = this.preProcessList(responseJson);
             this.arr = this.arr.concat(responseJson);
             
             this.setState({
@@ -82,7 +79,24 @@ class CategoryTab extends Component {
         var url = this.props.url + "/" + page;
         
         return fetch(url)
-            .then((response) => response.json());
+            .then((response) =>response.json());
+    }
+
+    preProcessList(posts){
+        var convertedPosts = [];
+       
+        if(posts!=null && posts.length>0){
+            for(var i = 0; i<posts.length; i++){
+                if (i % 2 == 0) {
+                    if(i+1<posts.length){
+                        convertedPosts.push({ id: posts[i].postid+'-'+ posts[i+1].postid, left: posts[i], right: posts[i++] })
+                    }
+                    
+                }                
+            }
+            return convertedPosts;
+        }
+        return convertedPosts;
     }
 
   refreshControl(){
@@ -97,35 +111,12 @@ class CategoryTab extends Component {
         if (this.state.isLoading) {
             return (
                 <View style={{ flex: 1, paddingTop: 20 }}>
-                    {/* <ActivityIndicator /> */}
+                     <ActivityIndicator /> 
                 </View>
             );
         }
 
-        //    var news = this.state.dataSource.map((item)=>{
-
-        //      return (
-
-        //       <Card key={item.id}>
-        //           <CardItem>
-        //            <Image  style={{height: 200, width: 200, flex: 1}}/> 
-        //           <Text>{item.title}</Text>
-        //           <Text>{item.image}</Text>
-        //           </CardItem>
-        //       </Card>
-
-        //           );
-        // });
-
-        // return (
-        //   <Container>
-        //     <View style={{flex:1}}>
-        //       {news}
-        //     </View>
-        //   </Container>
-        // );
-
-
+        let pos = 0;
         const { root } = this.props;
         return (
             <View style={styles.container}>
@@ -141,24 +132,82 @@ class CategoryTab extends Component {
                         enableEmptySections={true}
                         removeClippedSubviews={false}
                         dataSource={this.state.listPosts}
-                        renderRow={post => (
-                            <View style={styles.postContainer}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post })}>
+                        renderRow={(post) => {
+                            pos = pos + 1;
+                            if(pos==1){
+                                 return (<View key={post.id} style={styles.postContainerFullRow}>
+                                        <View style={styles.postContentFullRow}>
+                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
+                                                <Image style={styles.postImageFullRow} source={{ uri: post.sections[0].image }} />
+                                            
+                                            <View style={styles.postInfoFullRow}>
+                                                <Text style={styles.txtName}>{post.sections[0].title}</Text>
+                                            </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>)
+                            }else{
+                                    if (pos % 2 == 1 ) {
+                                    return (<View key={post.id} style={styles.postContainerCol}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
+                                            <View style={styles.postContentCol}>
+
+                                                 {post.sections[0]!=null && post.sections[0].image!=null? <Image style={styles.postImageCol} source={{ uri: post.sections[0].image}}/>:<Image style={styles.postImageCol} source={logo} />} 
+
+                                                <View style={styles.postInfoCol}>
+                                                    <Text style={styles.txtName}>{post.sections[0].title}</Text>
+                                                </View>
+
+                                            </View>
+                                        </TouchableOpacity>
+                                        {post.sections[1]!=null ?
+                                        (<TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[1] })}>
+                                            <View style={styles.postContentCol}>
+
+                                                 {post.sections[1]!=null && post.sections[1].image!=null? <Image style={styles.postImageCol} source={{ uri: post.sections[1].image}}/>:<Image style={styles.postImageCol} source={logo} />} 
+
+                                                <View style={styles.postInfoCol}>
+                                                    <Text style={styles.txtName}>{post.sections[1].title}</Text>
+                                                </View>
+
+                                            </View>
+                                        </TouchableOpacity>) :(<View></View>)}
+
+                                    </View>)
+                                    {/* return (<CouplePostsColumn navigation={this.props.navigation} post={post}/>) */ }
+                                    } else {
+                                        return (<View key={post.id} style={styles.postContainer}>
+                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
+                                                <View style={styles.postContentTop}>
+                                                     {post.sections[0]!=null && post.sections[0].image!=null? <Image style={styles.postImage} source={{ uri: post.sections[0].image}}/>:<Image style={styles.postImage} source={logo} />} 
+                                                    
+                                                    <View style={styles.postInfo}>
+                                                        <Text style={styles.txtName}>{post.sections[0].title}</Text>
+                                                    </View>
+
+                                                </View>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[1] })}>
+                                                <View style={styles.postContent}>
+
+                                                    {post.sections[1]!=null && post.sections[1].image!=null? <Image style={styles.postImage} source={{ uri: post.sections[1].image}}/>:<Image style={styles.postImage} source={logo} />} 
+                                                    
+
+                                                    <View style={styles.postInfo} >
+                                                        <Text style={styles.txtName}>{post.sections[1].title}</Text>
+                                                    </View>
+
+                                                </View>
+                                            </TouchableOpacity>
+
+                                        </View>)
+                                    }
+                            }
+                           
+                        }
 
 
-                                    <Image style={styles.postImage} source={{ uri: post.image }} />
-
-                                </TouchableOpacity>
-                                <View style={styles.postInfo}>
-                                    <Text style={styles.txtName}>{post.name}</Text>
-                                    <View style={styles.lastRowInfo}>
-                                        <Text style={styles.txtColor}>{post.title}</Text>
-                                        <View style={{ backgroundColor: '#fff', height: 16, width: 16, borderRadius: 8 }} />
-
-                                    </View>
-                                </View>
-                            </View>
-                        )}
+                        }
                        
                         onEndReached={this.onRefresh.bind(this)}
                     />
