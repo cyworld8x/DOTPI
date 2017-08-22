@@ -23,7 +23,7 @@ export default {
     // resizeMode: 'cover',
     height: deviceHeight/5,
     width: null,
-    position: "relative",
+    
     
     marginBottom: 0
   },
@@ -47,6 +47,7 @@ export default {
   drawerIconSlidebar: {
     top:10,
     left:5,
+    right:5,
     borderRadius:5,
     width: 60,
     height: 60,

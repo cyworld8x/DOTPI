@@ -80,50 +80,27 @@ class SideBar extends Component {
 			<Container>
 				<Content bounces={false} style={{ flex: 1, backgroundColor: "#60c49e", top: -1 }}>
 					<Image source={drawerCover} style={styles.drawerCover}>
-					<View  style={styles.drawerHeaderCover}>
-						<View style={styles.drawerSlidebar}>
-							<Image square style={styles.drawerLogoSlidebar} source={drawerImage} />
-							<Favorite/>
+						<View  style={styles.drawerHeaderCover}>
+							<View style={styles.drawerSlidebar}>
+								<Image square style={styles.drawerLogoSlidebar} source={drawerImage} />
+								<Favorite/>
+							</View>
+							
 						</View>
-						
-						{/* <Right style={styles.drawerProfile}>
-
-							<Button iconLeft rounded success
-							>
-								<Icon name='home' />
-								<Text style={styles.text}>
-
-								</Text>
-
-							</Button>
-						</Right> */}
-					</View>
-					<List
-						dataArray={datas}
-						renderRow={data =>
-							<ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)}>
-								<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
-									<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
-									<Title >
-										{data.name}
-									</Title>
+						<List
+							dataArray={datas}
+							renderRow={data =>
+								<ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)}>
+									<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
+										<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
+										<Title >
+											{data.name}
+										</Title>
+										
+									</Left>
 									
-								</Left>
-								{data.types &&
-									<Right style={{ flex: 1 }}>
-										<Badge
-											style={{
-												borderRadius: 3,
-												height: 25,
-												width: 72,
-												backgroundColor: data.bg,
-											}}
-										>
-											<Text style={styles.badgeText}>{`${data.types} Types`}</Text>
-										</Badge>
-									</Right>}
-							</ListItem>}
-					/>
+								</ListItem>}
+						/>
 					</Image>
 				</Content>
 			</Container>

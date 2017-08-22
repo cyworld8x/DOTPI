@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet } from "react-native";
 
 // import Moment from 'moment';
-
+import { connect } from 'react-redux';
+import { bookmarkPost, unbookmarkPost } from '../../api/actionCreators';
 import {
     Container, Header, Title, Content, Button,
     Badge,Spinner,
@@ -118,6 +119,7 @@ class Post extends Component {
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.refresh = this.refresh.bind(this);
+        this.checkingBookmark = this.checkingBookmark.bind(this);
     }
    
     goBack() {
@@ -125,15 +127,29 @@ class Post extends Component {
         navigator.pop();
     }
 
-    async savePost(post){
-       
-        var result =await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-        Toast.show({
-            text: 'Bài viết đã được lưu để xem sau!',
-            position: 'bottom',
-            type: 'success',
-            duration: 1000
-        });
+    checkingBookmark(postid){
+        //conslode.error(this.props.FavoritedPosts);
+        if(this.props.FavoritedPosts!=null && this.props.FavoritedPosts.length>0){
+            
+            return this.props.FavoritedPosts.filter(post=>Number(post.postid) == Number(postid)).length>0;
+        }
+        
+        return false;
+    }
+
+    savePost(){
+        let post = this.state.post;
+            if(post!=null){
+                this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image });
+            //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
+            Toast.show({
+                text: 'Bài viết đã được lưu để xem sau!',
+                position: 'bottom',
+                type: 'success',
+                duration: 1000
+            });
+        }
+        
     }
 
     componentDidMount() {
@@ -142,7 +158,7 @@ class Post extends Component {
         return fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
-
+               
                 if (responseJson.length > 0) {
                     this.arr = responseJson[0].posts;
                     this.setState({
@@ -152,7 +168,7 @@ class Post extends Component {
                     }, function () {
                         this.props.postcontent = this.state.postcontent;
                     });
-
+                    
                 }
 
             })
@@ -237,12 +253,13 @@ class Post extends Component {
                          <Title style={{ color: "#FFF" }}>{this.state.post.categoryname} </Title>
                      </Body>
                      <Right >
+                         {this.checkingBookmark(this.state.post.postid)==false?
                          <Button
                              transparent
-                             onPress={() => this.savePost(this.state.post)}
+                             onPress={() => this.savePost()}
                          >
                              <Icon style={{ color: "#FFF" }} name="md-bookmarks" />
-                         </Button>
+                         </Button>:<View/>}
                          <Button
                              transparent
                              onPress={() => this.props.navigation.navigate('DrawerOpen')}
@@ -301,7 +318,7 @@ class Post extends Component {
                         <View style={{flexDirection: 'row', flex:1}}> 
                             <View style={styles.singlePostContainer}>
                                 <Badge  style={{marginTop:10, backgroundColor:'#34B089'}}>
-                                 <Text style={{fontWeight :'700', fontSize:14}}>Các bài khác trong mục {this.state.post.categoryname}</Text>
+                                    <Text style={{fontWeight :'700', fontSize:14}}>Các bài khác trong mục {this.state.post.categoryname}</Text>
                                 </Badge>
                             {this.state.post.posts.map((post)=>
                                 {
@@ -349,4 +366,10 @@ class Post extends Component {
     }
 }
 
-export default Post;
+function mapStateToProps(state) {
+    return { 
+       FavoritedPosts: state.FavoritedPosts
+    };
+}
+
+export default connect(mapStateToProps,{ bookmarkPost, unbookmarkPost })(Post);

@@ -39,11 +39,12 @@ class SavedPosts extends Component {
             let posts = JSON.parse(result);
             
             this.arr = posts;
-              
+            
             this.setState({
                         isLoading: false,
                         listPosts: this.state.listPosts.cloneWithRows(this.arr),
                     }, function () {
+                        
                         // do something with new state
                     });
          });
