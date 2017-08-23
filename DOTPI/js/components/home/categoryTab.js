@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList,TouchableOpacity, RefreshControl, StyleSheet } from "react-native";
-
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList,TouchableOpacity, StyleSheet } from "react-native";
+import PushNotification from 'react-native-push-notification';
 import {
-    Header, Title, Content, Button,
+    Button,
     Icon,
-    Text, View, Thumbnail,
+    Text, View,
    
     Toast
 } from 'native-base';
-
+import Moment from 'moment';
 import styles from './styles';
 const deviceWidth = Dimensions.get("window").width;
 
@@ -23,10 +23,12 @@ class CategoryTab extends Component {
             listPosts: ds,
             refreshing: false,
             isLoading: true,
-            page: 1
+            page: 1,
+            notificationData:{}
         };
         this.arr = [];
         this.preProcessList = this.preProcessList.bind(this);
+        Moment.locale('en');
     }
 
     componentDidMount() {
@@ -40,9 +42,35 @@ class CategoryTab extends Component {
                     isLoading: false,
                     refreshing: false,
                     listPosts: this.state.listPosts.cloneWithRows(this.arr),
-                }, function () {                   
+                    notificationData: this.arr!=null && this.arr.length>0? this.arr[0].sections[0]:null
+                }, function () {     
+                    
                     // do something with new state
                 });
+                if(this.arr!=null && this.arr.length>0){
+                   
+                    
+                    try {
+                        let notificationId = this.props.categoryid;
+                        PushNotification.cancelLocalNotifications({id: notificationId});
+                        PushNotification.localNotificationSchedule({
+                            id: notificationId,
+                            foreground: false, // BOOLEAN: If the notification was received in foreground or not 
+                            userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not 
+                            message: this.state.notificationData.title, // STRING: The notification message 
+                            data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
+                            
+                            date: new Date(Date.now()+(60 * 60 * 8 * 1000)),
+                            //date: new Date(Date.now()),
+                            //actions:''
+                            //date: new Date(Date.now())
+                        });
+                    }
+                    catch (error) {
+                      console.error(error)
+                    } 
+                }
+                 
             });
 
     }
@@ -99,13 +127,7 @@ class CategoryTab extends Component {
         return convertedPosts;
     }
 
-  refreshControl(){
-    return (
-      <RefreshControl
-        refreshing={this.state.refreshing}
-        onRefresh={()=>this.onRefresh()} />
-    )
-  }
+  
 
     render() {
         if (this.state.isLoading) {
@@ -121,13 +143,7 @@ class CategoryTab extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    {/* <View style={styles.header}>
-                        <TouchableOpacity >
-                            <Image style={styles.backStyle} />
-                        </TouchableOpacity>
-                        <Text style={styles.titleStyle}>{this.props.name}</Text>
-                        <View style={{ width: 30 }} />
-                    </View> */}
+                   
                     <ListView
                         enableEmptySections={true}
                         removeClippedSubviews={false}

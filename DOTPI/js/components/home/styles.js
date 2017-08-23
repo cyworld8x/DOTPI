@@ -19,6 +19,16 @@ export default {
         padding: 5,
        
     },
+    shareContainer: {
+        //flex: 1,
+        flexDirection:'row',
+        backgroundColor: '#42cb5c',
+        //position:'absolute'
+    },
+    instructions: {
+        marginTop: 20,
+        marginBottom: 20,
+    },
     wrapper: {
         
         backgroundColor: '#FFF',

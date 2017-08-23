@@ -53,7 +53,7 @@ class Category extends Component {
                      </Right >
 
                 </Header>
-                <CategoryTab navigation={this.props.navigation} url={this.props.navigation.state.params.url} />
+                <CategoryTab navigation={this.props.navigation} url={this.props.navigation.state.params.url}  categoryid={this.props.navigation.state.params.categoryid}  />
 
             </Container>
             

@@ -76,7 +76,7 @@ class Home extends Component {
             <Body>
               <Title style={{ color: "#FFF" }}>MÓN ĂN NGON</Title>
             </Body>
-            <Right />
+            <Right/>
           
         </Header>
          <Tabs renderTabBar={() => <ScrollableTab />}>
@@ -85,7 +85,7 @@ class Home extends Component {
 
               <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} 
               tabStyle={{ backgroundColor: this.getHexColor(item.id)}} key={item.id*item.id/100} heading={item.name}>
-                <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} />
+                <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} categoryid={item.id} />
               </Tab>
             );
           })}

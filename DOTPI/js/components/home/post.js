@@ -18,9 +18,11 @@ import {
     Icon,
     Toast
 } from 'native-base';
+import Share, {ShareSheet} from 'react-native-share';
 const deviceHeight = Dimensions.get("window").height;
 
 const deviceWidth = Dimensions.get("window").width;
+
 import styles from './styles';
 import StorageApi from '../../api/storagePosts';
 import HTMLView from 'react-native-htmlview';
@@ -114,13 +116,24 @@ class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
             isLoading: true,
             loadAnotherPost:false,
             Height:deviceHeight
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
+        
         this.refresh = this.refresh.bind(this);
+        this.onOpen = this.onOpen.bind(this);
+        this.goBack = this.goBack.bind(this);
         this.checkingBookmark = this.checkingBookmark.bind(this);
+    }
+    onCancel() {
+        this.setState({ visible: false });
+    }
+    onOpen() {
+        
+        this.setState({ visible: true });
     }
    
     goBack() {
@@ -235,7 +248,12 @@ class Post extends Component {
             
         }
         // Moment.locale('vn');
-      
+        let shareOptions = {
+			title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
+			message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
+			url: "http://dotpi.tk",
+			subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
+		};
               
          return (
              <View style={{ backgroundColor: '#FFF', flex: 1 }} >
@@ -244,7 +262,7 @@ class Post extends Component {
                      <Left>
                          <Button
                              transparent
-                             onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname })}
+                             onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid:this.state.post.categoryid })}
                          >
                              <Icon style={{ color: "#FFF" }} name="md-arrow-round-back" />
                          </Button>
@@ -253,6 +271,12 @@ class Post extends Component {
                          <Title style={{ color: "#FFF" }}>{this.state.post.categoryname} </Title>
                      </Body>
                      <Right >
+                          <Button
+                             transparent
+                             onPress={() => this.onOpen()}
+                         >
+                             <Icon style={{ color: "#FFF" }} name="md-share" />
+                         </Button>
                          {this.checkingBookmark(this.state.post.postid)==false?
                          <Button
                              transparent
@@ -266,9 +290,82 @@ class Post extends Component {
                          >
                              <Icon style={{ color: "#FFF" }} name="menu" />
                          </Button>
+                        
                      </Right >
+                
                  </Header>
-                 <ScrollView ref='_scrollView' scrollEnabled={true} >
+                  <View style={styles.shareContainer}>
+                   {this.state.visible && <ScrollView  showsHorizontalScrollIndicator={true} showsVerticalScrollIndicator={false} style={{flexDirection:'row' }} onCancel={this.onCancel.bind(this)}>
+                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                   
+                             <Button style={{ backgroundColor: 'transparent' }}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "facebook"
+                                         }));
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="logo-facebook" /><Text>Facebook</Text></Button>
+
+                             <Button style={{ backgroundColor: 'transparent' }}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "googleplus"
+                                         }));
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="logo-googleplus" /><Text>Google +</Text></Button>
+                             <Button style={{ backgroundColor: 'transparent' }}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "twitter"
+                                         }));
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="logo-twitter" /><Text> Twitter</Text></Button>
+                             <Button style={{ backgroundColor: 'transparent' }}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "whatsapp"
+                                         }));
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="logo-whatsapp" /><Text>Whatsapp</Text></Button>
+                             <Button style={{ backgroundColor: 'transparent' }}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "email"
+                                         }));
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="md-mail" /><Text>Email</Text></Button>
+
+                             <Button style={{ backgroundColor: 'transparent' }}
+
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         if (typeof shareOptions["url"] !== undefined) {
+                                             Clipboard.setString(shareOptions["url"]);
+                                             if (Platform.OS === "android") {
+                                                 ToastAndroid.show("Mời bạn cài đặt ứng dụng MÓN ĂN NGON", ToastAndroid.SHORT);
+                                             } else if (Platform.OS === "ios") {
+                                                 AlertIOS.alert("Mời bạn cài đặt ứng dụng MÓN ĂN NGON", );
+                                             }
+                                         }
+                                     }, 300);
+                                 }}><Icon style={{ color: "#FFF" }} name="menu" /><Text>Copy Link</Text></Button>
+                    </View>
+                     
+                 </ScrollView>}
+
+                 </View>
+                  <ScrollView ref='_scrollView' scrollEnabled={true} >
                      <View style={{padding:10, flex:1}}>
                       <Text style={{ color: '#660000', fontSize: 20, flex:1 }}>{this.state.post.title}</Text>
                       <View style={{flex:1, paddingVertical: 10, flexDirection:'row'}}>
@@ -277,24 +374,8 @@ class Post extends Component {
                              </Badge>
                              <Text style={{paddingLeft:10}}>|</Text> 
                       </View>
-                      {/* {this.state.postcontent!=null ?
-                      <WebView scrollEnabled={false}
                       
-                             ref='_webView'
-                             domStorageEnabled={false}
-                             html={this.state.postcontent}
-                             style={{ height: this.state.Height, width: deviceWidth - 20 }}
-                             automaticallyAdjustContentInsets={false}
-                             renderLoading={() => {
-                                return <View style={{ flex: 1, paddingTop: deviceHeight/2 }}>
-                                     <Spinner color='green' />
-                                 </View>
-                                }
-                            }
-                            onNavigationStateChange={this.onNavigationStateChange.bind(this)}>
-                      </WebView>
-                      :<View></View>
-                      } */}
+                            
                         {this.state.postcontent!=null ?
                       <WebView scrollEnabled={false}
                       
@@ -346,7 +427,8 @@ class Post extends Component {
                      </View>
                      
                      
-                 </ScrollView>
+                 </ScrollView> 
+               
              </View>
                 );
     }

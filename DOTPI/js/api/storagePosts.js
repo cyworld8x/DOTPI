@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 
 const deletePost = async (post) => {
         
-        let posts =await getPosts().then((data)=> {return JSON.parse(data);});
+        let posts = await getPosts().then((data)=> {return JSON.parse(data);});
 
         posts = posts!=null?posts:[];
        

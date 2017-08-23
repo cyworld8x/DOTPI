@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Image, View, StatusBar } from "react-native";
 
-import { Container, Button, H3, Text, Header, Title, Body, Left, Right } from "native-base";
-
+import { Container, Button, H3, Text, Header, Title } from "native-base";
+import PushNotification from 'react-native-push-notification';
 import styles from "./styles";
 import { connect } from 'react-redux';
 import { loadingConfiguration } from '../../api/actionCreators';
@@ -20,6 +20,19 @@ class SplashScreen extends Component {
 		
 	}
 	componentDidMount() {
+		try {
+			let notificationId = 9999;
+			PushNotification.cancelLocalNotifications({ id: notificationId });
+			PushNotification.localNotificationSchedule({
+				id: notificationId,
+				message: "Bạn ơi! Có nhiều bài mới đang chờ bạn khám phá!", // (required) 
+				date: new Date(Date.now() + (60 * 60 * 24 * 1000)) // in 60 secs 
+			});
+
+		}
+		catch (error) {
+
+		}
 		
 		StoragePosts.getPosts().then((data)=> {
 			let posts = JSON.parse(data);
@@ -30,9 +43,9 @@ class SplashScreen extends Component {
 			//console.error(posts);
 			this.setState({
 				isLoading: false
-			})
+			});
 
-		})
+		});
 	}
 	render() {
 		if(this.state.isLoading){

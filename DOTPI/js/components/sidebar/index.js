@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
-
+import Share, {ShareSheet} from 'react-native-share';
 import Favorite from "./favorite";
 import {
 	Content,
@@ -43,7 +43,7 @@ const datas = [
 	},
 	{
 		name: "MỜI BẠN BÈ",
-		route: "SavedPosts",
+		route: "Shared",
 		icon: "md-person-add",
 		bg: "#48525D",
 	},
@@ -75,8 +75,30 @@ export  default class SideBar extends Component {
 			shadowRadius: 4,
 		};
 	}
+	
+	onOpenShares() {
+		let shareOptions = {
+			title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
+			message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
+			url: "http://dotpi.tk",
+			subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
+		};
+		setTimeout(() => {
+			if (typeof shareOptions["url"] !== undefined) {
+				Clipboard.setString(shareOptions["url"]);
+				if (Platform.OS === "android") {
+					ToastAndroid.show('Link copiado al portapapeles', ToastAndroid.SHORT);
+				} else if (Platform.OS === "ios") {
+					AlertIOS.alert('Link copiado al portapapeles');
+				}
+			}
+		}, 300);
+ 	
+  	}
 
 	render() {
+	  
+    
 		return ( 
 			<Container>
 				<Content bounces={false} style={{ flex: 1, backgroundColor: "#60c49e", top: -1 }}>
@@ -91,7 +113,7 @@ export  default class SideBar extends Component {
 						<List
 							dataArray={datas}
 							renderRow={data =>
-								<ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)}>
+								<ListItem button noBorder onPress={() => data.route!='Shared'? this.props.navigation.navigate(data.route):this.onOpenShares.bind(this)}>
 									<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
 										<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
 										<Title >

@@ -10,6 +10,7 @@ export default class App1 extends React.Component {
     this.state = {
       isReady: false
     };
+    
   }
 
   render() {
