@@ -3,9 +3,9 @@ export function bookmarkPost(post) {
 }
 
 export function unbookmarkPost(post) {
-    return { type: 'UN_BOOK_MARK_POST', post };
+    return { type: 'UNBOOK_MARK_POST', post };
 }
 
-export function checkingBookMarkPost(postid) {
-    return { type: 'CHECKING-BOOKMARK', postid };
+export function loadingConfiguration(posts) {
+    return { type: 'LOAD_CONFIGURATION',posts };
 }

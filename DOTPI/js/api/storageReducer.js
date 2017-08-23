@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import PostReducer from './postReducer';
 
 const StorageReducer = combineReducers({
-    FavoritedPosts: PostReducer
+    Storage: PostReducer
 });
 
 export default StorageReducer;

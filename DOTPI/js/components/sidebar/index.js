@@ -21,7 +21,8 @@ import {
 } from "native-base";
 
 import styles from "./style";
-
+import StoreManagement from "../../api/storageManagement";
+import { Provider } from 'react-redux';
 const drawerCover = require("../../../img/drawer-cover.png");
 
 const drawerImage = require("../../../img/logo.png");
@@ -66,7 +67,7 @@ const datas = [
 	},
 ];
 
-class SideBar extends Component {
+export  default class SideBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -76,14 +77,14 @@ class SideBar extends Component {
 	}
 
 	render() {
-		return (
+		return ( 
 			<Container>
 				<Content bounces={false} style={{ flex: 1, backgroundColor: "#60c49e", top: -1 }}>
 					<Image source={drawerCover} style={styles.drawerCover}>
 						<View  style={styles.drawerHeaderCover}>
 							<View style={styles.drawerSlidebar}>
 								<Image square style={styles.drawerLogoSlidebar} source={drawerImage} />
-								<Favorite/>
+								<Favorite />
 							</View>
 							
 						</View>
@@ -107,5 +108,3 @@ class SideBar extends Component {
 		);
 	}
 }
-
-export default SideBar;

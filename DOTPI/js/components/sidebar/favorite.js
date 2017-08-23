@@ -11,18 +11,24 @@ import {
 
 import styles from "./style";
 import StorageApi from '../../api/storagePosts';
-class Favorite extends Component{
+export default class Favorite extends Component{
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
             
         }
+        
     }
     // eslint-disable-line
     componentDidMount() {
-        this.setState({
-            posts:this.props.FavoritedPosts
+        StorageApi.getPosts().then((data)=> {
+            let posts=  JSON.parse(data);
+            
+            posts = posts.length>2 ? posts.slice(posts.length-2,posts.length):posts;
+            this.setState({
+                posts:posts
+            });
         });
     }
 
@@ -40,11 +46,3 @@ class Favorite extends Component{
         );
     }
 }
-
-function mapStateToProps(state) {
-    return { 
-       FavoritedPosts: state.posts
-    };
-}
-
-export default connect(mapStateToProps)(Favorite);

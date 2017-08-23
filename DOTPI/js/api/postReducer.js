@@ -1,45 +1,44 @@
 import StoragePosts from './storagePosts';
 
-const PostReducer = (state = [], action) => {
+const PostReducer = (state = {FavoritedPosts:[], Loaded:false}, action) => {
     if (action.type === 'BOOK_MARK_POST') {
         
-        if(state!=null && action.post!=null){
+        if(state.FavoritedPosts!=null && action.post!=null){
                 (async () => {
                     await StoragePosts.addPost(action.post);
                     })();
-                let existed =  StoragePosts.checkingExistedPost(action.post,state);
+                let existed =  StoragePosts.checkingExistedPost(action.post,state.FavoritedPosts);
                 
                 if(!existed){ 
-                    return [action.post].concat(state);
+                    return {...state,FavoritedPosts: [action.post].concat(state.FavoritedPosts)};
                 }
                 
         } 
         return state;      
     }
+    if (action.type === 'UNBOOK_MARK_POST') {
+        
+        if (state.FavoritedPosts != null && action.post != null) {
+            (async () => {
+                await StoragePosts.deletePost(action.post);
+            })();
+            let posts = state.FavoritedPosts.filter((item) => Number(item.postid) != Number(action.post.postid))
+            
+            return { ...state, FavoritedPosts: posts };
+
+        } 
+        return state;      
+    }
     if (action.type === 'LOAD_CONFIGURATION') {
-        var posts = StorageApi.getPosts().then((data)=> {
-            let posts = JSON.parse(data);
-            return posts;
-         });
-        state.posts = posts;
+        state.FavoritedPosts = action.posts
+        //console.error(state.FavoritedPosts);
         return state;
+       
     }
-    if (action.type === 'UN_BOOK_MARK_POST') {
-        var posts = [];
-        if (state.FavoritedPosts != null && state.FavoritedPosts.length >= 0) {
-            state.FavoritedPosts.map((item) => {
-                if (item.postid != action.post.postid) {
-                    posts.push(item);
-                }
-            });
-        }
-        action.posts = posts;       
-        StorageApi.deletePost(action.post);
-        return state;
-    }
+    
     if(action.type === 'CHECKING-BOOKMARK'){
         let existed =  StoragePosts.checkingExistedPost(action.post,state.FavoritedPosts);
-        return { ...state, booked:existed};
+        return { ...state, booked:true};
     }
     return state;
 };

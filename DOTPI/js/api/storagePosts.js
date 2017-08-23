@@ -7,9 +7,9 @@ const deletePost = async (post) => {
 
         posts = posts!=null?posts:[];
        
-        posts = checkExistPost(post, posts);
+        posts = posts.filter((item) => Number(item.postid) != Number(post.postid))
        
-        
+        //console.error(posts);
         try {
 
             await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts), (err, result) => { console.log(result); });
@@ -57,6 +57,17 @@ const getPosts = async () => {
         }
         
     }
+const getAllPosts = () => {
+    try {
+        return AsyncStorage.getItem('@Posts:key').then((data)=> {return JSON.parse(data);})
+        
+    } catch (error) {
+    // Error retrieving data
+        console.error(error);
+        return [];
+    }
+    
+}
     
 const checkExistPost = (obj, list) => {
     if (list != null) {
@@ -85,6 +96,6 @@ module.exports =
     addPost: addPost,
     deletePost:deletePost,
     checkExistPost:checkExistPost,
-    checkingExistedPost:checkingExistedPost
-    
+    checkingExistedPost:checkingExistedPost,
+    getAllPosts:getAllPosts
 } ;

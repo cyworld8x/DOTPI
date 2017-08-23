@@ -3,6 +3,7 @@ import { BackAndroid, StatusBar, Platform } from "react-native";
 import { variables, Drawer } from "native-base";
 
 import Home from "./components/home/";
+import SplashScreen from "./components/splash";
 
 import Post from "./components/home/post";
 

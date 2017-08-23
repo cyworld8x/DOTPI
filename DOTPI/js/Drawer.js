@@ -9,9 +9,11 @@ import ClonePost from "./components/home/clonePost";
 import About from "./components/about";
 import SavedPosts from "./components/home/savedPosts";
 import Category from "./components/home/category";
+import SplashScreen from "./components/splash";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },
+        SplashScreen: { screen: SplashScreen },
         CategoryTab: { screen: CategoryTab },
         About: { screen: About },
         Post: { screen: Post },
@@ -20,7 +22,7 @@ const DrawerNav = DrawerNavigator(
         Category:{ screen: Category }
     },
     {
-        initialRouteName: "Home",
+        initialRouteName: "SplashScreen",
         contentOptions: {
             activeTintColor: "#e91e63"
         },

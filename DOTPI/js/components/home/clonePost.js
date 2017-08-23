@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet } from "react-native";
 
 // import Moment from 'moment';
+import { connect } from 'react-redux';
 
+import { bookmarkPost } from '../../api/actionCreators';
 import {
     Container, Header, Title, Content, Button,
     Badge,Spinner,
@@ -69,16 +71,15 @@ const htmlStyle = `<style>
             font-size: 32px
         }
         img {
-            width:100% !important;
-            height:auto !important;
-        }
-        iframe {
-            width:100% !important;
-            height:auto !important;
+            width:100%;
         }
         td {
             display: block !important;
             width: 95% !important;
+        }
+        img {
+            width:100%;
+            radius:5px;
         }
         hr {
             width: 98%;
@@ -119,6 +120,7 @@ class ClonePost extends Component {
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.refresh = this.refresh.bind(this);
+        this.checkingBookmark = this.checkingBookmark.bind(this);
     }
    
     goBack() {
@@ -126,15 +128,28 @@ class ClonePost extends Component {
         navigator.pop();
     }
 
-    async savePost(post){
-       
-        var result =await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-        Toast.show({
-            text: 'Bài viết đã được lưu để xem sau!',
-            position: 'bottom',
-            type: 'success',
-            duration: 1000
-        });
+    checkingBookmark(postid){
+        if(this.props.FavoritedPosts!=null && this.props.FavoritedPosts.length>0){
+            
+            return this.props.FavoritedPosts.filter(post=>Number(post.postid) == Number(postid)).length>0;
+        }
+        
+        return false;
+    }
+
+    savePost(){
+        let post = this.state.post;
+            if(post!=null){
+                this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
+            //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
+            Toast.show({
+                text: 'Bài viết đã được lưu để xem sau!',
+                position: 'bottom',
+                type: 'success',
+                duration: 1000
+            });
+        }
+        
     }
 
     componentDidMount() {
@@ -143,7 +158,7 @@ class ClonePost extends Component {
         return fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
-
+               
                 if (responseJson.length > 0) {
                     this.arr = responseJson[0].posts;
                     this.setState({
@@ -153,7 +168,7 @@ class ClonePost extends Component {
                     }, function () {
                         this.props.postcontent = this.state.postcontent;
                     });
-
+                    
                 }
 
             })
@@ -238,12 +253,13 @@ class ClonePost extends Component {
                          <Title style={{ color: "#FFF" }}>{this.state.post.categoryname} </Title>
                      </Body>
                      <Right >
+                         {this.checkingBookmark(this.state.post.postid)==false?
                          <Button
                              transparent
-                             onPress={() => this.savePost(this.state.post)}
+                             onPress={() => this.savePost()}
                          >
                              <Icon style={{ color: "#FFF" }} name="md-bookmarks" />
-                         </Button>
+                         </Button>:<View/>}
                          <Button
                              transparent
                              onPress={() => this.props.navigation.navigate('DrawerOpen')}
@@ -287,6 +303,9 @@ class ClonePost extends Component {
                              source={{html:this.state.postcontent}}
                              style={{ height: this.state.Height, width: deviceWidth - 20 }}
                              automaticallyAdjustContentInsets={false}
+                             renderLoading= {<View style={{ flex: 1, paddingTop: 20 }}>
+                                            <ActivityIndicator />
+                                        </View>}
                              renderLoading={() => {
                                 return <View style={{ flex: 1, paddingTop: deviceHeight/2 }}>
                                      <Spinner color='green' />
@@ -298,11 +317,11 @@ class ClonePost extends Component {
                       :<View></View>
                       }
                                           
-                   {this.state.post.posts!=null && this.state.post.posts.length>0?
+                   {this.state.Height!=deviceHeight && this.state.post.posts!=null && this.state.post.posts.length>0 ?
                         <View style={{flexDirection: 'row', flex:1}}> 
                             <View style={styles.singlePostContainer}>
                                 <Badge  style={{marginTop:10, backgroundColor:'#34B089'}}>
-                                 <Text style={{fontWeight :'700', fontSize:14}}>Các bài khác trong mục {this.state.post.categoryname}</Text>
+                                    <Text style={{fontWeight :'700', fontSize:14}}>Các bài khác trong mục {this.state.post.categoryname}</Text>
                                 </Badge>
                             {this.state.post.posts.map((post)=>
                                 {
@@ -331,6 +350,29 @@ class ClonePost extends Component {
              </View>
                 );
     }
+    renderNode(node, index, siblings, parent, defaultRenderer) {
+        if (node.name == 'img') {
+            const src = node.attribs.src;
+            
+            return (
+  
+                <Image style={{
+                    flex: 1,
+                    alignSelf: 'cover',
+                    height: deviceWidth * 2 / 3,
+                    width: deviceWidth,
+                    borderWidth: 1,
+                    borderRadius: 75
+                }} source={{ uri: src, cache: 'only-if-cached' }} resizeMode="contain" />
+            )
+        }
+    }
 }
 
-export default ClonePost;
+function mapStateToProps(state) {
+    return { 
+       FavoritedPosts: state.Storage.FavoritedPosts
+    };
+}
+
+export default connect(mapStateToProps,{ bookmarkPost })(ClonePost);

@@ -3,7 +3,8 @@ import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpaci
 
 // import Moment from 'moment';
 import { connect } from 'react-redux';
-import { bookmarkPost, unbookmarkPost } from '../../api/actionCreators';
+
+import { bookmarkPost } from '../../api/actionCreators';
 import {
     Container, Header, Title, Content, Button,
     Badge,Spinner,
@@ -128,7 +129,6 @@ class Post extends Component {
     }
 
     checkingBookmark(postid){
-        //conslode.error(this.props.FavoritedPosts);
         if(this.props.FavoritedPosts!=null && this.props.FavoritedPosts.length>0){
             
             return this.props.FavoritedPosts.filter(post=>Number(post.postid) == Number(postid)).length>0;
@@ -140,7 +140,7 @@ class Post extends Component {
     savePost(){
         let post = this.state.post;
             if(post!=null){
-                this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image });
+                this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
             //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
             Toast.show({
                 text: 'Bài viết đã được lưu để xem sau!',
@@ -303,6 +303,9 @@ class Post extends Component {
                              source={{html:this.state.postcontent}}
                              style={{ height: this.state.Height, width: deviceWidth - 20 }}
                              automaticallyAdjustContentInsets={false}
+                             renderLoading= {<View style={{ flex: 1, paddingTop: 20 }}>
+                                            <ActivityIndicator />
+                                        </View>}
                              renderLoading={() => {
                                 return <View style={{ flex: 1, paddingTop: deviceHeight/2 }}>
                                      <Spinner color='green' />
@@ -314,7 +317,7 @@ class Post extends Component {
                       :<View></View>
                       }
                                           
-                   {this.state.post.posts!=null && this.state.post.posts.length>0?
+                   {this.state.Height!=deviceHeight && this.state.post.posts!=null && this.state.post.posts.length>0 ?
                         <View style={{flexDirection: 'row', flex:1}}> 
                             <View style={styles.singlePostContainer}>
                                 <Badge  style={{marginTop:10, backgroundColor:'#34B089'}}>
@@ -368,8 +371,8 @@ class Post extends Component {
 
 function mapStateToProps(state) {
     return { 
-       FavoritedPosts: state.FavoritedPosts
+       FavoritedPosts: state.Storage.FavoritedPosts
     };
 }
 
-export default connect(mapStateToProps,{ bookmarkPost, unbookmarkPost })(Post);
+export default connect(mapStateToProps,{ bookmarkPost })(Post);

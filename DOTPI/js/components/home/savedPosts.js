@@ -14,6 +14,9 @@ import { Container,Header,  Title, Content, Button,
   IconNB,
 Toast } from 'native-base';
 
+import { connect } from 'react-redux';
+
+import { unbookmarkPost, loadingConfiguration } from '../../api/actionCreators';
 import styles from './styles';
 
 const deviceWidth = Dimensions.get("window").width;
@@ -32,29 +35,26 @@ class SavedPosts extends Component {
             isLoading: true
         };
         this.arr = [];
+        //console.error(this.props.FavoritedPosts);
     }
    
 	componentDidMount() {
-         StorageApi.getPosts().then((result)=> {
-            let posts = JSON.parse(result);
-            
-            this.arr = posts;
-            
-            this.setState({
-                        isLoading: false,
-                        listPosts: this.state.listPosts.cloneWithRows(this.arr),
-                    }, function () {
-                        
-                        // do something with new state
-                    });
-         });
+        this.arr = this.props.FavoritedPosts;
+
+        this.setState({
+            isLoading: false,
+            listPosts: this.state.listPosts.cloneWithRows(this.arr),
+        }, function () {
+
+            // do something with new state
+        });
         
     }    
 
     async deletePost(post) {
-        var posts =await StorageApi.deletePost(post);
-        this.arr = posts;
-
+        this.props.unbookmarkPost(post);
+        this.arr = this.arr.filter(item=> Number(item.postid)!=Number(post.postid));
+       
         this.setState({
             isLoading: false,
             listPosts: this.state.listPosts.cloneWithRows(this.arr),
@@ -70,37 +70,53 @@ class SavedPosts extends Component {
  
     render() {
         if (this.state.isLoading) {
-        return (
-            <View style={{flex: 1, paddingTop: 20}}>
-                <Spinner color='green' />
-            </View>
-        );
-    }
+            return (
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <Spinner color='green' />
+                </View>
+            );
+        }
     
    
 
     
         const { root } = this.props;
         return (
-            <View style={styles.container}>
-                <View style={styles.wrapper}>
-                    <View style={styles.header}>
-                        <TouchableOpacity >
-                            <Image  style={styles.backStyle} />
-                        </TouchableOpacity>
-                        <Text style={styles.titleStyle}>Tin đã lưu</Text>
-                        <View style={{ width: 30 }} />
-                    </View>
-                    <ListView 
-                     key={this._data}
+            <View style={{ backgroundColor: '#FFF', flex: 1 }} >
+
+                 <Header style={{ backgroundColor: '#34B089' }}>
+                     <Left>
+                         <Button
+                             transparent
+                             onPress={() => this.props.navigation.navigate('Home')}
+                         >
+                             <Icon style={{ color: "#FFF" }} name="md-home" />
+                         </Button>
+                     </Left>
+                     <Body>
+                         <Title style={{ color: "#FFF" }}>MỤC ĐÃ ĐÁNH DẤU</Title>
+                     </Body>
+                     <Right >
+                        
+                         <Button
+                             transparent
+                             onPress={() => this.props.navigation.navigate('DrawerOpen')}
+                         >
+                             <Icon style={{ color: "#FFF" }} name="menu" />
+                         </Button>
+                     </Right >
+                 </Header>
+                 <ListView 
+                        style={{borderBottomColor: 'silver', borderBottomWidth: 1, paddingVertical:10 }}
+                        enableEmptySections={true}
+                        key={this._data}
                         removeClippedSubviews={false}
                         dataSource={this.state.listPosts}
                         renderRow={post => (
-                            <View style={styles.postContainer}>
+                            <View style={styles.savedPostContainer}>
                                 <TouchableOpacity onPress={() =>  this.props.navigation.navigate('Post', {post:post} )}>
                                   <Thumbnail  size={80} source={{ uri:  post.image  }} />                 
-                                       
-                                {/* <Image style={styles.postImage} source={{ uri: post.image }} />  */}
+                              
                                
                                  </TouchableOpacity>
                                   <View style={styles.postInfo}>
@@ -119,9 +135,15 @@ class SavedPosts extends Component {
                        
                     />
                 </View>
-            </View>
         );
     }
     
 }
-export default SavedPosts;
+
+function mapStateToProps(state) {
+    return { 
+       FavoritedPosts: state.Storage.FavoritedPosts
+    };
+}
+
+export default connect(mapStateToProps,{ unbookmarkPost, loadingConfiguration })(SavedPosts);

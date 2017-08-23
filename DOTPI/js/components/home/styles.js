@@ -55,6 +55,16 @@ export default {
         borderBottomWidth: 10,
         justifyContent:'space-between',
     },
+    savedPostContainer: {
+        width:deviceWidth,
+        paddingVertical: 10,
+        paddingHorizontal:10,
+        flex:1,
+        flexDirection: 'row',
+        borderBottomColor: 'silver',
+        borderBottomWidth: 1,
+        justifyContent:'space-between',
+    },
     postContentTop: {
         backgroundColor: '#FFF',
         borderBottomColor: 'silver',

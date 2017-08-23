@@ -5,6 +5,7 @@ import { Platform,StatusBar, Navigator } from "react-native";
 import { Root } from "native-base";
 import { StackNavigator } from "react-navigation";
 import Drawer from "./Drawer";
+import SplashScreen from "./components/splash";
 import Home from "./components/home/";
 import About from "./components/about/";
 import Post from "./components/home/post";
@@ -16,6 +17,7 @@ import Category from "./components/home/category";
 const AppNavigator = StackNavigator(
     {
         Drawer: { screen: Drawer },
+        SplashScreen:{screen: SplashScreen},
         Home:{ screen: Home },
         About:{ screen: About },
         Post:{ screen: Post },
