@@ -5,12 +5,17 @@ import {
     Button,
     Icon,
     Text, View,
-   
-    Toast
+    Badget,
+    Toast,
+    Spinner
 } from 'native-base';
-import Moment from 'moment';
+import DateHelper from '../../utilities/dateHelper';
+import SinglePost from './singlePost';
+import TwinPostRow from './twinPostRow';
+import TwinPostColumn from './twinPostColumn';
 import styles from './styles';
 const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
 
 const logo = require("../../../img/logo.png");
 
@@ -28,7 +33,7 @@ class CategoryTab extends Component {
         };
         this.arr = [];
         this.preProcessList = this.preProcessList.bind(this);
-        Moment.locale('en');
+        
     }
 
     componentDidMount() {
@@ -132,8 +137,8 @@ class CategoryTab extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                     <ActivityIndicator /> 
+                <View style={{ flex: 1,backgroundColor: "#FFF"  }}>
+                    <Spinner style={{ paddingTop: deviceHeight / 2 }} color='green' />
                 </View>
             );
         }
@@ -151,72 +156,13 @@ class CategoryTab extends Component {
                         renderRow={(post) => {
                             pos = pos + 1;
                             if(pos==1){
-                                 return (<View key={post.id} style={styles.postContainerFullRow}>
-                                        <View style={styles.postContentFullRow}>
-                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
-                                                <Image style={styles.postImageFullRow} source={{ uri: post.sections[0].image }} />
-                                            
-                                            <View style={styles.postInfoFullRow}>
-                                                <Text style={styles.txtName}>{post.sections[0].title}</Text>
-                                            </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>)
+                                 return ( <SinglePost post={post.sections[0]} navigation={this.props.navigation}/>)
                             }else{
                                     if (pos % 2 == 1 ) {
-                                    return (<View key={post.id} style={styles.postContainerCol}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
-                                            <View style={styles.postContentCol}>
-
-                                                 {post.sections[0]!=null && post.sections[0].image!=null? <Image style={styles.postImageCol} source={{ uri: post.sections[0].image}}/>:<Image style={styles.postImageCol} source={logo} />} 
-
-                                                <View style={styles.postInfoCol}>
-                                                    <Text style={styles.txtName}>{post.sections[0].title}</Text>
-                                                </View>
-
-                                            </View>
-                                        </TouchableOpacity>
-                                        {post.sections[1]!=null ?
-                                        (<TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[1] })}>
-                                            <View style={styles.postContentCol}>
-
-                                                 {post.sections[1]!=null && post.sections[1].image!=null? <Image style={styles.postImageCol} source={{ uri: post.sections[1].image}}/>:<Image style={styles.postImageCol} source={logo} />} 
-
-                                                <View style={styles.postInfoCol}>
-                                                    <Text style={styles.txtName}>{post.sections[1].title}</Text>
-                                                </View>
-
-                                            </View>
-                                        </TouchableOpacity>) :(<View></View>)}
-
-                                    </View>)
+                                        return (<TwinPostColumn post={post}  navigation={this.props.navigation} />)
                                     {/* return (<CouplePostsColumn navigation={this.props.navigation} post={post}/>) */ }
                                     } else {
-                                        return (<View key={post.id} style={styles.postContainer}>
-                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[0] })}>
-                                                <View style={styles.postContentTop}>
-                                                     {post.sections[0]!=null && post.sections[0].image!=null? <Image style={styles.postImage} source={{ uri: post.sections[0].image}}/>:<Image style={styles.postImage} source={logo} />} 
-                                                    
-                                                    <View style={styles.postInfo}>
-                                                        <Text style={styles.txtName}>{post.sections[0].title}</Text>
-                                                    </View>
-
-                                                </View>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post.sections[1] })}>
-                                                <View style={styles.postContent}>
-
-                                                    {post.sections[1]!=null && post.sections[1].image!=null? <Image style={styles.postImage} source={{ uri: post.sections[1].image}}/>:<Image style={styles.postImage} source={logo} />} 
-                                                    
-
-                                                    <View style={styles.postInfo} >
-                                                        <Text style={styles.txtName}>{post.sections[1].title}</Text>
-                                                    </View>
-
-                                                </View>
-                                            </TouchableOpacity>
-
-                                        </View>)
+                                        return (<TwinPostRow post={post}  navigation={this.props.navigation} />)
                                     }
                             }
                            

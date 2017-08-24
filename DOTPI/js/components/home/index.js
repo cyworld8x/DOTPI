@@ -18,13 +18,13 @@ import {
   TabHeading,
   Footer,
   FooterTab,
-  Content
+  Content,
+  Spinner
 
 } from "native-base";
 const  {height} = Dimensions.get('window');
 import styles from './styles';
 import CategoryTab from "./categoryTab";
-import ListPosts from "./listPosts";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -53,15 +53,7 @@ class Home extends Component {
   getHexColor(id) {
     return '#' + ('000000' + Math.floor(id * 1000).toString(16)).slice(-6);
   }
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={{ flex: 1, paddingTop: 20 }}>
-          <ActivityIndicator />
-        </View>
-      );
-    }
-   
+  render() {       
     return (
       <View style={{flex:1,backgroundColor: '#34B089'}} >
         <Header  hasTabs style={{ backgroundColor: '#34B089' }}>
@@ -74,22 +66,29 @@ class Home extends Component {
             </Button>
           </Left>
             <Body>
-              <Title style={{ color: "#FFF" }}>MÓN ĂN NGON</Title>
+              <Text style={{ color: "#FFF", fontWeight:'300' }}>MÓN ĂN NGON</Text>
             </Body>
             <Right/>
           
         </Header>
-         <Tabs renderTabBar={() => <ScrollableTab />}>
-          {this.state.dataSource.map((item) => {
-            return (
+        {
+          this.state.isLoading ? (
+              <View style={{ flex: 1,backgroundColor: "#FFF"  }}>
+                <Spinner style={{ paddingTop: height / 2 }} color='green' />
+              </View>) : 
+              (<Tabs renderTabBar={() => <ScrollableTab />}>
+                  {this.state.dataSource.map((item) => {
+                    return (
 
-              <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} 
-              tabStyle={{ backgroundColor: this.getHexColor(item.id)}} key={item.id*item.id/100} heading={item.name}>
-                <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} categoryid={item.id} />
-              </Tab>
-            );
-          })}
-        </Tabs> 
+                      <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}
+                        tabStyle={{ backgroundColor: this.getHexColor(item.id) }} key={item.id * item.id / 100} heading={item.name}>
+                        <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} categoryid={item.id} />
+                      </Tab>
+                    );
+                  })}
+                </Tabs>)
+        }
+         
          
      
       </View>

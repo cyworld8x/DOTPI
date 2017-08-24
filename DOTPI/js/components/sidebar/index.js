@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image } from "react-native";
+import { Image,BackAndroid } from "react-native";
 import Share, {ShareSheet} from 'react-native-share';
 import Favorite from "./favorite";
 import {
@@ -42,12 +42,6 @@ const datas = [
 		bg: "#48525D",
 	},
 	{
-		name: "MỜI BẠN BÈ",
-		route: "Shared",
-		icon: "md-person-add",
-		bg: "#48525D",
-	},
-	{
 		name: "CÀI ĐẶT",
 		route: "NHTypography",
 		icon: "settings",
@@ -61,8 +55,14 @@ const datas = [
 	},
 	{
 		name: "ĐIỀU KHOẢN SỬ DỤNG",
-		route: "NHTypography",
+		route: "TermAndCondition",
 		icon: "lock",
+		bg: "#48525D",
+	},
+	{
+		name: "THOÁT",
+		route: "Exit",
+		icon: "md-exit",
 		bg: "#48525D",
 	},
 ];
@@ -74,6 +74,17 @@ export  default class SideBar extends Component {
 			shadowOffsetWidth: 1,
 			shadowRadius: 4,
 		};
+	}
+
+	actionHandler(routedata){
+		switch(routedata.route){
+			case 'Exit': BackAndroid.exitApp();break;
+			case 'Share': this.onOpenShares(); break;
+			default:
+				this.props.navigation.navigate(routedata.route); break;
+
+		}
+
 	}
 	
 	onOpenShares() {
@@ -113,7 +124,7 @@ export  default class SideBar extends Component {
 						<List
 							dataArray={datas}
 							renderRow={data =>
-								<ListItem button noBorder onPress={() => data.route!='Shared'? this.props.navigation.navigate(data.route):this.onOpenShares.bind(this)}>
+								<ListItem button noBorder onPress={() => this.actionHandler(data)}>
 									<Left style={{flexDirection:'row', justifyContent:'flex-start'}}>
 										<Icon active name={data.icon} style={{ fontSize: 30, color: "#FFF", width:40 }} />  
 										<Title >

@@ -69,71 +69,69 @@ class SavedPosts extends Component {
     }
  
     render() {
-        if (this.state.isLoading) {
-            return (
-                <View style={{flex: 1, paddingTop: 20}}>
-                    <Spinner color='green' />
-                </View>
-            );
-        }
-    
-   
-
-    
-        const { root } = this.props;
         return (
-            <View style={{ backgroundColor: '#FFF', flex: 1 }} >
+            <View style={{ flex: 1 }} >
 
                  <Header style={{ backgroundColor: '#34B089' }}>
-                     <Left>
-                         <Button
-                             transparent
-                             onPress={() => this.props.navigation.navigate('Home')}
-                         >
-                             <Icon style={{ color: "#FFF" }} name="md-home" />
-                         </Button>
-                     </Left>
-                     <Body>
-                         <Title style={{ color: "#FFF" }}>MỤC ĐÃ ĐÁNH DẤU</Title>
-                     </Body>
-                     <Right >
-                        
-                         <Button
-                             transparent
-                             onPress={() => this.props.navigation.navigate('DrawerOpen')}
-                         >
-                             <Icon style={{ color: "#FFF" }} name="menu" />
-                         </Button>
-                     </Right >
+                    <Left >
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+                        >
+                            <Icon style={{ color: "#FFF" }} name="menu" />
+                        </Button>
+                    </Left >
+                    <Body>
+                        <Text style={{ color: "#FFF", fontWeight:'300' }}>MÓN ĂN NGON</Text>
+                    </Body>
+                    <Right>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate('Home')}
+                        >
+                            <Icon style={{ color: "#FFF" }} name="md-home" />
+                        </Button>
+                    </Right>
+                   
+                     
                  </Header>
-                 <ListView 
-                        style={{borderBottomColor: 'silver', borderBottomWidth: 1, paddingVertical:10 }}
-                        enableEmptySections={true}
-                        key={this._data}
-                        removeClippedSubviews={false}
-                        dataSource={this.state.listPosts}
-                        renderRow={post => (
-                            <View style={styles.savedPostContainer}>
-                                <TouchableOpacity onPress={() =>  this.props.navigation.navigate('Post', {post:post} )}>
-                                  <Thumbnail  size={80} source={{ uri:  post.image  }} />                 
-                              
-                               
-                                 </TouchableOpacity>
-                                  <View style={styles.postInfo}>
-                                    <Text style={styles.txtColor}>{post.title}</Text>
-                                  
-                                </View>
-                               
-                                <Button  danger rounded bordered  style={{marginLeft:5}}  onPress={() => this.deletePost(post)}>
-                                        <Icon active name="trash" />
-                                    </Button>
-                            </View>
-                            
-                            
-                        )}
-                            
-                       
-                    />
+                 {
+                     this.state.isLoading ? (
+                         <View style={{ flex: 1 }}>
+                             <Spinner color='green' />
+                         </View>
+                    ) : (<View style={{ flexDirection: 'column', flex:1, justifyContent: 'space-between', padding:10 }}>
+                        <View style={{ backgroundColor:'#FFF', borderBottomWidth:2, borderBottomColor:'silver' }}>
+                            <Title style={{ color: "black", paddingVertical:10  }}>DANH MỤC YÊU THÍCH</Title>
+                        </View>
+                        
+                         <ListView
+                                style={{ flex:1, borderBottomColor: 'silver', borderBottomWidth: 1, backgroundColor:'#FFF'}}
+                                enableEmptySections={true}
+                                key={this._data}
+                                removeClippedSubviews={false}
+                                dataSource={this.state.listPosts}
+                                renderRow={post => (
+                                    <View style={styles.savedPostContainer}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post })}>
+                                            <Thumbnail size={80} source={{ uri: post.image }} />
+
+
+                                        </TouchableOpacity>
+                                        <View style={styles.postInfo}>
+                                            <Text style={styles.txtPostTitle}>{post.title}</Text>
+
+                                        </View>
+
+                                        <Button danger rounded bordered style={{alignSelf:'center'}} onPress={() => this.deletePost(post)}>
+                                            <Icon active name="trash" />
+                                        </Button>
+                                    </View>
+
+                                )}
+                            />
+                    </View>)
+                }
                 </View>
         );
     }

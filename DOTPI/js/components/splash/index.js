@@ -41,9 +41,12 @@ class SplashScreen extends Component {
 			
 			this.props.loadingConfiguration(posts);
 			//console.error(posts);
-			this.setState({
-				isLoading: false
-			});
+			setTimeout(() => {
+				this.setState({
+					isLoading: false
+				});
+			}, 1000);
+		
 
 		});
 	}

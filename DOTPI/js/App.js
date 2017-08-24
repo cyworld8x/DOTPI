@@ -14,6 +14,7 @@ import ClonePost from "./components/home/clonePost";
 import SavedPosts from "./components/home/savedPosts";
 import ListPosts from "./components/home/listPosts";
 import Category from "./components/home/category";
+import TermAndCondition from "./components/home/termandcondition";
 const AppNavigator = StackNavigator(
     {
         Drawer: { screen: Drawer },
@@ -24,7 +25,8 @@ const AppNavigator = StackNavigator(
         ClonePost:{ screen: ClonePost },
         SavedPosts:{ screen: SavedPosts },
         ListPosts:{screen:ListPosts},
-        Category:{screen:Category}
+        Category:{screen:Category},
+        TermAndCondition:{screen:TermAndCondition}
     },
     {
         initialRouteName: "Drawer",

@@ -19,11 +19,37 @@ export default {
         padding: 5,
        
     },
-    shareContainer: {
-        //flex: 1,
-        flexDirection:'row',
-        backgroundColor: '#42cb5c',
+    share: {
+       height:deviceHeight/3,
+       justifyContent: 'space-between',
+       flexDirection: 'row',
+       backgroundColor: '#42cb5c',
         //position:'absolute'
+    },
+    shareContainer: {   
+       height:160,       
+       flexDirection: 'row',
+       backgroundColor: '#42cb5c',
+        //position:'absolute'
+    },
+    shareContainer_Content: {    
+        paddingHorizontal:20, paddingVertical:10,    
+        flex:1,
+        flexDirection:'column', justifyContent: 'space-between',
+    },
+    shareContainer_Row: {
+        paddingVertical:10,
+        backgroundColor: 'transparent', flexDirection: 'row', justifyContent: 'space-between'
+    },
+    shareContainer_Row_Text: {
+         color: "#FFF", paddingHorizontal: 10, alignSelf:'center'
+    },
+    shareContainer_Row_Icon: {
+         color: "#FFF", width:30, alignSelf:'center'
+    },
+    
+    shareContainer_Row_Content: {
+        backgroundColor: 'transparent', flex:1, flexDirection: 'column'
     },
     instructions: {
         marginTop: 20,
@@ -66,14 +92,14 @@ export default {
         justifyContent:'space-between',
     },
     savedPostContainer: {
-        width:deviceWidth,
+        width:deviceWidth-20,
         paddingVertical: 10,
         paddingHorizontal:10,
         flex:1,
         flexDirection: 'row',
         borderBottomColor: 'silver',
         borderBottomWidth: 1,
-        justifyContent:'space-between',
+        justifyContent:'space-around',
     },
     postContentTop: {
         backgroundColor: '#FFF',
@@ -135,6 +161,7 @@ export default {
     postInfoCol: {
         paddingTop:5,
         justifyContent: 'space-between',
+        flexDirection:'column',
         flex: 1
     },
 
@@ -169,8 +196,23 @@ export default {
     postInfoFullRow: {
         paddingTop:5,
         justifyContent: 'space-between',
-        height:75,
-        flex: 1
+        
+        flex: 1,
+        flexDirection:'column'
+    },
+    postDate:{
+        color:'silver', fontSize:10, fontStyle:'italic', 
+    },
+    postMiddleDate:{
+        color:'black', fontSize:10, 
+    },
+    postDetailDate:{
+        alignSelf:'center',
+        color:'silver', fontSize:10, fontStyle:'italic', 
+    },
+    postDetailMiddleDate:{
+        alignSelf:'center',
+        color:'black', fontSize:10, 
     },
     titleStyle: {
         fontFamily: 'Avenir',
@@ -199,6 +241,11 @@ export default {
         fontSize: 18,
         fontWeight: '400'
     },
+    txtPostTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        fontWeight: '400'
+    },
     txtPrice: {
         fontFamily: 'Avenir',
         color: '#B10D65',
@@ -217,6 +264,10 @@ export default {
     text: {
       alignSelf: "center",
       marginBottom: 7
+    },
+    title:{
+        color: "#FFF",
+        fontWeight:'lighter'
     },
     mb: {
       marginBottom: 15

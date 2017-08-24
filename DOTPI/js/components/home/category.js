@@ -41,9 +41,15 @@ class Category extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#FFF" }}> {this.props.navigation.state.params.title} </Title>
+                        <Text  style={{ color: "#FFF", fontWeight:'300' }}>{this.props.navigation.state.params.title}</Text>
                     </Body>
-                    <Right >                        
+                    <Right >  
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate('Home')}
+                        >
+                            <Icon style={{ color: "#FFF" }} name="md-home" />
+                        </Button>                      
                          <Button
                              transparent
                              onPress={() => this.props.navigation.navigate('DrawerOpen')}

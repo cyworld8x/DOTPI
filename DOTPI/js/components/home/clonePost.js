@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS } from "react-native";
 
 // import Moment from 'moment';
 import { connect } from 'react-redux';
@@ -16,11 +16,15 @@ import {
     Fab,
     DeckSwiper,
     Icon,
-    Toast
+    Toast,
+    Row,Col,Grid
 } from 'native-base';
+import Share, {ShareSheet} from 'react-native-share';
+import DateHelper from '../../utilities/dateHelper';
 const deviceHeight = Dimensions.get("window").height;
 
 const deviceWidth = Dimensions.get("window").width;
+
 import styles from './styles';
 import StorageApi from '../../api/storagePosts';
 import HTMLView from 'react-native-htmlview';
@@ -114,13 +118,25 @@ class ClonePost extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
             isLoading: true,
             loadAnotherPost:false,
             Height:deviceHeight
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
+        
         this.refresh = this.refresh.bind(this);
+        this.onOpen = this.onOpen.bind(this);
+        this.goBack = this.goBack.bind(this);
         this.checkingBookmark = this.checkingBookmark.bind(this);
+        
+    }
+    onCancel() {
+        this.setState({ visible: false });
+    }
+    onOpen() {
+        
+        this.setState({ visible: !this.state.visible });
     }
    
     goBack() {
@@ -139,15 +155,10 @@ class ClonePost extends Component {
 
     savePost(){
         let post = this.state.post;
-            if(post!=null){
-                this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-            //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-            Toast.show({
-                text: 'Bài viết đã được lưu để xem sau!',
-                position: 'bottom',
-                type: 'success',
-                duration: 1000
-            });
+        if(post!=null){
+            this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
+        //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
+        ToastAndroid.show('Bài viết đã được lưu',1000);
         }
         
     }
@@ -228,14 +239,39 @@ class ClonePost extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{ flex: 1, }}>
+                    <Header style={{ backgroundColor: '#34B089' }}>
+                        <Left />
+
+                        <Body>
+                            <Text style={{ color: "#FFF", fontWeight: '300' }}>MÓN ĂN NGON</Text>
+                        </Body>
+                        <Right >
+
+                            <Button
+                                transparent
+                                onPress={() => this.props.navigation.navigate('Home')}
+                            >
+                                <Icon style={{ color: "#FFF" }} name="md-home" />
+                            </Button>
+
+                        </Right >
+
+                    </Header>
+                    <View style={{ flex: 1, }}>
+                        <Spinner style={{ paddingTop: deviceHeight / 2 }} color='green' />
+                    </View>
                 </View>
             );
             
         }
         // Moment.locale('vn');
-      
+        let shareOptions = {
+			title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
+			message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
+			url: "http://dotpi.tk",
+			subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
+		};
               
          return (
              <View style={{ backgroundColor: '#FFF', flex: 1 }} >
@@ -244,15 +280,21 @@ class ClonePost extends Component {
                      <Left>
                          <Button
                              transparent
-                             onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname })}
+                             onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid:this.state.post.categoryid })}
                          >
                              <Icon style={{ color: "#FFF" }} name="md-arrow-round-back" />
                          </Button>
                      </Left>
                      <Body>
-                         <Title style={{ color: "#FFF" }}>{this.state.post.categoryname} </Title>
+                         <Text style={{ color: "#FFF", fontWeight:'300' }}>MÓN ĂN NGON</Text>
                      </Body>
                      <Right >
+                          <Button
+                             transparent
+                             onPress={() => this.onOpen()}
+                         >
+                             <Icon style={{ color: "#FFF" }} name="md-share" />
+                         </Button>
                          {this.checkingBookmark(this.state.post.postid)==false?
                          <Button
                              transparent
@@ -262,39 +304,113 @@ class ClonePost extends Component {
                          </Button>:<View/>}
                          <Button
                              transparent
-                             onPress={() => this.props.navigation.navigate('DrawerOpen')}
+                             onPress={() => this.props.navigation.navigate('Home')}
                          >
-                             <Icon style={{ color: "#FFF" }} name="menu" />
+                             <Icon style={{ color: "#FFF" }} name="md-home" />
                          </Button>
+                        
                      </Right >
+                
                  </Header>
-                 <ScrollView ref='_scrollView' scrollEnabled={true} >
+                  
+                   {this.state.visible && 
+                     <View style={styles.shareContainer}><View style={styles.shareContainer_Content} onCancel={this.onCancel.bind(this)}>
+
+                         <View style={styles.shareContainer_Row}>
+                             <TouchableOpacity style={styles.shareContainer_Row_Content}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "facebook"
+                                         }));
+                                     }, 300);
+                                 }}>
+                                 <Icon style={styles.shareContainer_Row_Icon} name="logo-facebook" /><Text style={styles.shareContainer_Row_Text}>Facebook</Text>
+                             </TouchableOpacity>
+
+                             <TouchableOpacity style={styles.shareContainer_Row_Content}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "googleplus"
+                                         }));
+                                     }, 300);
+                                 }}>
+                                  <Icon style={styles.shareContainer_Row_Icon} name="logo-googleplus" /><Text style={styles.shareContainer_Row_Text}>Google +</Text>
+                             </TouchableOpacity>
+                             <TouchableOpacity style={styles.shareContainer_Row_Content}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "twitter"
+                                         }));
+                                     }, 300);
+                                 }}>
+                                 <Icon style={styles.shareContainer_Row_Icon} name="logo-twitter" /><Text style={styles.shareContainer_Row_Text}> Twitter</Text>
+                             </TouchableOpacity>
+                         </View>
+                         <View style={styles.shareContainer_Row}>
+                             <TouchableOpacity style={styles.shareContainer_Row_Content}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "whatsapp"
+                                         }));
+                                     }, 300);
+                                 }}>
+                                 <Icon style={styles.shareContainer_Row_Icon} name="logo-whatsapp" /><Text style={styles.shareContainer_Row_Text}>Whatsapp</Text>
+                             </TouchableOpacity>
+                            <TouchableOpacity style={styles.shareContainer_Row_Content}
+
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         if (typeof shareOptions["url"] !== undefined) {
+                                             Clipboard.setString(shareOptions["url"]);
+                                             if (Platform.OS === "android") {
+                                                 ToastAndroid.show("Đã sao chép nội dung", ToastAndroid.SHORT);
+                                             } else if (Platform.OS === "ios") {
+                                                 AlertIOS.alert("Mời bạn cài đặt ứng dụng MÓN ĂN NGON", );
+                                             }
+                                         }
+                                     }, 300);
+                                 }}>
+                                 <Icon style={styles.shareContainer_Row_Icon} name="md-copy" /><Text style={styles.shareContainer_Row_Text}>Sao chép</Text>
+                             </TouchableOpacity>
+                             <TouchableOpacity style={styles.shareContainer_Row_Content}
+                                 onPress={() => {
+                                     this.onCancel();
+                                     setTimeout(() => {
+                                         Share.shareSingle(Object.assign(shareOptions, {
+                                             "social": "email"
+                                         }));
+                                     }, 300);
+                                 }}>
+                                 <Icon style={styles.shareContainer_Row_Icon} name="md-mail" /><Text style={styles.shareContainer_Row_Text}  >Email</Text>
+                             </TouchableOpacity>
+                              
+
+                             
+                         </View>
+                     </View>
+                     </View>
+                 }
+                  <ScrollView ref='_scrollView' scrollEnabled={true} >
                      <View style={{padding:10, flex:1}}>
                       <Text style={{ color: '#660000', fontSize: 20, flex:1 }}>{this.state.post.title}</Text>
                       <View style={{flex:1, paddingVertical: 10, flexDirection:'row'}}>
-                             <Badge infrro >
+                             <Badge info >
                                  <Text style={{fontWeight :'700'}}>{this.state.post.categoryname}</Text>
                              </Badge>
-                             <Text style={{paddingLeft:10}}>|</Text> 
+                             <Text style={styles.postDetailMiddleDate}> | </Text> 
+                             <Text style={styles.postDetailDate}> {DateHelper.getRelativeTime(this.state.post.date)}</Text> 
                       </View>
-                      {/* {this.state.postcontent!=null ?
-                      <WebView scrollEnabled={false}
                       
-                             ref='_webView'
-                             domStorageEnabled={false}
-                             html={this.state.postcontent}
-                             style={{ height: this.state.Height, width: deviceWidth - 20 }}
-                             automaticallyAdjustContentInsets={false}
-                             renderLoading={() => {
-                                return <View style={{ flex: 1, paddingTop: deviceHeight/2 }}>
-                                     <Spinner color='green' />
-                                 </View>
-                                }
-                            }
-                            onNavigationStateChange={this.onNavigationStateChange.bind(this)}>
-                      </WebView>
-                      :<View></View>
-                      } */}
+                            
                         {this.state.postcontent!=null ?
                       <WebView scrollEnabled={false}
                       
@@ -303,12 +419,10 @@ class ClonePost extends Component {
                              source={{html:this.state.postcontent}}
                              style={{ height: this.state.Height, width: deviceWidth - 20 }}
                              automaticallyAdjustContentInsets={false}
-                             renderLoading= {<View style={{ flex: 1, paddingTop: 20 }}>
-                                            <ActivityIndicator />
-                                        </View>}
+                            
                              renderLoading={() => {
-                                return <View style={{ flex: 1, paddingTop: deviceHeight/2 }}>
-                                     <Spinner color='green' />
+                                return <View style={{ flex: 1}}>
+                                     <Spinner style={{paddingTop:deviceHeight/2}} color='green' />
                                  </View>
                                 }
                             }
@@ -329,13 +443,18 @@ class ClonePost extends Component {
                                           //this.refresh(post.api);
                                              this.props.navigation.navigate('Post',{post:post})
                                         }}>
-                                                    <View  style={styles.postContent}>
+                                                    <View style={styles.postContent}>
 
-                                                        <Image style={styles.postImage} source={{ uri: post.image}}/>
-                                                        
+                                                        {post.image != null ? <Image style={styles.postImage} source={{ uri: post.image }} /> : <Image style={styles.postImage} source={logo} />}
+
 
                                                         <View style={styles.postInfo} >
-                                                            <Text style={styles.txtName}>{post.title}</Text>
+                                                            <Text style={styles.txtPostTitle}>{post.title}</Text>
+                                                            <View style={{ flexDirection: 'row' }}>
+                                                                <Text style={styles.postDate}>{DateHelper.getLongDate(post.date)}</Text>
+                                                                <Text style={styles.postMiddleDate} > | </Text>
+                                                                <Text style={styles.postDate}>{DateHelper.getView(post.date, post.id)}</Text>
+                                                            </View>
                                                         </View>
 
                                                     </View>
@@ -346,7 +465,8 @@ class ClonePost extends Component {
                      </View>
                      
                      
-                 </ScrollView>
+                 </ScrollView> 
+               
              </View>
                 );
     }
