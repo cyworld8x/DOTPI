@@ -14,13 +14,11 @@ export default {
   },
   logoContainer: {
     flex: 1,
-    marginTop: deviceHeight / 8,
-    marginBottom: 30
   },
   logo: {
     //position: "absolute",
     left: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 2 - 160 /2 :deviceWidth / 2 - 160/2):deviceWidth / 2 - 160/2,
-    top: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 8 - 160 /2 :deviceWidth / 8 - 160/2):deviceWidth / 8 - 160/2,
+    top:  deviceHeight / 2-160,
     width: 160,
     height: 160
   },

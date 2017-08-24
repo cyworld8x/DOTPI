@@ -5,9 +5,9 @@ import { Container, Button, H3, Text, Header, Title } from "native-base";
 import PushNotification from 'react-native-push-notification';
 import styles from "./styles";
 import { connect } from 'react-redux';
-import { loadingConfiguration } from '../../api/actionCreators';
-const launchscreenBg = require("../../../img/launchscreen-bg.png");
-const launchscreenLogo = require("../../../img/unnamed.png");
+import { loadingDataStorage, saveSettings } from '../../api/actionCreators';
+
+const launchscreenLogo = require("../../../img/version.png");
 import StoragePosts from '../../api/storagePosts';
 import Home from '../../components/home';
 class SplashScreen extends Component {
@@ -15,9 +15,9 @@ class SplashScreen extends Component {
     constructor(props){
 		super(props);
 		this.state= {
-			isLoading:true
+			isLoadingDataStorage:true,
+			isLoadingSetting:true
 		};
-		
 	}
 	componentDidMount() {
 		try {
@@ -39,47 +39,45 @@ class SplashScreen extends Component {
 			posts = posts!=null? posts:[];
 			
 			
-			this.props.loadingConfiguration(posts);
-			//console.error(posts);
-			setTimeout(() => {
-				this.setState({
-					isLoading: false
-				});
-			}, 1000);
-		
+			this.props.loadingDataStorage(posts);
+			this.setState({
+				isLoadingDataStorage: false
+			});		
 
 		});
+
+		fetch('http://api.dotpi.tk/configuration')
+			.then((response) => response.json())
+			.then((responseJson) => {
+
+				if (responseJson != null) {
+					
+					StoragePosts.saveSettings(responseJson);
+					this.props.saveSettings(responseJson)
+					setTimeout(() => {
+						this.setState({
+							isLoadingSetting: false
+						});
+					}, 1000);
+
+				}
+
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
 	render() {
-		if(this.state.isLoading){
+		if(this.state.isLoading || this.state.isLoadingSetting){
 			return (
-				<Container>
+				<Container style={{backgroundColor:'#34B089'}}> 
 					<StatusBar barStyle="light-content" />
-					<Image source={launchscreenBg} style={styles.imageContainer}>
+					<View style={{flex: 1,backgroundColor:'#34B089'}}>
 						<View style={styles.logoContainer}>
 							<Image source={launchscreenLogo} style={styles.logo} />
 						</View>
-						<View
-							style={{
-								alignItems: "center",
-								marginBottom: 50,
-								backgroundColor: "transparent",
-							}}
-						>
-							<H3 style={styles.text}>App to showcase</H3>
-							<View style={{ marginTop: 8 }} />
-							<H3 style={styles.text}>NativeBase components</H3>
-							<View style={{ marginTop: 8 }} />
-						</View>
-						<View style={{ marginBottom: 80 }}>
-							<Button
-								style={{ backgroundColor: "#6FAF98", alignSelf: "center" }}
-								onPress={() => this.props.navigation.navigate("DrawerOpen")}
-							>
-								<Text>Lets Go!</Text>
-							</Button>
-						</View>
-					</Image>
+						
+					</View>
 				</Container>
 			);
 		}
@@ -92,8 +90,9 @@ class SplashScreen extends Component {
 
 function mapStateToProps(state) {
     return { 
-       FavoritedPosts: state.Storage.FavoritedPosts
+	   FavoritedPosts: state.Storage.FavoritedPosts,
+	   Settings: state.Settings
     };
 }
 
-export default connect(mapStateToProps,{ loadingConfiguration })(SplashScreen);
+export default connect(mapStateToProps,{ loadingDataStorage, saveSettings })(SplashScreen);

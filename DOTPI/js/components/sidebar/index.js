@@ -41,15 +41,15 @@ const datas = [
 		icon: "bookmarks",
 		bg: "#48525D",
 	},
-	{
-		name: "CÀI ĐẶT",
-		route: "NHTypography",
-		icon: "settings",
-		bg: "#48525D",
-	},
+	// {
+	// 	name: "CÀI ĐẶT",
+	// 	route: "NHTypography",
+	// 	icon: "settings",
+	// 	bg: "#48525D",
+	// },
 	{
 		name: "PHIÊN BẢN",
-		route: "NHTypography",
+		route: "Version",
 		icon: "md-information-circle",
 		bg: "#48525D",
 	},

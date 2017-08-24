@@ -35,10 +35,10 @@ export default class Favorite extends Component{
     render (){
         
         return (
-            <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
+            <View style={{ flexDirection:'row'}}>
                 {
                     this.state.posts && this.state.posts.map((item)=>{
-                        return (<Thumbnail key={item.postid} style={styles.drawerIconSlidebar} square size={80} source={{ uri: item.image }} />  );
+                        return (<Thumbnail onPress={() => this.props.navigation.navigate('Post', { post: post })}  key={item.postid} style={styles.drawerIconSlidebar} square size={80} source={{ uri: item.image }} />  );
                     })
                      
                 }

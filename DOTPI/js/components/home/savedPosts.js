@@ -16,7 +16,7 @@ Toast } from 'native-base';
 
 import { connect } from 'react-redux';
 
-import { unbookmarkPost, loadingConfiguration } from '../../api/actionCreators';
+import { unbookmarkPost, loadingDataStorage } from '../../api/actionCreators';
 import styles from './styles';
 
 const deviceWidth = Dimensions.get("window").width;
@@ -144,4 +144,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps,{ unbookmarkPost, loadingConfiguration })(SavedPosts);
+export default connect(mapStateToProps,{ unbookmarkPost, loadingDataStorage })(SavedPosts);

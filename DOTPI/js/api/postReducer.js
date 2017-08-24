@@ -29,7 +29,7 @@ const PostReducer = (state = {FavoritedPosts:[], Loaded:false}, action) => {
         } 
         return state;      
     }
-    if (action.type === 'LOAD_CONFIGURATION') {
+    if (action.type === 'LOAD_DATA_STORAGE') {
         state.FavoritedPosts = action.posts
         //console.error(state.FavoritedPosts);
         return state;

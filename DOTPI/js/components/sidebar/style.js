@@ -13,7 +13,7 @@ export default {
   drawerCover: {
     alignSelf: "stretch",
     // resizeMode: 'cover',
-    height: deviceHeight,
+    height: deviceHeight-25,
     width: null,
     position: "relative",
     marginBottom: 0
@@ -28,7 +28,7 @@ export default {
     marginBottom: 0
   },
   drawerSlidebar: {
-    
+    flex:1,
     // left: (Platform.OS === 'android') ? 30 : 40,
     left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
     // top: (Platform.OS === 'android') ? 45 : 55,
@@ -49,8 +49,6 @@ export default {
     left:5,
     right:5,
     borderRadius:5,
-    width: 60,
-    height: 60,
     resizeMode: "cover",
     borderColor:'#FFF',
     borderWidth:2

@@ -6,6 +6,10 @@ export function unbookmarkPost(post) {
     return { type: 'UNBOOK_MARK_POST', post };
 }
 
-export function loadingConfiguration(posts) {
-    return { type: 'LOAD_CONFIGURATION',posts };
+export function loadingDataStorage(posts) {
+    return { type: 'LOAD_DATA_STORAGE',posts };
+}
+
+export function saveSettings(settings) {
+    return { type: 'SAVE_SETTINGS',settings };
 }

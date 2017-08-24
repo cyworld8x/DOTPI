@@ -90,6 +90,22 @@ const checkingExistedPost = (obj, list) => {
 
     return false;
 };
+
+const saveSettings =async (setting) => {
+        await AsyncStorage.setItem('@Settings:key', JSON.stringify(setting), (err, result) => { console.log(err); });        
+        return true;
+};
+const loadingSettings = () => {
+    try {
+        return AsyncStorage.getItem('@Settings:key').then((data) => { return JSON.parse(data); })
+
+    } catch (error) {
+        // Error retrieving data
+        console.error(error);
+        return {};
+    }
+
+}
 module.exports =
 {
     getPosts: getPosts,
@@ -97,5 +113,7 @@ module.exports =
     deletePost:deletePost,
     checkExistPost:checkExistPost,
     checkingExistedPost:checkingExistedPost,
-    getAllPosts:getAllPosts
+    getAllPosts:getAllPosts,
+    saveSettings:saveSettings,
+    loadingSettings:loadingSettings
 } ;

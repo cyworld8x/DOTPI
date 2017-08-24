@@ -11,6 +11,7 @@ import SavedPosts from "./components/home/savedPosts";
 import Category from "./components/home/category";
 import SplashScreen from "./components/splash";
 import TermAndCondition from "./components/home/termandcondition";
+import Version from "./components/splash/version";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },
@@ -21,7 +22,8 @@ const DrawerNav = DrawerNavigator(
         ClonePost: { screen: ClonePost },
         SavedPosts:{ screen: SavedPosts },
         Category:{ screen: Category },
-        TermAndCondition:{screen:TermAndCondition}
+        TermAndCondition:{screen:TermAndCondition},
+        Version:{screen:Version}
     },
     {
         initialRouteName: "SplashScreen",

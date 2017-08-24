@@ -15,6 +15,7 @@ import SavedPosts from "./components/home/savedPosts";
 import ListPosts from "./components/home/listPosts";
 import Category from "./components/home/category";
 import TermAndCondition from "./components/home/termandcondition";
+import Version from "./components/splash/version";
 const AppNavigator = StackNavigator(
     {
         Drawer: { screen: Drawer },
@@ -26,7 +27,8 @@ const AppNavigator = StackNavigator(
         SavedPosts:{ screen: SavedPosts },
         ListPosts:{screen:ListPosts},
         Category:{screen:Category},
-        TermAndCondition:{screen:TermAndCondition}
+        TermAndCondition:{screen:TermAndCondition},
+        Version:{screen:Version}
     },
     {
         initialRouteName: "Drawer",
