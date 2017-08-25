@@ -29,16 +29,16 @@ const html = `
     <p>Ứng Dụng này được phát triển và sở hữu bởi chúng tôi, tất cả các quyền sở hữu trí tuệ liên quan đến Ứng Dụng (bao gồm nhưng không giới hạn mã nguồn, hình ảnh, dữ liệu, thông tin, nội dung chứa đựng trong Ứng Dụng; các sửa đổi, bổ sung, cập nhật của Ứng Dụng) và các tài liệu hướng dẫn liên quan (nếu có) không cho phép các tổ chức cá nhân nào có quyền sao chép.</p>
 
     <h1>4. Xử Lý Vi Phạm</h1>
-    <p>Trường hợp bạn vi phạm bất kỳ quy định nào trong Thỏa Thuận này, VNG có quyền ngay lập tức khóa tài khoản của bạn và/hoặc xóa bỏ toàn bộ các thông tin, nội dung vi phạm, đồng thời tùy thuộc vào tính chất, mức độ vi phạm bạn sẽ phải chịu trách nhiệm trước cơ quan có thẩm quyền, VNG và bên thứ ba về mọi thiệt hại gây ra bởi hoặc xuất phát từ hành vi vi phạm của bạn.</p>
+    <p>Trường hợp bạn vi phạm bất kỳ quy định nào trong Thỏa Thuận này, chu có quyền ngay lập tức khóa tài khoản của bạn và/hoặc xóa bỏ toàn bộ các thông tin, nội dung vi phạm, đồng thời tùy thuộc vào tính chất, mức độ vi phạm bạn sẽ phải chịu trách nhiệm trước cơ quan có thẩm quyền, chúng tôi và bên thứ ba về mọi thiệt hại gây ra bởi hoặc xuất phát từ hành vi vi phạm của bạn.</p>
     <p>&nbsp;</p>
     <h1>5. Quyền Truy Cập và Thu Thập Thông Tin</h1>
     <p>Khi sử dụng Ứng Dụng, bạn thừa nhận rằng  chúng tôi có quyền sử dụng những API hệ thống sau để truy cập vào dữ liệu trên  điện thoại của bạn: (1) Khởi động ứng dụng cùng điển thoại, (2) Ghi dữ liệu của Ứng Dụng lên thẻ nhớ, (3)  Truy cập vào Internet từ thiết bị của bạn. Tất cả các truy cập này đều được  chúng tôi thực hiện sau khi có sự đồng ý của bạn, vì vậy bạn cam kết và thừa nhận  rằng, khi bạn đã cấp quyền cho chúng tôi, bạn sẽ không có bất kỳ khiếu nại nào  đối với chúng tôi về việc truy cập này.</p>
     <p>&nbsp;</p>
     <h1>6. Cam Kết Bảo Mật Thông Tin</h1>
-    <p>VNG sử dụng các phương thức truyền tin an toàn https và mã hóa để truyền tải và lưu trữ các dữ liệu cá nhân và giao tiếp của bạn. Chúng tôi cam kết giữ bí mật tất cả thông tin mà bạn cung cấp cho VNG hoặc chúng tôi thu thập từ bạn và không tiết lộ với bất kỳ bên thứ ba nào trừ khi có yêu cầu từ Cơ quan Nhà nước có thẩm quyền.</p>
+    <p>VNG sử dụng các phương thức truyền tin an toàn https và mã hóa để truyền tải và lưu trữ các dữ liệu cá nhân và giao tiếp của bạn. Chúng tôi cam kết giữ bí mật tất cả thông tin mà bạn cung cấp cho chúng tôi hoặc chúng tôi thu thập từ bạn và không tiết lộ với bất kỳ bên thứ ba nào trừ khi có yêu cầu từ Cơ quan Nhà nước có thẩm quyền.</p>
     <p>&nbsp;</p>
     <h1>7. Phí Và Các Khoản Thu</h1>
-    <p>VNG cam kết không thu bất cứ khoản phí nào từ người dùng cho các dịch vụ cơ bản mà hiện tại chúng tôi đang cung cấp.</p>
+    <p>Chúng tôi cam kết không thu bất cứ khoản phí nào từ người dùng cho các dịch vụ cơ bản mà hiện tại chúng tôi đang cung cấp.</p>
     <p>&nbsp;</p>
     <h1>8. Quảng cáo và các nội dung thương mại được phân phối bởi MÓN ĂN NGON</h1>
     <p>Khi sử dụng ứng dụng, bạn thừa nhận rằng chúng tôi có quyền cung cấp các nội dung quảng cáo cho bạn.</p>
@@ -46,7 +46,7 @@ const html = `
     <p>&nbsp;</p>
     <h1>9. Liên Lạc Với Chúng Tôi</h1>
 
-    <p>- Địa chỉ email <a href="mailto:cyworld8x@gmail.com">cyworld8x@gmail.com</a>; hoặc </p>
+    <p>- Địa chỉ email <a href="mailto:cyworld8x@gmail.com">cyworld8x@gmail.com</a>;</p>
 
 
     <p><strong>Trân trọng cảm ơn bạn đã sử dụng sản phẩm và dịch vụ của chúng tôi.</strong></p>
