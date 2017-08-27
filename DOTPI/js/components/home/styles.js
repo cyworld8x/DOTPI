@@ -241,9 +241,19 @@ export default {
         fontSize: 18,
         fontWeight: '400'
     },
+    txtPostHeader: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        fontWeight: '400'
+    },
     txtPostTitle: {
         fontFamily: 'Avenir',
         fontSize: 16,
+        fontWeight: '400'
+    },
+    txtSmallTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 12,
         fontWeight: '400'
     },
     txtPrice: {
@@ -271,6 +281,29 @@ export default {
     },
     mb: {
       marginBottom: 15
+    },
+
+    search_postContainer: {
+        width: deviceWidth,
+
+        flex: 1,
+        flexDirection: 'row',
+        
+        justifyContent: 'space-between',
+    },
+    search_content: {
+        width: deviceWidth - 20,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderBottomColor: 'silver',
+        borderBottomWidth: 1,
+        backgroundColor:'#FFF',
+        flexDirection: 'row',
+    },
+    search_postInfo: {
+        paddingHorizontal: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
 };
 

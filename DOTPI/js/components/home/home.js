@@ -28,7 +28,7 @@ import styles from './styles';
 import { connect } from 'react-redux';
 import ColorHelper from '../../utilities/colorHelper';
 import CategoryTab from "./categoryTab";
-class Home extends Component {
+class TransitionHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,7 +95,7 @@ class Home extends Component {
                {
                 this.state.isShowReloading && (<Button
                   transparent
-                  onPress={() => this.props.navigation.navigate("TransitionHome")}
+                  onPress={() => this.props.navigation.navigate("Home")}
                 >
                   <Icon style={{ color: "#FFF" }} name="md-refresh" />
                 </Button>)
@@ -137,4 +137,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(TransitionHome);

@@ -7,12 +7,12 @@ import { StackNavigator } from "react-navigation";
 import Drawer from "./Drawer";
 import SplashScreen from "./components/splash";
 import Home from "./components/home/";
+import TransitionHome from "./components/home/home";
 import About from "./components/about/";
 import Post from "./components/home/post";
-
+import Search from "./components/home/search";
 import ClonePost from "./components/home/clonePost";
 import SavedPosts from "./components/home/savedPosts";
-import ListPosts from "./components/home/listPosts";
 import Category from "./components/home/category";
 import TermAndCondition from "./components/home/termandcondition";
 import Version from "./components/splash/version";
@@ -21,11 +21,12 @@ const AppNavigator = StackNavigator(
         Drawer: { screen: Drawer },
         SplashScreen:{screen: SplashScreen},
         Home:{ screen: Home },
+        TransitionHome:{ screen: TransitionHome },
+        Search:{screen: Search },
         About:{ screen: About },
         Post:{ screen: Post },
         ClonePost:{ screen: ClonePost },
         SavedPosts:{ screen: SavedPosts },
-        ListPosts:{screen:ListPosts},
         Category:{screen:Category},
         TermAndCondition:{screen:TermAndCondition},
         Version:{screen:Version}

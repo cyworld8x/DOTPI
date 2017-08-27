@@ -2,6 +2,7 @@ import React from "react";
 import { DrawerNavigator } from "react-navigation";
 
 import Home from "./components/home/";
+import TransitionHome from "./components/home/home";
 import SideBar from "./components/sidebar";
 import CategoryTab from "./components/home/categoryTab";
 import Post from "./components/home/post";
@@ -12,9 +13,11 @@ import Category from "./components/home/category";
 import SplashScreen from "./components/splash";
 import TermAndCondition from "./components/home/termandcondition";
 import Version from "./components/splash/version";
+import Search from "./components/home/search";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },
+         TransitionHome:{ screen: TransitionHome },
         SplashScreen: { screen: SplashScreen },
         CategoryTab: { screen: CategoryTab },
         About: { screen: About },
@@ -23,7 +26,8 @@ const DrawerNav = DrawerNavigator(
         SavedPosts:{ screen: SavedPosts },
         Category:{ screen: Category },
         TermAndCondition:{screen:TermAndCondition},
-        Version:{screen:Version}
+        Version:{screen:Version},
+        Search:{screen:Search},
     },
     {
         initialRouteName: "SplashScreen",

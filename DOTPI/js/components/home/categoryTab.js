@@ -80,32 +80,35 @@ class CategoryTab extends Component {
 
     }
 
-    onRefresh() {
+    onLoadMore() {
         
-        const newPage = this.state.page + 1;
         
-        this.setState({ refreshing: true, isLoading: false });
-       
-        // Toast.show({
-        //                                     text: 'Page:'+ newPage,
-        //                                     position: 'bottom',
-        //                                     type: 'success',
-        //                                     duration: 1000
-        //                                 }) ;
-        this.getPosts(newPage).then(responseJson => {
-            responseJson = responseJson==null?[]:responseJson;
-            //responseJson = this.preProcessList(responseJson);
-            this.arr = this.arr.concat(responseJson);
-            
-            this.setState({
-                isLoading: false,
-                refreshing: false,
-                page: newPage,
-                listPosts: this.state.listPosts.cloneWithRows(this.arr),
-            }, function () {
-                // do something with new state
+        if (!this.state.refreshing) {
+            const newPage = this.state.page + 1;
+            this.setState({ refreshing: true, isLoading: false });
+
+            // Toast.show({
+            //                                     text: 'Page:'+ newPage,
+            //                                     position: 'bottom',
+            //                                     type: 'success',
+            //                                     duration: 1000
+            //                                 }) ;
+            this.getPosts(newPage).then(responseJson => {
+                responseJson = responseJson == null ? [] : responseJson;
+                //responseJson = this.preProcessList(responseJson);
+                this.arr = this.arr.concat(responseJson);
+
+                this.setState({
+                    isLoading: false,
+                    refreshing: false,
+                    page: newPage,
+                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
+                }, function () {
+                    // do something with new state
+                });
             });
-        });
+        }
+        
     }
 
     getPosts(page) {
@@ -171,7 +174,7 @@ class CategoryTab extends Component {
 
                         }
                        
-                        onEndReached={this.onRefresh.bind(this)}
+                        onEndReached={this.onLoadMore.bind(this)}
                     />
                 </View>
             </View>

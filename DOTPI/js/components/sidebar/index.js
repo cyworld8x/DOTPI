@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image,BackAndroid } from "react-native";
+import { Image,BackAndroid, Platform, ToastAndroid, AlertIOS } from "react-native";
 import Share, {ShareSheet} from 'react-native-share';
 import Favorite from "./favorite";
 import {
@@ -98,9 +98,9 @@ export  default class SideBar extends Component {
 			if (typeof shareOptions["url"] !== undefined) {
 				Clipboard.setString(shareOptions["url"]);
 				if (Platform.OS === "android") {
-					ToastAndroid.show('Link copiado al portapapeles', ToastAndroid.SHORT);
+					ToastAndroid.show('copied to clipboard', ToastAndroid.SHORT);
 				} else if (Platform.OS === "ios") {
-					AlertIOS.alert('Link copiado al portapapeles');
+					AlertIOS.alert('copied to clipboard');
 				}
 			}
 		}, 300);

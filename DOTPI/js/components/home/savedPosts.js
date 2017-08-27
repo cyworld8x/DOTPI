@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions,WebView,ActivityIndicator,ListView,TouchableOpacity ,RefreshControl,StyleSheet } from "react-native";
+import { Image, Dimensions,WebView,ActivityIndicator,ListView,TouchableOpacity ,RefreshControl,StyleSheet, Platform, AlertIOS } from "react-native";
 
 import { Container,Header,  Title, Content, Button,
   Icon,
@@ -53,18 +53,23 @@ class SavedPosts extends Component {
 
     async deletePost(post) {
         this.props.unbookmarkPost(post);
-        this.arr = this.arr.filter(item=> Number(item.postid)!=Number(post.postid));
-       
+        this.arr = this.arr.filter(item => Number(item.postid) != Number(post.postid));
+
         this.setState({
             isLoading: false,
             listPosts: this.state.listPosts.cloneWithRows(this.arr),
         }, function () {
-            Toast.show({
-              text: 'Bài viết đã được xóa!',
-              position: 'bottom',
-              type:'success',
-              duration:1000
-            })
+            if (Platform.OS === "android") {
+                Toast.show({
+                    text: 'Bài viết đã được xóa!',
+                    position: 'bottom',
+                    type: 'success',
+                    duration: 1000
+                })
+            } else if (Platform.OS === "ios") {
+                AlertIOS.alert('Bài viết đã được xóa!');
+            }
+
         });
     }
  

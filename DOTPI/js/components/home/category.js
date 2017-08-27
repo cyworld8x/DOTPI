@@ -33,12 +33,12 @@ class Category extends Component {
 
                 <Header hasTabs style={{ backgroundColor: '#34B089' }}>
                     <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.navigate('Home')}
-                        >
-                            <Icon style={{ color: "#FFF" }} name="md-arrow-round-back" />
-                        </Button>
+                          <Button
+                             transparent
+                             onPress={() => this.props.navigation.navigate('DrawerOpen')}
+                         >
+                             <Icon style={{ color: "#FFF" }} name="menu" />
+                         </Button>                      
                     </Left>
                     <Body>
                         <Text  style={{ color: "#FFF", fontWeight:'300' }}>{this.props.navigation.state.params.title}</Text>
@@ -50,12 +50,7 @@ class Category extends Component {
                         >
                             <Icon style={{ color: "#FFF" }} name="md-home" />
                         </Button>                      
-                         <Button
-                             transparent
-                             onPress={() => this.props.navigation.navigate('DrawerOpen')}
-                         >
-                             <Icon style={{ color: "#FFF" }} name="menu" />
-                         </Button>
+                       
                      </Right >
 
                 </Header>

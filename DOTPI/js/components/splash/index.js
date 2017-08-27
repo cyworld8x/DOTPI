@@ -46,26 +46,44 @@ class SplashScreen extends Component {
 
 		});
 
-		fetch('http://api.dotpi.tk/configuration')
-			.then((response) => response.json())
-			.then((responseJson) => {
-
-				if (responseJson != null) {
-					
-					StoragePosts.saveSettings(responseJson);
-					this.props.saveSettings(responseJson)
-					setTimeout(() => {
-						this.setState({
-							isLoadingSetting: false
-						});
-					}, 1000);
-
+		StoragePosts.loadingSettings().then((settings)=> {
+			
+			if(settings==null){
+				settings = {
+					ApiUrl : 'http://api.dotpi.tk',
+					WebsiteUrl : 'http://dotpi.tk'
 				}
+			}
+			if(settings.ApiUrl==null){
+				settings.ApiUrl = 'http://api.dotpi.tk';
+			}
+			if(settings.WebsiteUrl==null){
+				settings.WebsiteUrl = 'http://dotpi.tk';
+			}
+			fetch(settings.ApiUrl+ '/configuration')
+					.then((response) => response.json())
+					.then((responseJson) => {
 
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+						if (responseJson != null) {
+
+							StoragePosts.saveSettings(responseJson);
+							this.props.saveSettings(responseJson)
+							setTimeout(() => {
+								this.setState({
+									isLoadingSetting: false
+								});
+							}, 1000);
+
+						}
+
+					})
+					.catch((error) => {
+						console.error(error);
+					});	
+
+		});
+
+		
 	}
 	render() {
 		if(this.state.isLoading || this.state.isLoadingSetting){

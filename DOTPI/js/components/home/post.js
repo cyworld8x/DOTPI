@@ -115,7 +115,7 @@ const htmlStyle = `<style>
 </style>`;
 
 
-const logo = require("../../../img/logo.png");
+const logo = require("../../../img/nothumbnail.png");
 class Post extends Component {
     //eslint-disable-line
     constructor(props) {
@@ -284,7 +284,7 @@ class Post extends Component {
         let shareOptions = {
             title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
             message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
-            url: "http://dotpi.tk",
+            url: this.props.Settings.WebsiteUrl,
             subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
         };
 
@@ -423,7 +423,7 @@ class Post extends Component {
                                 <Text style={{ fontWeight: '700' }}>{this.state.post.categoryname}</Text>
                             </Badge>
                             <Text style={styles.postDetailMiddleDate}> | </Text>
-                            <Text style={styles.postDetailDate}> {DateHelper.getRelativeTime(this.state.post.date)}</Text>
+                            <Text style={styles.postDetailDate}> {DateHelper.getLongDate(this.state.post.date)}</Text>
                         </View>
 
 
@@ -432,7 +432,7 @@ class Post extends Component {
 
                                 ref='_webView'
                                 domStorageEnabled={false}
-                                source={{ html: this.state.postcontent }}
+                                source={{ html: this.state.postcontent, baseUrl:this.props.Settings.WebsiteUrl }}
                                 style={{ height: this.state.Height, width: deviceWidth - 20 }}
                                 automaticallyAdjustContentInsets={false}
 
@@ -512,4 +512,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps,{ bookmarkPost, saveSettings })(Post);
+export default connect(mapStateToProps,{bookmarkPost})(Post);

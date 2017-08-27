@@ -20,7 +20,7 @@ export default {
     left: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 2 - 160 /2 :deviceWidth / 2 - 160/2):deviceWidth / 2 - 160/2,
     top:  deviceHeight / 2-160,
     width: 160,
-    height: 160
+    height: 189
   },
   text: {
     color: "#D8D8D8",
