@@ -65,7 +65,7 @@ class CategoryTab extends Component {
                             message: this.state.notificationData.title, // STRING: The notification message 
                             data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
                             playSound: false, 
-                            date: new Date(Date.now()+(1000)),
+                            date: new Date(Date.now()+(1000*60**60*12)),
                         });
                     }
                     catch (error) {
