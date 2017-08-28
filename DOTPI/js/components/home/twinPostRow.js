@@ -37,7 +37,7 @@ export default class TwinPostRow extends Component{
 
                                                 </View>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[1] })}>
+                                            {post.sections[1]!=null ?<TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[1] })}>
                                                 <View style={styles.postContent}>
 
                                                     {post.sections[1]!=null && post.sections[1].image!=null? <Image style={styles.postImage} source={{ uri: post.sections[1].image}}/>:<Image style={styles.postImage} source={logo} />} 
@@ -53,7 +53,7 @@ export default class TwinPostRow extends Component{
                                                     </View>
 
                                                 </View>
-                                            </TouchableOpacity>
+                                            </TouchableOpacity>:<View></View>}
 
                                         </View>)
     }

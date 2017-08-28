@@ -35,11 +35,7 @@ class Home extends Component {
       isLoading: true,
       isShowReloading:false
     }
-     setTimeout(() => {
-       this.setState({
-         isShowReloading: true
-       });
-     }, 5000);
+     
   }
   // eslint-disable-line
   componentDidMount() {
@@ -48,6 +44,7 @@ class Home extends Component {
   }
 
   loadingData(){
+    
       var url = this.props.Settings.ApiUrl +'/category'
       fetch(url)
       .then((response) => response.json())
@@ -55,6 +52,7 @@ class Home extends Component {
 
         this.setState({
           isLoading: false,
+          isShowReloading:true,
           dataSource: responseJson,
         }, function () {
           // do something with new state

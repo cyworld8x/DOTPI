@@ -81,7 +81,7 @@ class Search extends Component {
     }
 
     onValidate() {
-        if (this.state.txtSearch.length <= 3) {
+        if (this.state.txtSearch.length < 3) {
             if (Platform.OS === "android") {
                 ToastAndroid.show('Từ khóa tìm kiếm phải ít nhất 3 ký tự', ToastAndroid.SHORT);
             } else if (Platform.OS === "ios") {

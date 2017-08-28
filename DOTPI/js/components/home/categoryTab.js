@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList,TouchableOpacity, StyleSheet } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, SectionList,TouchableOpacity, StyleSheet,FlatList } from "react-native";
 import PushNotification from 'react-native-push-notification';
 import {
     Button,
@@ -23,9 +23,9 @@ class CategoryTab extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+       
         this.state = {
-            listPosts: ds,
+            listPosts: [],
             refreshing: false,
             isLoading: true,
             page: 1,
@@ -46,7 +46,7 @@ class CategoryTab extends Component {
                 this.setState({
                     isLoading: false,
                     refreshing: false,
-                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
+                    listPosts: this.state.listPosts.concat(this.arr),
                     notificationData: this.arr!=null && this.arr.length>0? this.arr[0].sections[0]:null
                 }, function () {     
                     
@@ -94,15 +94,15 @@ class CategoryTab extends Component {
             //                                     duration: 1000
             //                                 }) ;
             this.getPosts(newPage).then(responseJson => {
-                responseJson = responseJson == null ? [] : responseJson;
-                //responseJson = this.preProcessList(responseJson);
-                this.arr = this.arr.concat(responseJson);
+                responseJson = responseJson==null?[]:responseJson;
+                
+                this.arr = responseJson;     
 
                 this.setState({
                     isLoading: false,
                     refreshing: false,
                     page: newPage,
-                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
+                    listPosts: this.state.listPosts.concat(this.arr),
                 }, function () {
                     // do something with new state
                 });
@@ -150,33 +150,40 @@ class CategoryTab extends Component {
         const { root } = this.props;
         return (
             <View style={styles.container}>
-                <View style={styles.wrapper}>
-                   
-                    <ListView
-                        enableEmptySections={true}
-                        removeClippedSubviews={false}
-                        dataSource={this.state.listPosts}
-                        renderRow={(post) => {
-                            pos = pos + 1;
-                            if(pos==1){
-                                 return ( <SinglePost post={post.sections[0]} navigation={this.props.navigation}/>)
-                            }else{
-                                    if (pos % 2 == 1 ) {
-                                        return (<TwinPostColumn post={post}  navigation={this.props.navigation} />)
+                 <View style={styles.wrapper}>
+                <FlatList 
+                    keyExtractor={post => { return ('FlatItem-' + post.id + Math.floor((Math.random() * 8)) + ''); }}
+                    enableEmptySections={true}
+                    data={this.state.listPosts}
+                    renderItem={(item) => {
+                        pos = pos + 1;
+                        let post = item.item;
+                        if (post != null) {
+
+                            if (pos == 1) {
+                                return (<SinglePost post={post.sections[0]} navigation={this.props.navigation} />)
+                            } else {
+                                if (pos % 2 == 1) {
+                                    return (<TwinPostColumn post={post} navigation={this.props.navigation} />)
                                     {/* return (<CouplePostsColumn navigation={this.props.navigation} post={post}/>) */ }
-                                    } else {
-                                        return (<TwinPostRow post={post}  navigation={this.props.navigation} />)
-                                    }
+                                } else {
+                                    return (<TwinPostRow post={post} navigation={this.props.navigation} />)
+                                }
                             }
-                           
+                        }
+                        else {
                         }
 
 
-                        }
-                       
-                        onEndReached={this.onLoadMore.bind(this)}
-                    />
-                </View>
+                    }
+
+
+                    }
+                    
+                    onEndReachedThreshold = {1}
+                    onEndReached={this.onLoadMore.bind(this)}
+                />
+            </View>
             </View>
         );
     }

@@ -24,7 +24,7 @@ export default class Favorite extends Component{
     componentDidMount() {
         StorageApi.getPosts().then((data)=> {
             let posts=  JSON.parse(data);
-            
+            posts = posts!=null?posts:[];
             posts = posts.length>2 ? posts.slice(posts.length-2,posts.length):posts;
             this.setState({
                 posts:posts
