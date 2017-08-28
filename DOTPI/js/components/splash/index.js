@@ -26,7 +26,7 @@ class SplashScreen extends Component {
 			PushNotification.localNotificationSchedule({
 				id: notificationId,
 				message: "Bạn ơi! Có nhiều bài mới đang chờ bạn khám phá!", // (required) 
-				date: new Date(Date.now() + (60 * 60 * 24 * 1000)) // in 60 secs 
+				date: new Date(Date.now()) // in 60 secs 
 			});
 
 		}

@@ -17,10 +17,10 @@ export default {
   },
   logo: {
     //position: "absolute",
-    left: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 2 - 160 /2 :deviceWidth / 2 - 160/2):deviceWidth / 2 - 160/2,
+    left: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 2 - 120 /2 :deviceWidth / 2 - 120/2):deviceWidth / 2 - 120/2,
     top:  deviceHeight / 2-160,
-    width: 160,
-    height: 189
+    width: 120,
+    height: 142
   },
   text: {
     color: "#D8D8D8",

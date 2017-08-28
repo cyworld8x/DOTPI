@@ -23,16 +23,15 @@ class CategoryTab extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
-       
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            listPosts: [],
+            listPosts: ds,
             refreshing: false,
             isLoading: true,
             page: 1,
             notificationData:{}
         };
         this.arr = [];
-        this.preProcessList = this.preProcessList.bind(this);
         
     }
 
@@ -42,11 +41,11 @@ class CategoryTab extends Component {
             .then(responseJson => {
                 responseJson = responseJson==null?[]:responseJson;
                 
-                this.arr = responseJson;                
+                this.arr = this.arr.concat(responseJson);                
                 this.setState({
                     isLoading: false,
                     refreshing: false,
-                    listPosts: this.state.listPosts.concat(this.arr),
+                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
                     notificationData: this.arr!=null && this.arr.length>0? this.arr[0].sections[0]:null
                 }, function () {     
                     
@@ -55,25 +54,22 @@ class CategoryTab extends Component {
                 if(this.arr!=null && this.arr.length>0){
                    
                     
-                    try {
-                        let notificationId = this.props.categoryid;
-                        PushNotification.cancelLocalNotifications({id: notificationId});
-                        PushNotification.localNotificationSchedule({
-                            id: notificationId,
-                            foreground: false, // BOOLEAN: If the notification was received in foreground or not 
-                            userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not 
-                            message: this.state.notificationData.title, // STRING: The notification message 
-                            data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
+                    // try {
+                    //     let notificationId = this.props.categoryid;
+                    //     PushNotification.cancelLocalNotifications({id: notificationId});
+                    //     PushNotification.localNotificationSchedule({
+                    //         id: notificationId,
+                    //         foreground: false, // BOOLEAN: If the notification was received in foreground or not 
+                    //         userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not 
+                    //         message: this.state.notificationData.title, // STRING: The notification message 
+                    //         data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
                             
-                            date: new Date(Date.now()+(60 * 60 * 8 * 1000)),
-                            //date: new Date(Date.now()),
-                            //actions:''
-                            //date: new Date(Date.now())
-                        });
-                    }
-                    catch (error) {
-                      console.error(error)
-                    } 
+                    //         date: new Date(Date.now()+(60 * 60 * 8 * 1000)),
+                    //     });
+                    // }
+                    // catch (error) {
+                    //   console.error(error)
+                    // } 
                 }
                  
             });
@@ -96,13 +92,13 @@ class CategoryTab extends Component {
             this.getPosts(newPage).then(responseJson => {
                 responseJson = responseJson==null?[]:responseJson;
                 
-                this.arr = responseJson;     
+                this.arr = this.arr.concat(responseJson);     
 
                 this.setState({
                     isLoading: false,
                     refreshing: false,
                     page: newPage,
-                    listPosts: this.state.listPosts.concat(this.arr),
+                    listPosts: this.state.listPosts.cloneWithRows(this.arr),
                 }, function () {
                     // do something with new state
                 });
@@ -117,24 +113,6 @@ class CategoryTab extends Component {
         return fetch(url)
             .then((response) =>response.json());
     }
-
-    preProcessList(posts){
-        var convertedPosts = [];
-       
-        if(posts!=null && posts.length>0){
-            for(var i = 0; i<posts.length; i++){
-                if (i % 2 == 0) {
-                    if(i+1<posts.length){
-                        convertedPosts.push({ id: posts[i].postid+'-'+ posts[i+1].postid, left: posts[i], right: posts[i++] })
-                    }
-                    
-                }                
-            }
-            return convertedPosts;
-        }
-        return convertedPosts;
-    }
-
   
 
     render() {
@@ -151,13 +129,14 @@ class CategoryTab extends Component {
         return (
             <View style={styles.container}>
                  <View style={styles.wrapper}>
-                <FlatList 
-                    keyExtractor={post => { return ('FlatItem-' + post.id + Math.floor((Math.random() * 8)) + ''); }}
+                <ListView 
+                    keyExtractor={post => { return ('FlatItem-' + post.id); }}
                     enableEmptySections={true}
-                    data={this.state.listPosts}
-                    renderItem={(item) => {
+                    dataSource={this.state.listPosts}
+                    renderRow={(item) => {
                         pos = pos + 1;
-                        let post = item.item;
+                         
+                        let post = item;
                         if (post != null) {
 
                             if (pos == 1) {
@@ -172,6 +151,7 @@ class CategoryTab extends Component {
                             }
                         }
                         else {
+                            <View></View>
                         }
 
 
@@ -180,7 +160,6 @@ class CategoryTab extends Component {
 
                     }
                     
-                    onEndReachedThreshold = {1}
                     onEndReached={this.onLoadMore.bind(this)}
                 />
             </View>
