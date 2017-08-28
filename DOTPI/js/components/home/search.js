@@ -62,7 +62,7 @@ class Search extends Component {
 
                     this.setState({
                         refreshing: false,
-                        isLoading:false,
+                        isLoading: false,
                         listPosts: this.state.listPosts.cloneWithRows(this.arr),
                     }, function () {
 
@@ -70,8 +70,11 @@ class Search extends Component {
                     });
 
                     if (this.arr.length == 0) {
-                        NotificationHelper.Notify('Không tìm thấy kết quả nào cho từ khóa "' +this.state.txtSearch+'"');
+                        NotificationHelper.Notify('Không tìm thấy kết quả nào cho từ khóa "' + this.state.txtSearch + '"');
                     }
+                }).catch((error) => {
+                    NotificationHelper.Notify('Kết nối không thành công!');
+                    this.props.navigation.navigate('SplashScreen');
                 });
         }
 

@@ -55,22 +55,22 @@ class CategoryTab extends Component {
                 if(this.arr!=null && this.arr.length>0){
                    
                     
-                    // try {
-                    //     let notificationId = this.props.categoryid;
-                    //     PushNotification.cancelLocalNotifications({id: notificationId});
-                    //     PushNotification.localNotificationSchedule({
-                    //         id: notificationId,
-                    //         foreground: false, // BOOLEAN: If the notification was received in foreground or not 
-                    //         userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not 
-                    //         message: this.state.notificationData.title, // STRING: The notification message 
-                    //         data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
-                            
-                    //         date: new Date(Date.now()+(60 * 60 * 8 * 1000)),
-                    //     });
-                    // }
-                    // catch (error) {
-                    //   console.error(error)
-                    // } 
+                    try {
+                        let notificationId = this.props.categoryid;
+                        PushNotification.cancelLocalNotifications({id: notificationId});
+                        PushNotification.localNotificationSchedule({
+                            id: notificationId,
+                            foreground: false, // BOOLEAN: If the notification was received in foreground or not 
+                            userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not 
+                            message: this.state.notificationData.title, // STRING: The notification message 
+                            data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
+                            playSound: false, 
+                            date: new Date(Date.now()+(1000)),
+                        });
+                    }
+                    catch (error) {
+                      
+                    } 
                 }
                  
             });
