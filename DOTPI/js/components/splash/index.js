@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Image, View, StatusBar } from "react-native";
+import { Image, View, StatusBar,NetInfo,ProgressBar } from "react-native";
 
-import { Container, Button, H3, Text, Header, Title } from "native-base";
+import { Container, Button, H3, Text, Header, Title,Spinner } from "native-base";
 import PushNotification from 'react-native-push-notification';
 import styles from "./styles";
 import { connect } from 'react-redux';
@@ -10,14 +10,18 @@ import { loadingDataStorage, saveSettings } from '../../api/actionCreators';
 const launchscreenLogo = require("../../../img/version.png");
 import StoragePosts from '../../api/storagePosts';
 import Home from '../../components/home';
+import NetInfoHelper from '../../utilities/netInfoHelper'
+import NotificationHelper from '../../utilities/notificationHelper'
 class SplashScreen extends Component {
 	// eslint-disable-line
     constructor(props){
 		super(props);
 		this.state= {
 			isLoadingDataStorage:true,
-			isLoadingSetting:true
+			isLoadingSetting:true,
+			networkError:false
 		};
+		this.loadingServerSettings = this.loadingServerSettings.bind(this);
 	}
 	componentDidMount() {
 		try {
@@ -26,14 +30,14 @@ class SplashScreen extends Component {
 			PushNotification.localNotificationSchedule({
 				id: notificationId,
 				message: "Bạn ơi! Có nhiều bài mới đang chờ bạn khám phá!", // (required) 
-				date: new Date(Date.now()) // in 60 secs 
+				date: new Date(Date.now()+60*60*100*24) // in 60 secs 
 			});
 
 		}
 		catch (error) {
 
 		}
-		
+			
 		StoragePosts.getPosts().then((data)=> {
 			let posts = JSON.parse(data);
 			posts = posts!=null? posts:[];
@@ -46,6 +50,12 @@ class SplashScreen extends Component {
 
 		});
 
+		this.loadingServerSettings();
+		
+	}
+
+	loadingServerSettings()
+	{
 		StoragePosts.loadingSettings().then((settings)=> {
 			
 			if(settings==null){
@@ -78,23 +88,38 @@ class SplashScreen extends Component {
 
 					})
 					.catch((error) => {
-						console.error(error);
+						this.setState({
+							networkError: true
+						})
+						NotificationHelper.Notify('Vui lòng bật kết nối mạng');
 					});	
 
 		});
-
-		
 	}
 	render() {
 		if(this.state.isLoading || this.state.isLoadingSetting){
 			return (
 				<Container style={{backgroundColor:'#34B089'}}> 
 					<StatusBar barStyle="light-content" />
-					<View style={{flex: 1,backgroundColor:'#34B089'}}>
+					<View style={{flex: 1, flexDirection:'column'}}>
 						<View style={styles.logoContainer}>
 							<Image source={launchscreenLogo} style={styles.logo} />
 						</View>
-						
+						{this.state.isLoadingSetting && !this.state.networkError && 
+							<View style={ styles.info }>
+								
+								<Spinner color='#FFF' />
+								<Text style={{color:'#FFF'}}>Đang kiểm tra kết nối internet</Text>
+							</View>}
+							{this.state.networkError &&
+							<View style={ styles.info }>
+								<Text style={{color:'#FFF', paddingVertical:10}}>Bạn đã bật kết nối internet?</Text>
+								<View style={{flex:1, flexDirection:'column'}}>
+								<Button rounded bordered warning onPress={()=>{ this.setState({networkError:false}); this.loadingServerSettings()}}>
+									<Text>Thử lại</Text>
+								</Button>
+								</View>
+							</View>}
 					</View>
 				</Container>
 			);

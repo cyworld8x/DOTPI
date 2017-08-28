@@ -2,7 +2,6 @@
 
 export default class DateHelper{
     constructor(){
-        //Moment('vi');
     }
     static getRelativeTime(date){
          return date.toString('hh:mm DD-MM-YYYY');

@@ -27,6 +27,7 @@ const  {height} = Dimensions.get('window');
 import styles from './styles';
 import { connect } from 'react-redux';
 import ColorHelper from '../../utilities/colorHelper';
+import NotificationHelper from '../../utilities/notificationHelper'
 import CategoryTab from "./categoryTab";
 class Home extends Component {
   constructor(props) {
@@ -59,7 +60,8 @@ class Home extends Component {
         });
       })
       .catch((error) => {
-        console.error(error);
+        NotificationHelper.Notify('Kết nối không thành công!');
+        this.props.navigation.navigate('SplashScreen');
       });
   }
 

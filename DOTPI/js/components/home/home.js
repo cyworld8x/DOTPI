@@ -27,6 +27,7 @@ const  {height} = Dimensions.get('window');
 import styles from './styles';
 import { connect } from 'react-redux';
 import ColorHelper from '../../utilities/colorHelper';
+import NotificationHelper from '../../utilities/notificationHelper'
 import CategoryTab from "./categoryTab";
 class TransitionHome extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class TransitionHome extends Component {
   }
 
   loadingData(){
-      
+    
       var url = this.props.Settings.ApiUrl +'/category'
       fetch(url)
       .then((response) => response.json())
@@ -59,7 +60,8 @@ class TransitionHome extends Component {
         });
       })
       .catch((error) => {
-        console.error(error);
+        NotificationHelper.Notify('Kết nối không thành công!');
+        this.props.navigation.navigate('SplashScreen');
       });
   }
 

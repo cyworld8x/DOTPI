@@ -21,6 +21,7 @@ import {
 } from 'native-base';
 import Share, {ShareSheet} from 'react-native-share';
 import DateHelper from '../../utilities/dateHelper';
+import NotificationHelper from '../../utilities/notificationHelper';
 const deviceHeight = Dimensions.get("window").height;
 
 const deviceWidth = Dimensions.get("window").width;
@@ -163,7 +164,8 @@ class Post extends Component {
         if(post!=null){
             this.props.bookmarkPost({postid:post.postid, title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
         //var result = await StorageApi.addPost({postid:post.postid,title:post.title, image:post.image, api:this.props.navigation.state.params.post.api});
-        ToastAndroid.show('Bài viết đã được lưu',1000);
+        
+            NotificationHelper.Notify('Bài viết đã được lưu');
         }
         
     }
@@ -190,7 +192,8 @@ class Post extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
+                NotificationHelper.Notify('Kết nối không thành công!');
+                this.props.navigation.navigate('SplashScreen');
             });
     }
 
@@ -230,7 +233,8 @@ class Post extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
+                NotificationHelper.Notify('Kết nối không thành công!');
+                this.props.navigation.navigate('SplashScreen');
             });
     }
 

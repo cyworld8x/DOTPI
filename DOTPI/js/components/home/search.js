@@ -13,6 +13,7 @@ import {
     Spinner
 } from 'native-base';
 import DateHelper from '../../utilities/dateHelper';
+import NotificationHelper from '../../utilities/notificationHelper';
 import styles from './styles';
 import ColorHelper from '../../utilities/colorHelper';
 const deviceHeight = Dimensions.get("window").height;
@@ -69,11 +70,7 @@ class Search extends Component {
                     });
 
                     if (this.arr.length == 0) {
-                        if (Platform.OS === "android") {
-                            ToastAndroid.show('Không tìm thấy kết quả nào cho từ khóa "' +this.state.txtSearch+'"', ToastAndroid.SHORT);
-                        } else if (Platform.OS === "ios") {
-                            AlertIOS.alert('Không tìm thấy kết quả nào cho từ khóa "' +this.state.txtSearch+'"');
-                        }
+                        NotificationHelper.Notify('Không tìm thấy kết quả nào cho từ khóa "' +this.state.txtSearch+'"');
                     }
                 });
         }
@@ -82,11 +79,8 @@ class Search extends Component {
 
     onValidate() {
         if (this.state.txtSearch.length < 3) {
-            if (Platform.OS === "android") {
-                ToastAndroid.show('Từ khóa tìm kiếm phải ít nhất 3 ký tự', ToastAndroid.SHORT);
-            } else if (Platform.OS === "ios") {
-                AlertIOS.alert('Từ khóa tìm kiếm phải ít nhất 3 ký tự');
-            }
+            NotificationHelper.Notify('Từ khóa tìm kiếm phải ít nhất 3 ký tự');
+            
             return false;
         }
 

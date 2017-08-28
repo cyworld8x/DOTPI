@@ -1,7 +1,6 @@
 
 export default class ColorHelper{
     constructor(){
-        //Moment('vi');
     }
    
 

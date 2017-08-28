@@ -10,6 +10,7 @@ import {
     Spinner
 } from 'native-base';
 import DateHelper from '../../utilities/dateHelper';
+import NotificationHelper from '../../utilities/notificationHelper';
 import SinglePost from './singlePost';
 import TwinPostRow from './twinPostRow';
 import TwinPostColumn from './twinPostColumn';
@@ -111,7 +112,11 @@ class CategoryTab extends Component {
         var url = this.props.url + "/" + page;
         
         return fetch(url)
-            .then((response) =>response.json());
+            .then((response) =>response.json())
+            .catch((error) => {
+                NotificationHelper.Notify('Kết nối không thành công!');
+                this.props.navigation.navigate('SplashScreen');
+              });
     }
   
 

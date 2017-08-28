@@ -22,9 +22,15 @@ export default {
     width: 120,
     height: 142
   },
+  info: {
+    alignSelf:'center',
+    alignItems:'center',
+    flex:1, flexDirection:'column',
+  },
   text: {
     color: "#D8D8D8",
     bottom: 6,
     marginTop: 5
-  }
+  },
+  
 };
