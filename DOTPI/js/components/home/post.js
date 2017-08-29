@@ -286,10 +286,10 @@ class Post extends Component {
         }
         // Moment.locale('vn');
         let shareOptions = {
-            title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
+            title: "Chia sẻ bài viết từ ứng dụng Món Ăn Ngon",
             message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
-            url: this.props.Settings.WebsiteUrl,
-            subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
+            url: this.state.post!=null && this.state.post.shareurl? this.state.post.shareurl: this.props.Settings.WebsiteUrl,
+            subject: "Chia sẻ bài viết từ ứng dụng Món Ăn Ngon" //  for email 
         };
 
         return (

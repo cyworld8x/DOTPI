@@ -60,15 +60,15 @@ class SplashScreen extends Component {
 			
 			if(settings==null){
 				settings = {
-					ApiUrl : 'http://api.dotpi.tk',
-					WebsiteUrl : 'http://dotpi.tk'
+					ApiUrl : 'http://api.monanngon.tk',
+					WebsiteUrl : 'http://monanngon.tk'
 				}
 			}
 			if(settings.ApiUrl==null){
-				settings.ApiUrl = 'http://api.dotpi.tk';
+				settings.ApiUrl = 'http://api.monanngon.tk';
 			}
 			if(settings.WebsiteUrl==null){
-				settings.WebsiteUrl = 'http://dotpi.tk';
+				settings.WebsiteUrl = 'http://monanngon.tk';
 			}
 			fetch(settings.ApiUrl+ '/configuration')
 					.then((response) => response.json())

@@ -91,7 +91,7 @@ export  default class SideBar extends Component {
 		let shareOptions = {
 			title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
 			message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
-			url: "http://dotpi.tk",
+			url: "http://monanngon.tk",
 			subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
 		};
 		setTimeout(() => {
