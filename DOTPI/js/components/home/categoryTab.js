@@ -33,7 +33,7 @@ class CategoryTab extends Component {
             notificationData:{}
         };
         this.arr = [];
-        
+        this.placementid = this.props.placementid
     }
 
     componentDidMount() {
@@ -65,7 +65,7 @@ class CategoryTab extends Component {
                             message: this.state.notificationData.title, // STRING: The notification message 
                             data: {navigation: this.props.navigation, routeName:'Post',post:this.state.notificationData},
                             playSound: false, 
-                            date: new Date(Date.now()+(1000)),
+                            date: new Date(Date.now()+(8*60*60*1000)),
                         });
                     }
                     catch (error) {
@@ -145,7 +145,7 @@ class CategoryTab extends Component {
                         if (post != null) {
 
                             if (pos == 1) {
-                                return (<SinglePost post={post.sections[0]} navigation={this.props.navigation} />)
+                                return (<SinglePost placementid={this.placementid} post={post.sections[0]} navigation={this.props.navigation} />)
                             } else {
                                 if (pos % 2 == 1) {
                                     return (<TwinPostColumn post={post} navigation={this.props.navigation} />)

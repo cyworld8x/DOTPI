@@ -13,3 +13,7 @@ export function loadingDataStorage(posts) {
 export function saveSettings(settings) {
     return { type: 'SAVE_SETTINGS',settings };
 }
+
+export function countViewedPosts() {
+    return { type: 'VIEW_POST' };
+}

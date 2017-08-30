@@ -115,7 +115,9 @@ class Home extends Component {
 
                       <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
                         tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id) }} key={item.id * item.id / 100} heading={item.name}>
-                        <CategoryTab name={item.name} navigation={this.props.navigation} url={item.url} categoryid={item.id} />
+                        <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''}  
+                        name={item.name} 
+                        navigation={this.props.navigation} url={item.url} categoryid={item.id} />
                       </Tab>
                     );
                   })}

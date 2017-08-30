@@ -13,11 +13,11 @@ const deviceWidth = Dimensions.get("window").width;
 
 const logo = require("../../../img/logo.png");
 
+import { connect } from 'react-redux';
 class Category extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
-        
     }
 
     componentDidMount() {
@@ -54,7 +54,9 @@ class Category extends Component {
                      </Right >
 
                 </Header>
-                <CategoryTab navigation={this.props.navigation} url={this.props.navigation.state.params.url}  categoryid={this.props.navigation.state.params.categoryid}  />
+                <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                    navigation={this.props.navigation} url={this.props.navigation.state.params.url}  
+                    categoryid={this.props.navigation.state.params.categoryid}  />
 
             </Container>
             
@@ -62,4 +64,12 @@ class Category extends Component {
     }
 
 }
-export default Category;
+
+function mapStateToProps(state) {
+    return { 
+      
+       Settings: state.Settings
+    };
+}
+
+export default connect(mapStateToProps)(Category);

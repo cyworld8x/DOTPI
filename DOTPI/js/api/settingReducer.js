@@ -6,6 +6,12 @@ const SettingReducer = (state = {}, action) => {
         return action.settings;
        
     }
+    if (action.type === 'VIEW_POST') {
+       
+        let counter = state.Views == null? 1: state.Views + 1;
+        return {...state, Views: counter};
+       
+    }
     return state;
 };
 

@@ -4,7 +4,7 @@ import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpaci
 // import Moment from 'moment';
 import { connect } from 'react-redux';
 import { InterstitialAdManager } from 'react-native-fbads';
-import { bookmarkPost, saveSettings } from '../../api/actionCreators';
+import { bookmarkPost, countViewedPosts } from '../../api/actionCreators';
 import {
     Container, Header, Title, Content, Button,
     Badge,Spinner,
@@ -25,6 +25,7 @@ import NotificationHelper from '../../utilities/notificationHelper';
 const deviceHeight = Dimensions.get("window").height;
 
 const deviceWidth = Dimensions.get("window").width;
+
 
 import styles from './styles';
 import StorageApi from '../../api/storagePosts';
@@ -134,7 +135,6 @@ class ClonePost extends Component {
         this.onOpen = this.onOpen.bind(this);
         this.goBack = this.goBack.bind(this);
         this.checkingBookmark = this.checkingBookmark.bind(this);
-        this.showFullScreenAd = this.showFullScreenAd.bind(this);
        
     }
     onCancel() {
@@ -158,7 +158,31 @@ class ClonePost extends Component {
         
         return false;
     }
+    saveUserState(){
+       
+        this.props.countViewedPosts();
+        this.showFullScreenAd();
+        
+    }
 
+    showFullScreenAd() {        
+        if (!__DEV__) {
+            try{
+                if(this.props.Settings.ShowFacebookAd==true && this.props.Settings.Views % this.props.Settings.InterstitialRepeatedTime == 0){
+                    NotificationHelper.Notify('Quảng cáo sẽ xuất hiện sau vài giây');
+                    InterstitialAdManager.showAd(this.props.Settings.InterstitialPlacementId)
+                    .then(didClick => { })
+                    .catch(error => { NotificationHelper.Notify('CODE:0')})
+                } 
+            }
+            catch(error){
+                return;
+            }
+                      
+            
+        }
+    };
+    
     savePost(){
         let post = this.state.post;
         if(post!=null){
@@ -186,12 +210,14 @@ class ClonePost extends Component {
                         isShowAd: true,
                     }, function () {
                         this.props.postcontent = this.state.postcontent;
+                        
                     });
-                    
+                    this.saveUserState();
                 }
 
             })
             .catch((error) => {
+                console.error(error);
                 NotificationHelper.Notify('Kết nối không thành công!');
                 this.props.navigation.navigate('SplashScreen');
             });
@@ -246,12 +272,7 @@ class ClonePost extends Component {
 
      }
 
-    showFullScreenAd() {
-        //console.error('AAA');
-        InterstitialAdManager.showAd('1912255062335197_1954647211429315')
-            .then(didClick => {this.setState({isShowAd:false}); })
-                .catch(error => { console.error(error) })
-    };
+    
     
     render() {
         
@@ -286,10 +307,10 @@ class ClonePost extends Component {
         }
         // Moment.locale('vn');
         let shareOptions = {
-            title: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON",
+            title: "Chia sẻ bài viết từ ứng dụng Món Ăn Ngon",
             message: "Một ứng dụng tổng hợp nhiều bài viết về các món ăn đa dạng và phong phú",
             url: this.props.Settings.WebsiteUrl,
-            subject: "Mời bạn cài đặt ứng dụng MÓN ĂN NGON" //  for email 
+            title: "Chia sẻ bài viết từ ứng dụng Món Ăn Ngon"
         };
 
         return (
@@ -516,4 +537,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps,{bookmarkPost})(ClonePost);
+export default connect(mapStateToProps,{bookmarkPost, countViewedPosts})(ClonePost);

@@ -8,8 +8,9 @@ import {
 
 } from "native-base";
 import styles from './styles';
+import { InterstitialAdManager } from 'react-native-fbads';
 import DateHelper from '../../utilities/dateHelper';
-
+import { BannerView } from 'react-native-fbads';
 const logo = require("../../../img/logo.png");
 export default class SinglePost extends Component{
     constructor(props)
@@ -34,6 +35,16 @@ export default class SinglePost extends Component{
                         </View>
                         <Text style={styles.txtPostTitle}>{post.title}</Text>
                     </View>
+                    {this.props.placementid.length>0 && !__DEV__
+                        &&
+                            <View style={styles.postInfoFullRow}>
+                            <BannerView
+                                placementId={this.props.placementid}
+                                type="standard"
+                                onPress={() => console.log('click')}
+                                onError={(err) => {}}
+                            />
+                            </View>}
                 </TouchableOpacity>
             </View>
         </View>);
