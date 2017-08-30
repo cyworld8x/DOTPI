@@ -16,6 +16,7 @@ export default class SinglePost extends Component{
     constructor(props)
     {
         super(props);
+        
     }
 
     render(){
@@ -38,7 +39,7 @@ export default class SinglePost extends Component{
                     {this.props.placementid.length>0 && !__DEV__
                         &&
                             <View style={styles.postInfoFullRow}>
-                            <BannerView
+                            <BannerView style={{flex:1}}
                                 placementId={this.props.placementid}
                                 type="standard"
                                 onPress={() => console.log('click')}

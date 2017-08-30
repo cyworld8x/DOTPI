@@ -177,8 +177,7 @@ class ClonePost extends Component {
             }
             catch(error){
                 return;
-            }
-                      
+            }                     
             
         }
     };
@@ -210,9 +209,9 @@ class ClonePost extends Component {
                         isShowAd: true,
                     }, function () {
                         this.props.postcontent = this.state.postcontent;
-                        
+                        this.saveUserState();
                     });
-                    this.saveUserState();
+                    
                 }
 
             })
