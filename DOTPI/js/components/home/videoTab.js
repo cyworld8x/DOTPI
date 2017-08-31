@@ -89,8 +89,9 @@ class VideoTab extends Component {
         
     }
 
+    
     getVideos(page) {
-        var url =  this.props.Settings.ApiUrl +'video/' + page;
+        var url = this.props.url + "/" + page;
        
         return fetch(url)
             .then((response) =>response.json())
@@ -138,7 +139,7 @@ class VideoTab extends Component {
                                                     <Text style={styles.postDate}>{DateHelper.getView(post.sections[0].date, post.sections[0].id)}</Text>
                                                 </View>
                                                 
-                                                <Text style={styles.txtPostTitle}>{post.sections[1].title}</Text>
+                                                <Text style={styles.txtPostTitle}>{post.sections[0].title}</Text>
                                                
 
                                             </View>

@@ -113,22 +113,31 @@ class Home extends Component {
               </View>) : 
               (<Tabs renderTabBar={() => <ScrollableTab />}>
                   {this.state.dataSource.map((item) => {
-                    return (
+                    
+                    if(item.type==null || item.type=="post"){
+                        return (
 
-                      <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
-                        tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id) }} key={item.id * item.id / 100} heading={item.name}>
-                        <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''}  
-                        name={item.name} 
-                        navigation={this.props.navigation} url={item.url} categoryid={item.id} />
-                      </Tab>
-                    );
+                        <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
+                          tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id) }} key={item.key} heading={item.name}>
+                          <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''}  
+                          name={item.name} 
+                          navigation={this.props.navigation} url={item.url} categoryid={item.id} />
+                        </Tab>
+                      );
+                    }
+                    else{
+                      return(
+                        <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
+                        tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id+100) }} key={item.key} heading={item.name}>
+                          <VideoTab placementid={this.props.Settings != null && this.props.Settings.FacebookBannerPlacementId != null ? this.props.Settings.FacebookBannerPlacementId : ''}
+                            name={'Video'}
+                            navigation={this.props.navigation} url={item.url}   />
+                        </Tab>
+                      )
+                    }
+                    
                   })}
-                  <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} textStyle={{ color: '#FFF' }}
-                    tabStyle={{ backgroundColor: '#a2d246' }} key='video' heading={'Video'}>
-                    <VideoTab placementid={this.props.Settings != null && this.props.Settings.FacebookBannerPlacementId != null ? this.props.Settings.FacebookBannerPlacementId : ''}
-                      name={'Video'}
-                      navigation={this.props.navigation}  />
-                  </Tab>
+                  
                 </Tabs>)
         }
          
