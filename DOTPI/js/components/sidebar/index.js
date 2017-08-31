@@ -60,6 +60,12 @@ const datas = [
 		bg: "#48525D",
 	},
 	{
+		name: "Youtube",
+		route: "Youtube",
+		icon: "lock",
+		bg: "#48525D",
+	},
+	{
 		name: "THOÁT",
 		route: "Exit",
 		icon: "md-exit",

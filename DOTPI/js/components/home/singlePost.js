@@ -26,8 +26,8 @@ export default class SinglePost extends Component{
         return (<View key={post.id} style={styles.postContainerFullRow}>
             <View style={styles.postContentFullRow}>
                 <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post })}>
-                    {post!=null && post.image!=null ? <Image style={styles.postImageFullRow} source={{ uri: post.image}}/>:<Image style={styles.postImageFullRow} source={logo} />} 
-                    
+                    {post != null && post.image != null ? <Image style={styles.postImageFullRow} source={{ uri: post.image }} /> : <Image style={styles.postImageFullRow} source={logo} />}
+
                     <View style={styles.postInfoFullRow}>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.postDate}>{DateHelper.getLongDate(post.date)}</Text>
@@ -36,17 +36,16 @@ export default class SinglePost extends Component{
                         </View>
                         <Text style={styles.txtPostTitle}>{post.title}</Text>
                     </View>
+                </TouchableOpacity>
                     {this.props.placementid.length>0 && !__DEV__
                         &&
-                            <View style={styles.postInfoFullRow}>
-                            <BannerView style={{flex:1}}
-                                placementId={this.props.placementid}
-                                type="standard"
-                                onPress={() => console.log('click')}
-                                onError={(err) => {}}
-                            />
-                            </View>}
-                </TouchableOpacity>
+                        <BannerView style={styles.bannerFullRow}
+                        placementId={this.props.placementid}
+                        type="standard"
+                        onPress={() => console.log('click')}
+                        onError={(err) => {}}
+                    />}
+               
             </View>
         </View>);
     }

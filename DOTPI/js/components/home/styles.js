@@ -178,13 +178,13 @@ export default {
         width: deviceWidth,
         padding: 10,
         backgroundColor: '#FFF',
-
+        flex:1,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
     postImageFullRow: {
         borderRadius:5,
-        width: deviceWidth,
+        width: deviceWidth-20,
         height: deviceWidth/2,
         resizeMode: 'cover',
     },
@@ -195,8 +195,18 @@ export default {
     },
     postInfoFullRow: {
         paddingTop:5,
+        paddingHorizontal:5,
+        width: deviceWidth-20,
         justifyContent: 'space-between',
         
+        flex: 1,
+        flexDirection:'column'
+    },
+    bannerFullRow: {
+        paddingHorizontal:5,
+        width: deviceWidth-10,
+        alignSelf: 'stretch',
+        textAlign: 'center',       
         flex: 1,
         flexDirection:'column'
     },

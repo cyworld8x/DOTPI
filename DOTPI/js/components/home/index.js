@@ -27,8 +27,9 @@ const  {height} = Dimensions.get('window');
 import styles from './styles';
 import { connect } from 'react-redux';
 import ColorHelper from '../../utilities/colorHelper';
-import NotificationHelper from '../../utilities/notificationHelper'
+import NotificationHelper from '../../utilities/notificationHelper';
 import CategoryTab from "./categoryTab";
+import VideoTab from "./videoTab";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -60,6 +61,7 @@ class Home extends Component {
         });
       })
       .catch((error) => {
+        console.error(error);
         NotificationHelper.Notify('Kết nối không thành công!');
         this.props.navigation.navigate('SplashScreen');
       });
@@ -121,6 +123,12 @@ class Home extends Component {
                       </Tab>
                     );
                   })}
+                  <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} textStyle={{ color: '#FFF' }}
+                    tabStyle={{ backgroundColor: '#a2d246' }} key='video' heading={'Video'}>
+                    <VideoTab placementid={this.props.Settings != null && this.props.Settings.FacebookBannerPlacementId != null ? this.props.Settings.FacebookBannerPlacementId : ''}
+                      name={'Video'}
+                      navigation={this.props.navigation}  />
+                  </Tab>
                 </Tabs>)
         }
          

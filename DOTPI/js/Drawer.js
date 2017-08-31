@@ -14,6 +14,7 @@ import SplashScreen from "./components/splash";
 import TermAndCondition from "./components/home/termandcondition";
 import Version from "./components/splash/version";
 import Search from "./components/home/search";
+import Youtube from "./components/splash/youtube";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },
@@ -28,6 +29,7 @@ const DrawerNav = DrawerNavigator(
         TermAndCondition:{screen:TermAndCondition},
         Version:{screen:Version},
         Search:{screen:Search},
+        Youtube:{screen:Youtube}
     },
     {
         initialRouteName: "SplashScreen",
