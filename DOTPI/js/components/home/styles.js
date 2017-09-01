@@ -11,6 +11,20 @@ export default {
         flex: 1,
         backgroundColor:'#FFF'
     },
+    videocontainer: {
+        flex: 1,
+        backgroundColor: '#34B089' 
+    },
+    video_item: {        
+        borderRadius:5,
+        
+        width: deviceWidth-20,
+        flex: 1,
+        flexDirection: 'row',
+        borderBottomColor: 'silver',
+        borderBottomWidth: 10,
+        justifyContent: 'space-between',
+    },
     header: {
         height: 50,
         flexDirection: 'row',
@@ -64,6 +78,10 @@ export default {
         margin: 0,
         paddingHorizontal: 0
     },
+    videowrapper: {        
+        margin: 0,
+        paddingVertical: 0
+    },
     backStyle: {
         width: 30,
         height: 30
@@ -71,7 +89,6 @@ export default {
     listPostContainer: {
         backgroundColor: 'red',
         paddingHorizontal:30,
-        backgroundColor:'black'
     },
     singlePostContainer: {
         width:deviceWidth,
@@ -130,6 +147,7 @@ export default {
         height: deviceHeight/10,
 
     },
+
     postContainerCol: {
         width: deviceWidth,
 
@@ -147,10 +165,109 @@ export default {
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
+    video_item_left: {
+        width: deviceWidth / 2-15,    
+        flex:1,
+        borderRadius:5,        
+        flexDirection: 'column',
+        justifyContent: 'space-between', 
+        backgroundColor:'#09aa77'      
+    },
+    block_video: { 
+        borderTopLeftRadius:5,
+        borderTopRightRadius:5,               
+        zIndex:2,
+        flex:1    
+    },
+    block_video_mirror: {
+               
+        flex:1,     
+        borderRadius:5,       
+    },
+    video_column_right: {
+        width: deviceWidth / 2-15,  
+        flex:1, 
+        borderRadius:5,
+        //backgroundColor:'#09aa77',
+        backgroundColor: 'blue',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    block_video_shadow: {
+        flex:1,
+        borderTopLeftRadius:5,
+        borderTopRightRadius:5,
+        position:'absolute',
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
+        backgroundColor:'black',
+        opacity:0.2
+    },
+    block_video_shadow_play: {
+        flex:1,
+        borderRadius:5,
+        width: 60,
+        height: 60,
+        top: (deviceWidth / 2 - 15) / 2 - 30,
+        position:'absolute',
+        alignSelf:'center',
+        opacity: 1,
+    },
+    block_video_view: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
+       
+    },
+    block_video_bottom: {
+        flex:1,
+        paddingTop:5, 
+        paddingBottom:10, 
+        paddingHorizontal:10,      
+    },
+    block_video_view_counter_bottom: {
+        flex:1,
+        position:'absolute',
+        top: (deviceWidth / 2 - 15)*4/5,
+        width: deviceWidth / 2 - 15,
+        height: (deviceWidth / 2 - 15)/5,
+        backgroundColor:'black',
+        opacity:0.2,
+    },
+    block_video_view_counter_info: {
+        flex:1,
+        position:'absolute',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        top: (deviceWidth / 2 - 15)*4/5,
+        width: deviceWidth / 2 - 15
+    },
+    block_video_shadow_view: {
+        borderRadius:5,
+        width: 60,
+        height: 60,
+        top: (deviceWidth / 2 - 15) / 2 - 30,
+        position:'absolute',
+        alignSelf:'center',
+        opacity: 2,
+    },
     postImageCol: {
 
         width: deviceWidth / 2 - 20,
         height: deviceWidth / 3,
+        resizeMode: 'cover',
+    },
+    block_post_half_width: {
+
+        width: deviceWidth / 2 - 20,
+    },
+    
+    block_post_half_width_image: {
+        borderTopLeftRadius:5,
+        borderTopRightRadius:5,
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
         resizeMode: 'cover',
     },
     imageCol: {
@@ -260,6 +377,20 @@ export default {
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: '400'
+    },
+    txtMediumTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 14,
+        fontWeight: '400'
+    },
+    txtMediumVideoTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 14,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1}
     },
     txtSmallTitle: {
         fontFamily: 'Avenir',

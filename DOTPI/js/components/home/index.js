@@ -74,7 +74,7 @@ class Home extends Component {
   
   render() {       
     return (
-      <View style={{flex:1,backgroundColor: '#34B089'}} >
+      <View style={{flex:1}} >
         <Header  hasTabs style={{ backgroundColor: '#34B089' }}>
           <Left>
             <Button
@@ -127,7 +127,7 @@ class Home extends Component {
                     }
                     else{
                       return(
-                        <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
+                        <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} textStyle={{color:'#FFF'}}
                         tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id+100) }} key={item.key} heading={item.name}>
                           <VideoTab placementid={this.props.Settings != null && this.props.Settings.FacebookBannerPlacementId != null ? this.props.Settings.FacebookBannerPlacementId : ''}
                             name={'Video'}

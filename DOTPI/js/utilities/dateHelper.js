@@ -41,6 +41,34 @@ export default class DateHelper{
         }
     }
 
+    static getLongDateVideo(date){
+        
+         try{
+             let inputDate = this.parseDate(date);
+             let currentDate = new Date();
+             let diffMinutes =this.calDiffMinutes(inputDate,currentDate);
+             
+             if (diffMinutes >= 60 * 24 * 30 * 12) {
+                 let year = Math.floor(diffMinutes / (60 * 24 * 30 * 12));
+                 return year + ' ngày trước';
+
+             } else if (diffMinutes >= 60 * 24 * 30) {
+                 let month = Math.floor(diffMinutes / (60 * 24 * 30));
+                 return month + ' tháng trước';
+
+             } else if (diffMinutes >= 60) {
+                 let hour = Math.floor(diffMinutes / 60);
+                 return hour + ' giờ trước';
+             } else if (diffMinutes > 0) {
+                 return diffMinutes + ' phút trước';
+             } else {
+                 return diffMinutes + ' phút trước';
+             }
+         }catch(error){
+             return error;
+         }
+     }
+
     static getView(date, id){
         try{
             let inputDate = this.parseDate(date);

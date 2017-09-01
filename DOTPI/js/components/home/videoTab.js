@@ -19,7 +19,7 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 import { connect } from 'react-redux';
 const logo = require("../../../img/logo.png");
-
+const playicon = require("../../../img/play.png");
 class VideoTab extends Component {
     //eslint-disable-line
     constructor(props) {
@@ -115,9 +115,9 @@ class VideoTab extends Component {
         let pos = 0;
         const { root } = this.props;
         return (
-            <View style={styles.container}>
-                 <View style={styles.wrapper}>
-                    <ListView 
+            <View style={styles.videocontainer}>
+                 <View style={styles.videowrapper}>
+                    <ListView style={{ paddingLeft:10, paddingRight:10, paddingTop:10, paddingBottom:10}}
                         keyExtractor={post => { return ('FlatItem-' + post.id); }}
                         enableEmptySections={true}
                         dataSource={this.state.listPosts}
@@ -126,44 +126,69 @@ class VideoTab extends Component {
                             let post = item;
                             if (post != null) {
                                 return(
-                                <View key={post.id} style={styles.postContainerCol}>
+                                <View key={post.id} style={styles.video_item}>
                                     <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[0] })}>
-                                        <View style={styles.postContentCol}>
-
-                                            {post.sections[0] != null && post.sections[0].image != null ? <Image style={styles.postImageCol} source={{ uri: post.sections[0].image }} /> : <Image style={styles.postImageCol} source={logo} />}
-
-                                            <View style={styles.postInfoCol}>
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <Text style={styles.postDate}>{DateHelper.getLongDate(post.sections[0].date)}</Text>
-                                                    <Text style={styles.postMiddleDate} > | </Text>
-                                                    <Text style={styles.postDate}>{DateHelper.getView(post.sections[0].date, post.sections[0].id)}</Text>
+                                        <View style={styles.video_item_left}>
+                                           
+                                            <View style={styles.block_video} >
+                                                {post.sections[0] != null && post.sections[0].image != null ? <Image style={styles.block_post_half_width_image} source={{ uri: post.sections[0].image }} /> : <Image style={styles.block_post_half_width_image} source={logo} />}
+                                                <View style={styles.block_video_shadow} >                                                     
+                                                </View>                                                
+                                                <Image style={styles.block_video_shadow_play} source={ playicon } />
+                                                <View style={styles.block_video_view} >  
+                                                    <View style={styles.block_video_view_counter_bottom} >                                                     
+                                                    </View> 
+                                                    <View style={styles.block_video_view_counter_info} >  
+                                                        <View style={{ flex:1, flexDirection: 'row', paddingLeft:10,paddingRight:10,paddingTop:10, alignSelf:'center'}}>
+                                                            <Text style={styles.postDate}>{DateHelper.getLongDateVideo(post.sections[0].date)}</Text>
+                                                            <Text style={styles.postMiddleDate} > | </Text>
+                                                            <Text style={styles.postDate}>{DateHelper.getView(post.sections[0].date, post.sections[0].id)}</Text>
+                                                        </View>                                     
+                                                    </View>                                                   
                                                 </View>
-                                                
-                                                <Text style={styles.txtPostTitle}>{post.sections[0].title}</Text>
                                                
-
+                                            </View>
+                                            
+                                            <View style={styles.block_video_mirror} >
+                                                <View style={styles.block_video_bottom} >
+                                                    <Text style={styles.txtMediumVideoTitle}>{post.sections[0].title}</Text>
+                                                </View>
                                             </View>
 
                                         </View>
                                     </TouchableOpacity>
                                     {post.sections[1] != null ?
                                         (<TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[1] })}>
-                                            <View style={styles.postContentCol}>
-
-                                                {post.sections[1] != null && post.sections[1].image != null ? <Image style={styles.postImageCol} source={{ uri: post.sections[1].image }} /> : <Image style={styles.postImageCol} source={logo} />}
-
-                                                <View style={styles.postInfoCol}>
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Text style={styles.postDate}>{DateHelper.getLongDate(post.sections[1].date)}</Text>
-                                                        <Text style={styles.postMiddleDate} > | </Text>
-                                                        <Text style={styles.postDate}>{DateHelper.getView(post.sections[1].date, post.sections[1].id)}</Text>
-                                                    </View>
-                                                    <Text style={styles.txtPostTitle}>{post.sections[1].title}</Text>
-
+                                        <View style={styles.video_item_left}>
+                                           
+                                            <View style={styles.block_video} >
+                                                {post.sections[1] != null && post.sections[1].image != null ? <Image style={styles.block_post_half_width_image} source={{ uri: post.sections[1].image }} /> : <Image style={styles.block_post_half_width_image} source={logo} />}
+                                                <View style={styles.block_video_shadow} >                                                     
+                                                </View>                                                
+                                                <Image style={styles.block_video_shadow_play} source={ playicon } />
+                                                <View style={styles.block_video_view} >  
+                                                    <View style={styles.block_video_view_counter_bottom} >                                                     
+                                                    </View> 
+                                                    <View style={styles.block_video_view_counter_info} >  
+                                                        <View style={{ flex:1, flexDirection: 'row', paddingLeft:10,paddingRight:10,paddingTop:10, alignSelf:'center'}}>
+                                                            <Text style={styles.postDate}>{DateHelper.getLongDateVideo(post.sections[1].date)}</Text>
+                                                            <Text style={styles.postMiddleDate} > | </Text>
+                                                            <Text style={styles.postDate}>{DateHelper.getView(post.sections[1].date, post.sections[1].id)}</Text>
+                                                        </View>                                     
+                                                    </View>                                                   
                                                 </View>
-
+                                               
                                             </View>
-                                        </TouchableOpacity>) : (<View></View>)}
+                                            
+                                            <View style={styles.block_video_mirror} >
+
+                                                <View style={styles.block_video_bottom} >
+                                                    <Text style={styles.txtMediumVideoTitle}>{post.sections[0].title}</Text>
+                                                </View>
+                                            </View>
+
+                                        </View>
+                                    </TouchableOpacity>) : (<View></View>)}
 
                                 </View>
                                 )
