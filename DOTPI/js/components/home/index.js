@@ -61,7 +61,7 @@ class Home extends Component {
         });
       })
       .catch((error) => {
-        console.error(error);
+        
         NotificationHelper.Notify('Kết nối không thành công!');
         this.props.navigation.navigate('SplashScreen');
       });
@@ -108,7 +108,7 @@ class Home extends Component {
         </Header>
         {
           this.state.isLoading ? (
-              <View style={{ flex: 1,backgroundColor: "#FFF"  }}>
+              <View style={{ flex: 1,backgroundColor:'#34B089'  }}>
                 <Spinner style={{ paddingTop: height / 2 }} color='green' />
               </View>) : 
               (<Tabs renderTabBar={() => <ScrollableTab />}>
@@ -117,7 +117,7 @@ class Home extends Component {
                     if(item.type==null || item.type=="post"){
                         return (
 
-                        <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }}  textStyle={{color:'#FFF'}}
+                        <Tab activeTabStyle={{  backgroundColor: '#ffcc33',  }}  textStyle={{color:'#FFF',borderBottomColor:'green'}}
                           tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id) }} key={item.key} heading={item.name}>
                           <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''}  
                           name={item.name} 

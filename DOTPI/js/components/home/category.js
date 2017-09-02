@@ -9,6 +9,7 @@ import {
 
 import styles from './styles';
 import CategoryTab from './categoryTab';
+import VideoTab from './videoTab';
 const deviceWidth = Dimensions.get("window").width;
 
 const logo = require("../../../img/logo.png");
@@ -18,6 +19,7 @@ class Category extends Component {
     //eslint-disable-line
     constructor(props) {
         super(props);
+        
     }
 
     componentDidMount() {
@@ -29,7 +31,7 @@ class Category extends Component {
     render() {
         
         return (
-            <Container style={{ backgroundColor: '#FFF', flex: 1 }} >
+            <Container style={{ flex: 1 }} >
 
                 <Header hasTabs style={{ backgroundColor: '#34B089' }}>
                     <Left>
@@ -54,9 +56,19 @@ class Category extends Component {
                      </Right >
 
                 </Header>
-                <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                {
+                    this.props.navigation.state.params.categorytype ==null || 
+                    this.props.navigation.state.params.categorytype =='post'?
+                    <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
                     navigation={this.props.navigation} url={this.props.navigation.state.params.url}  
                     categoryid={this.props.navigation.state.params.categoryid}  />
+                    :
+                    
+                    <VideoTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                    navigation={this.props.navigation} url={this.props.navigation.state.params.url}  
+                    categoryid={this.props.navigation.state.params.categoryid}  />
+                }
+                
 
             </Container>
             

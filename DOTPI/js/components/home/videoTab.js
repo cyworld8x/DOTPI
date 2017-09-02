@@ -17,7 +17,6 @@ import TwinPostColumn from './twinPostColumn';
 import styles from './styles';
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
-import { connect } from 'react-redux';
 const logo = require("../../../img/logo.png");
 const playicon = require("../../../img/play.png");
 class VideoTab extends Component {
@@ -33,6 +32,7 @@ class VideoTab extends Component {
             notificationData:{}
         };
         this.arr = [];
+        
         //this.placementid = this.props.placementid
     }
 
@@ -92,7 +92,7 @@ class VideoTab extends Component {
     
     getVideos(page) {
         var url = this.props.url + "/" + page;
-       
+      
         return fetch(url)
             .then((response) =>response.json())
             .catch((error) => {
@@ -106,7 +106,7 @@ class VideoTab extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1,backgroundColor: "#FFF"  }}>
+                <View style={{ flex: 1,backgroundColor: "#34B089"  }}>
                     <Spinner style={{ paddingTop: deviceHeight / 2 }} color='green' />
                 </View>
             );
@@ -127,7 +127,7 @@ class VideoTab extends Component {
                             if (post != null) {
                                 return(
                                 <View key={post.id} style={styles.video_item}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[0] })}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { url: post.sections[0].api })}>
                                         <View style={styles.video_item_left}>
                                            
                                             <View style={styles.block_video} >
@@ -158,7 +158,7 @@ class VideoTab extends Component {
                                         </View>
                                     </TouchableOpacity>
                                     {post.sections[1] != null ?
-                                        (<TouchableOpacity onPress={() => navigation.navigate('Post', { post: post.sections[1] })}>
+                                        (<TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { url: post.sections[1].api })}>
                                         <View style={styles.video_item_left}>
                                            
                                             <View style={styles.block_video} >
@@ -170,7 +170,7 @@ class VideoTab extends Component {
                                                     <View style={styles.block_video_view_counter_bottom} >                                                     
                                                     </View> 
                                                     <View style={styles.block_video_view_counter_info} >  
-                                                        <View style={{ flex:1, flexDirection: 'row', paddingLeft:10,paddingRight:10,paddingTop:10, alignSelf:'center'}}>
+                                                        <View style={{ flex:1,  flexDirection: 'row', paddingLeft:10,paddingRight:10,paddingTop:10, alignSelf:'center'}}>
                                                             <Text style={styles.postDate}>{DateHelper.getLongDateVideo(post.sections[1].date)}</Text>
                                                             <Text style={styles.postMiddleDate} > | </Text>
                                                             <Text style={styles.postDate}>{DateHelper.getView(post.sections[1].date, post.sections[1].id)}</Text>
@@ -213,10 +213,5 @@ class VideoTab extends Component {
 }
 
 
-function mapStateToProps(state) {
-    return { 
-	   Settings: state.Settings
-    };
-}
 
-export default connect(mapStateToProps)(VideoTab);
+export default VideoTab

@@ -14,7 +14,7 @@ import SplashScreen from "./components/splash";
 import TermAndCondition from "./components/home/termandcondition";
 import Version from "./components/splash/version";
 import Search from "./components/home/search";
-import Youtube from "./components/splash/youtube";
+import Youtube from "./components/home/youtube";
 const DrawerNav = DrawerNavigator(
     {
         Home: { screen: Home },

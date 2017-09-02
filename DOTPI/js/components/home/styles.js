@@ -9,10 +9,12 @@ const deviceWidth = Dimensions.get("window").width;
 export default {
     container: {
         flex: 1,
-        backgroundColor:'#FFF'
+        backgroundColor:'#34B089',
+        alignSelf:'center',
     },
     videocontainer: {
         flex: 1,
+        alignSelf:'center',
         backgroundColor: '#34B089' 
     },
     video_item: {        
@@ -25,6 +27,7 @@ export default {
         borderBottomWidth: 10,
         justifyContent: 'space-between',
     },
+    
     header: {
         height: 50,
         flexDirection: 'row',
@@ -71,7 +74,7 @@ export default {
     },
     wrapper: {
         
-        backgroundColor: '#FFF',
+        backgroundColor: '#34B089',
         shadowColor: '#2E272B',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
@@ -81,6 +84,29 @@ export default {
     videowrapper: {        
         margin: 0,
         paddingVertical: 0
+    },
+    video_single_top:{
+        
+        paddingLeft:10,
+        paddingRight:10,
+        flexDirection: 'column',
+        justifyContent:'space-between'
+    },
+    video_single_middle:{
+        
+        paddingLeft:10,
+        paddingRight:10,
+        flex:1,
+        flexDirection: 'column',
+        justifyContent:'space-between'
+    },
+    video_single_bottom:{
+        paddingBottom:10,
+        paddingLeft:10,
+        paddingRight:10,
+        flex:1,
+        flexDirection: 'column',
+        justifyContent:'space-between'
     },
     backStyle: {
         width: 30,
@@ -103,10 +129,31 @@ export default {
         paddingVertical: 10,
         paddingHorizontal:10,
         flex:1,
+        backgroundColor:'#FFF',
         flexDirection: 'column',
         borderBottomColor: 'silver',
         borderBottomWidth: 10,
         justifyContent:'space-between',
+    },
+
+    double_post_column_container: {
+        width:deviceWidth,
+        paddingHorizontal:10,
+        flex:1,
+        flexDirection: 'column',
+        borderBottomColor: '#34B089',
+        borderBottomWidth: 10,
+        justifyContent:'space-between',
+    },
+    
+    double_post_row_container: {
+        width: deviceWidth,
+        flex: 1,
+        flexDirection: 'row',
+        borderBottomColor: '#34B089',
+        borderBottomWidth: 10,
+        justifyContent: 'space-between',
+        paddingHorizontal:10
     },
     savedPostContainer: {
         width:deviceWidth-20,
@@ -125,6 +172,83 @@ export default {
         paddingBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
+    },
+    double_post_column_view: {
+        borderBottomColor: 'silver',
+        borderBottomWidth: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    double_post_column_view_thumb: {
+        flex:7,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    double_post_column_view_thumb_shadow_bottom: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: deviceWidth/3-40,
+        backgroundColor:'#09aa77',
+        opacity:0.4
+    },
+    double_post_column_view_thumb_shadow_top: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: 0,
+        backgroundColor:'#09aa77',
+        opacity:0.4
+    },
+    double_post_column_view_thumb_bottom_title: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: deviceWidth/3-40
+    },
+    double_post_column_view_thumb_top_title: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: 0
+    },
+    double_post_column_view_info: {
+        flex:3,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        backgroundColor:'#09aa77'
+    },
+    double_post_column_view_info_view:
+    { 
+        flexDirection: 'row', 
+        flex:1, 
+        flexDirection:'column', 
+        justifyContent:'space-between',  
+        alignItems:'center',
+        backgroundColor:'black', 
+        paddingTop:10,
+        opacity:0.6,
+        height:deviceWidth/3-40
+    },
+    double_post_column_view_info_title:
+    { 
+        flexDirection: 'row', 
+        flex:1, 
+        flexDirection:'column', 
+        justifyContent:'space-between', 
+        paddingVertical:5, 
+        backgroundColor:'black', 
+        height:40,
+        opacity:0.4 
+    },
+    double_post_column_view_image: {
+        width: deviceWidth*2/3,
+        height: deviceWidth/3,
+        resizeMode:'cover'
     },
     postContent: {
         
@@ -150,7 +274,7 @@ export default {
 
     postContainerCol: {
         width: deviceWidth,
-
+        backgroundColor:'#FFF',
         flex: 1,
         flexDirection: 'row',
         borderBottomColor: 'silver',
@@ -165,6 +289,14 @@ export default {
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
+    double_post_row_view: {
+        width: deviceWidth / 2-15,    
+        flex:1,
+        borderRadius:5,        
+        flexDirection: 'column',
+        justifyContent: 'space-between', 
+        backgroundColor:'#09aa77'      
+    },
     video_item_left: {
         width: deviceWidth / 2-15,    
         flex:1,
@@ -173,11 +305,19 @@ export default {
         justifyContent: 'space-between', 
         backgroundColor:'#09aa77'      
     },
+    double_post_row_view_thumb: {                
+        zIndex:2,
+        flex:1    
+    },
     block_video: { 
         borderTopLeftRadius:5,
         borderTopRightRadius:5,               
         zIndex:2,
         flex:1    
+    },
+    double_post_row_view_thumb_mirror:{
+        flex:1,     
+        borderRadius:5,   
     },
     block_video_mirror: {
                
@@ -203,6 +343,14 @@ export default {
         backgroundColor:'black',
         opacity:0.2
     },
+    double_post_row_view_shadow: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
+        backgroundColor:'black',
+        opacity:0.2
+    },
     block_video_shadow_play: {
         flex:1,
         borderRadius:5,
@@ -213,6 +361,12 @@ export default {
         alignSelf:'center',
         opacity: 1,
     },
+    double_post_row_view_thumb_view:{
+        flex:1,
+        position:'absolute',
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
+    },
     block_video_view: {
         flex:1,
         position:'absolute',
@@ -220,11 +374,31 @@ export default {
         height: deviceWidth / 2 - 15,
        
     },
+    double_post_row_view_thumb_mirror_bottom: {
+        flex:1,
+        paddingTop:5, 
+        paddingBottom:10, 
+        paddingHorizontal:10,      
+    },
     block_video_bottom: {
         flex:1,
         paddingTop:5, 
         paddingBottom:10, 
         paddingHorizontal:10,      
+    },
+    single_video_bottom_info: {
+        flex:1,
+        padding:5,
+        flexDirection:'row'      
+    },
+    double_post_row_view_thumb_view_counter:{
+        flex:1,
+        position:'absolute',
+        top: (deviceWidth / 2 - 15)*4/5,
+        width: deviceWidth / 2 - 15,
+        height: (deviceWidth / 2 - 15)/5,
+        backgroundColor:'black',
+        opacity:0.2
     },
     block_video_view_counter_bottom: {
         flex:1,
@@ -234,6 +408,22 @@ export default {
         height: (deviceWidth / 2 - 15)/5,
         backgroundColor:'black',
         opacity:0.2,
+    },
+    double_post_row_view_thumb_view_info : {
+        flex:1, 
+        flexDirection: 'row', 
+        paddingLeft:10,
+        paddingRight:10,
+        paddingTop:10, 
+        alignSelf:'center'
+    },
+    double_post_row_view_thumb_view_counter_info: {
+        flex:1,
+        position:'absolute',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        top: (deviceWidth / 2 - 15)*4/5,
+        width: deviceWidth / 2 - 15
     },
     block_video_view_counter_info: {
         flex:1,
@@ -262,7 +452,11 @@ export default {
 
         width: deviceWidth / 2 - 20,
     },
-    
+    double_post_row_view_thumb_image: {
+        width: deviceWidth / 2 - 15,
+        height: deviceWidth / 2 - 15,
+        resizeMode: 'cover',
+    },
     block_post_half_width_image: {
         borderTopLeftRadius:5,
         borderTopRightRadius:5,
@@ -284,11 +478,25 @@ export default {
 
     postContainerFullRow: {
         width: deviceWidth,
-
         flex: 1,
         flexDirection: 'row',
         borderBottomColor: 'silver',
         borderBottomWidth: 10,
+        justifyContent: 'space-between',
+    },
+    single_post_container: {
+        width: deviceWidth,
+        flex: 1,
+        flexDirection: 'column',
+        borderBottomColor: '#34B089',
+        borderBottomWidth: 10,
+        justifyContent: 'space-between',
+    },
+    single_post_view: {
+        width: deviceWidth,
+        paddingHorizontal: 10,
+        flex:1,
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     postContentFullRow: {
@@ -310,6 +518,72 @@ export default {
         height: deviceWidth *2/ 3,
 
     },
+    single_post_views: {
+        position:'absolute',
+        paddingTop:5,
+        paddingHorizontal:5,
+        zIndex:1,
+        top: 0,
+        width: deviceWidth-20,
+        justifyContent: 'space-between',
+        height:30,
+        flex: 1,
+        flexDirection:'column',
+        alignSelf:'flex-end'
+    },
+    single_post_info: {
+        position:'absolute',
+        paddingTop:5,
+        paddingHorizontal:5,
+        zIndex:3,
+        top: deviceWidth/2-40,
+        width: deviceWidth-20,
+        justifyContent: 'space-between',
+        
+        flex: 1,
+        flexDirection:'row'
+    },
+    single_post_info_date: 
+    { 
+        flex: 3,
+        height:50, 
+        alignSelf:'center', 
+        alignItems:'center'
+    },
+    single_post_info_title: 
+    { 
+        flex: 7,
+        height:50 
+    },
+    single_post_info_shadow: {
+        position:'absolute',
+        zIndex:2,
+        top: deviceWidth/2-40,
+        width: deviceWidth-20,
+        height:40,
+        borderBottomLeftRadius:5,
+        borderBottomRightRadius:5,
+        backgroundColor:'#09aa77',
+        opacity:0.8,
+        flex: 1,
+        flexDirection:'row'
+    },
+    single_post_info_shadow_date:
+    { 
+        flex: 3,
+        height:50, 
+        backgroundColor: 'black',
+        justifyContent: 'space-between',
+        opacity: 0.6, 
+        borderBottomLeftRadius:5 
+    },
+    single_post_info_shadow_title:
+    {   
+        flex: 7,
+        height:50, 
+        backgroundColor: 'black', 
+        opacity: 0.4 
+    },
     postInfoFullRow: {
         paddingTop:5,
         paddingHorizontal:5,
@@ -320,18 +594,73 @@ export default {
         flexDirection:'column'
     },
     bannerFullRow: {
-        paddingHorizontal:5,
+       
         width: deviceWidth-10,
         alignSelf: 'stretch',
         textAlign: 'center',       
         flex: 1,
         flexDirection:'column'
     },
+    single_post_text_view:{
+        fontSize:12, 
+        fontStyle:'italic', 
+        paddingLeft:10,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        alignSelf:'flex-end'
+    },
+    single_post_text_date:{
+        fontSize:12, 
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        paddingHorizontal:5,
+        paddingTop:5,
+        textAlign:'center',
+        alignSelf:'center'
+    },
+    single_post_text_title: {
+        fontFamily: 'Avenir',
+        fontSize: 14,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        paddingHorizontal:10,
+        textAlign:'center',
+        alignSelf:'flex-start'
+    },
+    double_post_column_text_title: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        paddingHorizontal:10
+    },
     postDate:{
-        color:'silver', fontSize:10, fontStyle:'italic', 
+        fontSize:12, fontStyle:'italic', 
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
     },
     postMiddleDate:{
-        color:'black', fontSize:10, 
+        fontSize:10, 
+        color:'black',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
     },
     postDetailDate:{
         alignSelf:'center',
@@ -383,6 +712,35 @@ export default {
         fontSize: 14,
         fontWeight: '400'
     },
+    txtSinglePostTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        color:'#09aa77',
+        fontWeight: '500'
+    },
+    double_post_row_text_view: {
+        flex:1,
+        fontFamily: 'Avenir',
+        fontSize: 14,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        alignSelf:'center'
+    },
+    double_post_column_text_view: {
+        flex:1,
+        fontStyle:'italic', 
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        alignSelf:'center'
+    },
     txtMediumVideoTitle: {
         fontFamily: 'Avenir',
         fontSize: 14,
@@ -390,7 +748,33 @@ export default {
         fontWeight: '400',
         textShadowColor:'#636664',
         textShadowRadius:1,
-        textShadowOffset:{width:1, height:1}
+        textShadowOffset:{width:1, height:1},
+        alignSelf:'center'
+    },
+    txtSmallVideoTitleCenter:{
+        
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        paddingHorizontal:10,
+        alignSelf:'center'
+    },
+    txt_single_video_date:{
+        position: 'absolute',
+        paddingTop:10,
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        color:'#FFF',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+        alignSelf:'flex-end',
+        paddingHorizontal:10
     },
     txtSmallTitle: {
         fontFamily: 'Avenir',

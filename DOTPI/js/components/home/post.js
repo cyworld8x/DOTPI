@@ -38,7 +38,17 @@ const script = `<script>
                             calculator.appendChild(document.body.firstChild);
                         }
                         document.body.appendChild(calculator);
-                        
+                        var images = document.getElementsByTagName('img'); 
+                        var srcList = [];
+                        for(var i = 0; i < images.length; i++) {
+                            srcList.push(images[i].src);
+                        }
+                        var allimgs = document.images;
+                        for (var i = 0; i < allimgs.length; i++) {
+                            allimgs[i].onerror = function() {
+                                this.style.visibility = "hidden"; // Other elements aren't affected. 
+                            }
+                        }
                         var i = 0;
                         function updateHeight() {
                             document.title = calculator.clientHeight;
@@ -217,7 +227,6 @@ class Post extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
                 NotificationHelper.Notify('Kết nối không thành công!');
                 this.props.navigation.navigate('SplashScreen');
             });
@@ -320,7 +329,7 @@ class Post extends Component {
                     <Left>
                         <Button
                             transparent
-                            onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid: this.state.post.categoryid })}
+                            onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid: this.state.post.categoryid, categorytype:'post' })}
                         >
                             <Icon style={{ color: "#FFF" }} name="md-arrow-round-back" />
                         </Button>

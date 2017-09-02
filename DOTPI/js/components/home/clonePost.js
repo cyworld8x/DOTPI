@@ -177,7 +177,8 @@ class ClonePost extends Component {
             }
             catch(error){
                 return;
-            }                     
+            }
+                      
             
         }
     };
@@ -216,7 +217,6 @@ class ClonePost extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
                 NotificationHelper.Notify('Kết nối không thành công!');
                 this.props.navigation.navigate('SplashScreen');
             });
@@ -319,7 +319,7 @@ class ClonePost extends Component {
                     <Left>
                         <Button
                             transparent
-                            onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid: this.state.post.categoryid })}
+                            onPress={() => this.props.navigation.navigate('Category', { url: this.state.post.url, title: this.state.post.categoryname, categoryid: this.state.post.categoryid, categorytype:'post' })}
                         >
                             <Icon style={{ color: "#FFF" }} name="md-arrow-round-back" />
                         </Button>

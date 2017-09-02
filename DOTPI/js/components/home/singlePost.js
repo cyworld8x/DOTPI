@@ -23,21 +23,41 @@ export default class SinglePost extends Component{
         const  post  = this.props.post;
         
         const  navigation  = this.props.navigation;
-        return (<View key={post.id} style={styles.postContainerFullRow}>
-            <View style={styles.postContentFullRow}>
+        return (<View key={post.id} style={styles.single_post_container}>
+            <View style={styles.single_post_view}>
                 <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post })}>
                     {post != null && post.image != null ? <Image style={styles.postImageFullRow} source={{ uri: post.image }} /> : <Image style={styles.postImageFullRow} source={logo} />}
+                    <View style={styles.single_post_views}>
+                        <Text style={styles.single_post_text_view}>{DateHelper.getView(post.date, post.id)}</Text>
+                    </View>
+                    <View style={styles.single_post_info_shadow}>
+                        <View style={styles.single_post_info_shadow_date}>
+                            
 
-                    <View style={styles.postInfoFullRow}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.postDate}>{DateHelper.getLongDate(post.date)}</Text>
-                            <Text style={styles.postMiddleDate} > | </Text>
-                            <Text style={styles.postDate}>{DateHelper.getView(post.date, post.id)}</Text>
                         </View>
-                        <Text style={styles.txtPostTitle}>{post.title}</Text>
+
+                        <View style={styles.single_post_info_shadow_title}>
+                            
+
+                        </View>
+                    </View>
+                    
+                    <View style={styles.single_post_info}>
+                        <View style={styles.single_post_info_date}>
+                            <Text style={styles.single_post_text_date}>{DateHelper.getLongDate(post.date)}</Text>
+
+                        </View>
+                        <View style={styles.single_post_info_title}>
+                            <Text style={styles.single_post_text_title}>{post.title}</Text>
+
+                        </View>
+                       
                     </View>
                 </TouchableOpacity>
-                    {this.props.placementid.length>0 && !__DEV__
+                   
+               
+            </View>
+            {this.props.placementid.length>0 && !__DEV__
                         &&
                         <BannerView style={styles.bannerFullRow}
                         placementId={this.props.placementid}
@@ -45,8 +65,6 @@ export default class SinglePost extends Component{
                         onPress={() => console.log('click')}
                         onError={(err) => {}}
                     />}
-               
-            </View>
         </View>);
     }
 }

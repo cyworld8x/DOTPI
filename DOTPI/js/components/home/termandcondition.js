@@ -59,10 +59,10 @@ const htmlStyle = `<style>
         a,img{border:none}
         a{color:#466da4;cursor:pointer;display:inline;text-decoration:inherit;text-decoration:none}
 
-        h1 {font-size:16px; margin:0 0 8px 0; padding:0;}
-        p {margin:0 0 10px 0; line-height:18px;}
+        h1 {font-size:16px; margin:0 0 8px 0; padding:0; color:white}
+        p {margin:0 0 10px 0; line-height:18px;color:white}
         
-        .content {border-radius:10px; border:1px solid #ccc; background:#FFF; padding:20px; margin:10px 6px;}
+        .content {border-radius:10px; border:1px solid #ccc; background:#209872; padding:20px; margin:10px 6px;}
         
         .hili01 {margin-top:20px; font-style:italic; color:#666;}
         h2 {
@@ -146,7 +146,7 @@ class TermAndCondition extends Component {
             </Right >
           
         </Header>
-        <View style={{ flex: 1, backgroundColor: 'silver' }}>
+        <View style={{ flex: 1, backgroundColor: '#34b089' }}>
             <WebView  source={{ html: htmlStyle + '<body>'+html+'</body>' }} domStorageEnabled={true}
             style={{padding:10}}
                 automaticallyAdjustContentInsets={false}

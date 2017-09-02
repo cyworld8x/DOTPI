@@ -14,7 +14,7 @@ const deletePost = async (post) => {
 
             await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts), (err, result) => { console.log(result); });
         } catch (error) {
-            console.error(error);
+            
             return false;
         }
         return posts;
@@ -38,7 +38,7 @@ const addPost =async (post) => {
 
                 await AsyncStorage.setItem('@Posts:key', JSON.stringify(posts), (err, result) => { console.log(err); });
             } catch (error) {
-                console.error(error);
+                
                 return false;
             }
             return true;
@@ -52,7 +52,7 @@ const getPosts = async () => {
            
         } catch (error) {
         // Error retrieving data
-            console.error(error);
+            
             return [];
         }
         
@@ -63,7 +63,7 @@ const getAllPosts = () => {
         
     } catch (error) {
     // Error retrieving data
-        console.error(error);
+        
         return [];
     }
     
@@ -101,7 +101,7 @@ const loadingSettings = () => {
 
     } catch (error) {
         // Error retrieving data
-        console.error(error);
+        
         return {};
     }
 

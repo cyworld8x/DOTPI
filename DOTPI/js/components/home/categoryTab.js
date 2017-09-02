@@ -123,7 +123,7 @@ class CategoryTab extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1,backgroundColor: "#FFF"  }}>
+                <View style={{ flex: 1,backgroundColor: "#34B089"  }}>
                     <Spinner style={{ paddingTop: deviceHeight / 2 }} color='green' />
                 </View>
             );
@@ -134,7 +134,7 @@ class CategoryTab extends Component {
         return (
             <View style={styles.container}>
                  <View style={styles.wrapper}>
-                <ListView 
+                <ListView style={{paddingVertical:10}}
                     keyExtractor={post => { return ('FlatItem-' + post.id); }}
                     enableEmptySections={true}
                     dataSource={this.state.listPosts}
@@ -147,7 +147,7 @@ class CategoryTab extends Component {
                             if (pos == 1) {
                                 return (<SinglePost placementid={this.placementid} post={post.sections[0]} navigation={this.props.navigation} />)
                             } else {
-                                if (pos % 2 == 1) {
+                                if (pos % 4 == 1 || pos % 4 == 2|| pos % 4 == 3) {
                                     return (<TwinPostColumn post={post} navigation={this.props.navigation} />)
                                     {/* return (<CouplePostsColumn navigation={this.props.navigation} post={post}/>) */ }
                                 } else {

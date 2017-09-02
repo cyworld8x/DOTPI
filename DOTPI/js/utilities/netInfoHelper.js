@@ -14,7 +14,7 @@ export default class NetInfoHelper {
 
     handleConnectivityChange(isConnected) {
         if(!isConnected){
-            console.error(isConnected);
+            // console.error(isConnected);
             this.navigation.navigate("Version");
         }
         

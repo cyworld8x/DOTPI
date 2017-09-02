@@ -27,14 +27,14 @@ export default class DateHelper{
             let diffMinutes =this.calDiffMinutes(inputDate,currentDate);
             
             if(diffMinutes>=60*24){                
-                return date;
+                return date.split(' ')[1];
             }else if(diffMinutes>=60){
                 let hour = Math.floor(diffMinutes/60);
                 return hour + ' giờ trước';
             } else if(diffMinutes>0){
                 return diffMinutes + ' phút trước';
             } else {
-                return diffMinutes + ' phút trước';
+                return 'Mới cập nhật';
             }
         }catch(error){
             return error;
@@ -47,7 +47,7 @@ export default class DateHelper{
              let inputDate = this.parseDate(date);
              let currentDate = new Date();
              let diffMinutes =this.calDiffMinutes(inputDate,currentDate);
-             
+
              if (diffMinutes >= 60 * 24 * 30 * 12) {
                  let year = Math.floor(diffMinutes / (60 * 24 * 30 * 12));
                  return year + ' ngày trước';
@@ -55,6 +55,9 @@ export default class DateHelper{
              } else if (diffMinutes >= 60 * 24 * 30) {
                  let month = Math.floor(diffMinutes / (60 * 24 * 30));
                  return month + ' tháng trước';
+             } else if (diffMinutes >= 60 * 24) {
+                 let month = Math.floor(diffMinutes / (60 * 24));
+                 return month + ' ngày trước';
 
              } else if (diffMinutes >= 60) {
                  let hour = Math.floor(diffMinutes / 60);
@@ -62,31 +65,34 @@ export default class DateHelper{
              } else if (diffMinutes > 0) {
                  return diffMinutes + ' phút trước';
              } else {
-                 return diffMinutes + ' phút trước';
+                 return 'Mới cập nhật';
              }
          }catch(error){
-             return error;
+             return '';
          }
      }
 
-    static getView(date, id){
+    static getView(date, id){       
+        return this.getViewVideo(date,id)+ ' lượt xem';
+    }
+
+    static getViewVideo(date, id){
         try{
             let inputDate = this.parseDate(date);
             let currentDate = new Date();
             let diffMinutes =this.calDiffMinutes(inputDate,currentDate);
-            let addViews = Math.floor(Number(id)/1000);
-            if(addViews>5000){
-                addViews = Number(id);
-            }
+            diffMinutes = diffMinutes>0?diffMinutes:1;
+            let addViews = Number(id)*Number(id)%100;
+            
             diffMinutes = diffMinutes+ addViews;
             if(addViews>20000){
                 diffMinutes = 20000 + Number(id);
             }
-            return (diffMinutes) + ' lượt xem' ;
+            return (diffMinutes);
         }
         catch(error){
-            return Number(id)*2 + ' lượt xem';
+            return Number(id)*2;
         }
-        return Number(id)*2 + ' lượt xem';
+        return Number(id)*2;
     }
 }
