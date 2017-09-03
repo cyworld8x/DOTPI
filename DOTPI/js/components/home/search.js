@@ -175,7 +175,7 @@ class Search extends Component {
                         onEndReached={this.onLoadMore.bind(this)}
                         renderRow={post => (
                             <View style={styles.search_postContainer}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Post', { post: post })}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate(post.type=='Post'?'Post':'Youtube', { post: post })}>
                                     <View style={styles.search_content}>
                                         {post.image != null ? <Image style={styles.postImage} source={{ uri: post.image }} /> : <Image style={styles.postImage} source={noThumbnail} />}
                                         <View style={styles.search_postInfo}>

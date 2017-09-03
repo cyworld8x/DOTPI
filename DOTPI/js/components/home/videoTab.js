@@ -127,7 +127,7 @@ class VideoTab extends Component {
                             if (post != null) {
                                 return(
                                 <View key={post.id} style={styles.video_item}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { url: post.sections[0].api })}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { post: post.sections[0] })}>
                                         <View style={styles.video_item_left}>
                                            
                                             <View style={styles.block_video} >
@@ -158,7 +158,7 @@ class VideoTab extends Component {
                                         </View>
                                     </TouchableOpacity>
                                     {post.sections[1] != null ?
-                                        (<TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { url: post.sections[1].api })}>
+                                        (<TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { post: post.sections[1] })}>
                                         <View style={styles.video_item_left}>
                                            
                                             <View style={styles.block_video} >

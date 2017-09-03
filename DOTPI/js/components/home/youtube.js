@@ -47,7 +47,7 @@ class Youtube extends Component {
 
     componentDidMount() {
      
-      var url = this.props.navigation.state.params.url;
+      var url = this.props.navigation.state.params.post.api;
       
       return fetch(url)
           .then((response) => response.json())

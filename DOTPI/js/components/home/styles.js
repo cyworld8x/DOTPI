@@ -179,19 +179,116 @@ export default {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    double_post_column_view_thumb: {
-        flex:7,
+    double_post_column_view_thumb_full: {
+        flex:1,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    double_post_column_view_thumb_shadow_bottom: {
+    double_post_column_view_thumb_shadow: {
         flex:1,
+        position:'absolute',
+        width: deviceWidth,
+        height: deviceWidth/3,
+        top:0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    double_post_column_view_thumb: {
+        flex:1,
+        position:'absolute',
+        width: deviceWidth,
+        height: deviceWidth/3,
+        top:0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    double_post_column_view_thumb_col_2: {
+        flex:2,
+        height:deviceWidth
+        
+    },
+    double_post_column_view_thumb_shadow_col_2_bottom: {
+        
         position:'absolute',
         width: deviceWidth*2/3,
         height:40,
         top: deviceWidth/3-40,
-        backgroundColor:'#09aa77',
+        backgroundColor:'black',
         opacity:0.4
+    },
+    double_post_column_view_thumb_shadow_col_2_top: {
+        
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: 0,
+        backgroundColor:'black',
+        opacity:0.4
+    },
+    double_post_column_view_thumb_col_2_bottom: {
+        
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: deviceWidth/3-40
+    },
+    double_post_column_view_thumb_col_2_top: {
+        
+        position:'absolute',
+        width: deviceWidth*2/3,
+        height:40,
+        top: 0
+    },
+    double_post_column_view_thumb_shadow_col_1_bottom_rowspan_2: {        
+        position:'absolute',
+        width: deviceWidth/3,
+        height:deviceWidth/3-40,
+        top: 40
+    },
+    double_post_column_view_thumb_shadow_col_1_bottom_rowspan_1: {        
+        position:'absolute',
+        width: deviceWidth/3,
+        height:40,
+        top: deviceWidth/3-40,
+        backgroundColor:'black',
+        opacity:0.6
+    },
+    double_post_column_view_thumb_col_1_bottom: {        
+        position:'absolute',
+        width: deviceWidth/3,
+        height:35,
+        top: deviceWidth/3-40,
+        paddingTop:10,
+        paddingHorizontal:10,
+        alignSelf:'flex-end'
+    },
+    double_post_column_view_thumb_shadow_col_1_top_rowspan_2: {
+        position:'absolute',
+        width: deviceWidth/3,
+        height:deviceWidth*2/3,
+        top: 0,
+    },
+    double_post_column_view_thumb_shadow_col_1_top_rowspan_1: {
+        position:'absolute',
+        width: deviceWidth/3,
+        height:40,
+        top: 0,        
+        backgroundColor:'black',
+        opacity:0.6
+    },
+    double_post_column_view_thumb_col_1_top: {
+        paddingTop:10,
+        paddingHorizontal:10,
+        alignSelf:'flex-end',
+        position:'absolute',
+        width: deviceWidth/3-5,
+        height:35,
+        top: 0
+    },
+    double_post_column_view_thumb_col_1: {
+        flex:1,
+        flexDirection:'column',
+        height:deviceWidth/3
     },
     double_post_column_view_thumb_shadow_top: {
         flex:1,
@@ -224,15 +321,14 @@ export default {
     },
     double_post_column_view_info_view:
     { 
-        flexDirection: 'row', 
-        flex:1, 
+        flex:1,
         flexDirection:'column', 
         justifyContent:'space-between',  
         alignItems:'center',
         backgroundColor:'black', 
         paddingTop:10,
         opacity:0.6,
-        height:deviceWidth/3-40
+        height:deviceWidth-40
     },
     double_post_column_view_info_title:
     { 
@@ -246,7 +342,7 @@ export default {
         opacity:0.4 
     },
     double_post_column_view_image: {
-        width: deviceWidth*2/3,
+        width: deviceWidth,
         height: deviceWidth/3,
         resizeMode:'cover'
     },
@@ -595,7 +691,7 @@ export default {
     },
     bannerFullRow: {
        
-        width: deviceWidth-10,
+        width: deviceWidth,
         alignSelf: 'stretch',
         textAlign: 'center',       
         flex: 1,
@@ -654,13 +750,90 @@ export default {
         textShadowRadius:1,
         textShadowOffset:{width:1, height:1},
     },
-    postMiddleDate:{
-        fontSize:10, 
-        color:'black',
+    detail_post_text_view:{
+        fontSize:12, fontStyle:'italic', 
+        color:'silver',
         fontWeight: '400',
         textShadowColor:'#636664',
         textShadowRadius:1,
         textShadowOffset:{width:1, height:1},
+    },
+    detail_post_text_date:{
+        fontSize:12, fontStyle:'italic', 
+        color:'silver',
+        fontWeight: '400'
+    },
+    postMiddleDate:{
+        fontSize:10, 
+        color:'black',
+        fontFamily: 'Avenir',
+        fontWeight: '400',
+        textShadowColor:'#636664',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1},
+    },
+    detail_post_middle_text_date:{
+        fontSize:10, 
+        color:'silver',
+        fontFamily: 'Avenir',
+        fontWeight: '400',
+    },
+    detail_post_featured_image_top:{
+        zIndex:3, position:'absolute',
+        paddingTop:5,
+        paddingHorizontal:5,
+        top: 0,
+        width: deviceWidth-20,
+        justifyContent: 'space-between',
+        height:30,
+        flexDirection:'column',
+        alignSelf:'flex-end'
+    },
+    detail_post_featured_container:{
+        width:deviceWidth, height:deviceWidth*3/5
+    },
+    detail_post_featured_image_container:{
+        width:deviceWidth, height:deviceWidth*3/5
+    },
+    detail_post_featured_image_top_shadow:{ 
+        zIndex:2, 
+        position: 'absolute', 
+        width:deviceWidth, 
+        height:50, 
+        top:deviceWidth*3/5-50, 
+        flexDirection:'row' 
+    },
+    detail_post_featured_image_top_category_view:{
+        flex:1,height:50, alignSelf:'center', alignItems:'center'
+    },
+    detail_post_featured_image_top_category_text_title:{ 
+        fontWeight: '400', paddingTop:10, fontSize:14, color:'#FFF',fontFamily: 'Avenir'
+    },
+    detail_post_featured_image_bottom_view:{
+        zIndex:4, position: 'absolute', width:deviceWidth, height:50, top:deviceWidth*3/5-50, flexDirection:'row'
+    },
+    detail_post_featured_image_bottom_date_view:{
+        zIndex:3, position:'absolute',
+        paddingTop:5,
+        paddingHorizontal:5,
+        top: 0,
+        width: deviceWidth-20,
+        justifyContent: 'space-between',
+        height:30,
+        flexDirection:'column',
+        alignSelf:'flex-end'
+    },
+    detail_post_featured_image_top_view_title:{ 
+        flex:2,height:50, paddingHorizontal:10, paddingVertical:5, alignSelf:'center', alignItems:'center', 
+    },
+    detail_post_featured_image_top_text_title:{ 
+        color: '#FFF', fontSize: 16, 
+        flex: 1,fontWeight: '400', 
+        fontFamily: 'Avenir', 
+        textShadowColor:'#636664', 
+        alignSelf:'flex-start',
+        textShadowRadius:1,
+        textShadowOffset:{width:1, height:1} 
     },
     postDetailDate:{
         alignSelf:'center',
@@ -703,6 +876,11 @@ export default {
         fontWeight: '400'
     },
     txtPostTitle: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        fontWeight: '400'
+    },
+    detail_post_text_title: {
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: '400'
@@ -809,7 +987,7 @@ export default {
     },
 
     search_postContainer: {
-        width: deviceWidth,
+        width: deviceWidth-10,
 
         flex: 1,
         flexDirection: 'row',
@@ -826,6 +1004,7 @@ export default {
         flexDirection: 'row',
     },
     search_postInfo: {
+        width:deviceWidth*3/4-30,
         paddingHorizontal: 10,
         flexDirection: 'column',
         justifyContent: 'space-between',

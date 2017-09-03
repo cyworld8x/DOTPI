@@ -21,6 +21,7 @@ import {
 } from 'native-base';
 import Share, {ShareSheet} from 'react-native-share';
 import DateHelper from '../../utilities/dateHelper';
+import ColorHelper from '../../utilities/colorHelper';
 import NotificationHelper from '../../utilities/notificationHelper';
 const deviceHeight = Dimensions.get("window").height;
 
@@ -38,7 +39,17 @@ const script = `<script>
                             calculator.appendChild(document.body.firstChild);
                         }
                         document.body.appendChild(calculator);
-                        
+                        var images = document.getElementsByTagName('img'); 
+                        var srcList = [];
+                        for(var i = 0; i < images.length; i++) {
+                            srcList.push(images[i].src);
+                        }
+                        var allimgs = document.images;
+                        for (var i = 0; i < allimgs.length; i++) {
+                            allimgs[i].onerror = function() {
+                                this.style.visibility = "hidden"; // Other elements aren't affected. 
+                            }
+                        }
                         var i = 0;
                         function updateHeight() {
                             document.title = calculator.clientHeight;
@@ -440,15 +451,31 @@ class ClonePost extends Component {
                     </View>
                 }
                 <ScrollView ref='_scrollView' scrollEnabled={true} >
-                    <View style={{ padding: 10, flex: 1 }}>
-                        <Text style={{ color: '#660000', fontSize: 20, flex: 1 }}>{this.state.post.title}</Text>
-                        <View style={{ flex: 1, paddingVertical: 10, flexDirection: 'row' }}>
-                            <Badge info >
-                                <Text style={{ fontWeight: '700' }}>{this.state.post.categoryname}</Text>
-                            </Badge>
-                            <Text style={styles.postDetailMiddleDate}> | </Text>
-                            <Text style={styles.postDetailDate}> {DateHelper.getLongDate(this.state.post.date)}</Text>
+                    <View style={styles.detail_post_featured_container}>
+                        <Image style={styles.detail_post_featured_image_container} source={{uri:this.state.post.image}}/>
+                        <View style={styles.detail_post_featured_image_top_shadow}>
+                            <View style={{ flex:1, opacity:0.8,backgroundColor:ColorHelper.getHexColor(this.state.post.categoryid) }}>
+                                
+                            </View>
+                            <View style={{ flex:2,  backgroundColor: 'black', opacity:0.4 }}>
+                                
+                            </View>
                         </View>
+                        <View style={styles.detail_post_featured_image_bottom_date_view}>
+                            <Text style={styles.single_post_text_view}> {DateHelper.getLongDate(this.state.post.date)}</Text>
+                        </View>
+
+                        <View style={styles.detail_post_featured_image_bottom_view}>
+                            <View style={{ flex:1,height:50, alignSelf:'center', alignItems:'center'}}>
+                                <Text style={styles.detail_post_featured_image_top_category_text_title}>{this.state.post.categoryname}</Text>
+                            </View>
+                            <View style={styles.detail_post_featured_image_top_view_title}>
+                                <Text style={styles.detail_post_featured_image_top_text_title}>{this.state.post.title}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{ padding: 10, flex: 1 }}>
+                       
 
 
                         {this.state.postcontent != null ?
@@ -488,11 +515,11 @@ class ClonePost extends Component {
 
 
                                                 <View style={styles.postInfo} >
-                                                    <Text style={styles.txtPostTitle}>{post.title}</Text>
+                                                    <Text style={styles.detail_post_text_title}>{post.title}</Text>
                                                     <View style={{ flexDirection: 'row' }}>
-                                                        <Text style={styles.postDate}>{DateHelper.getLongDate(post.date)}</Text>
-                                                        <Text style={styles.postMiddleDate} > | </Text>
-                                                        <Text style={styles.postDate}>{DateHelper.getView(post.date, post.id)}</Text>
+                                                        <Text style={styles.detail_post_text_date}>{DateHelper.getLongDate(post.date)}</Text>
+                                                        <Text style={styles.detail_post_middle_text_date} > | </Text>
+                                                        <Text style={styles.detail_post_text_date}>{DateHelper.getView(post.date, post.id)}</Text>
                                                     </View>
                                                 </View>
 

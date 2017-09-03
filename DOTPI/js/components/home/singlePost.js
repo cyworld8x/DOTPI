@@ -32,16 +32,16 @@ export default class SinglePost extends Component{
                     </View>
                     <View style={styles.single_post_info_shadow}>
                         <View style={styles.single_post_info_shadow_date}>
-                            
+
 
                         </View>
 
                         <View style={styles.single_post_info_shadow_title}>
-                            
+
 
                         </View>
                     </View>
-                    
+
                     <View style={styles.single_post_info}>
                         <View style={styles.single_post_info_date}>
                             <Text style={styles.single_post_text_date}>{DateHelper.getLongDate(post.date)}</Text>
@@ -51,11 +51,11 @@ export default class SinglePost extends Component{
                             <Text style={styles.single_post_text_title}>{post.title}</Text>
 
                         </View>
-                       
+
                     </View>
                 </TouchableOpacity>
-                   
-               
+
+
             </View>
             {this.props.placementid.length>0 && !__DEV__
                         &&
