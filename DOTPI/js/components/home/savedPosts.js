@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions,WebView,ActivityIndicator,ListView,TouchableOpacity ,RefreshControl,StyleSheet, Platform, AlertIOS } from "react-native";
+import { Image, Dimensions,WebView,ActivityIndicator,ListView,TouchableOpacity ,RefreshControl,StyleSheet, Platform, AlertIOS, BackHandler} from "react-native";
 
 import { Container,Header,  Title, Content, Button,
   Icon,
@@ -36,6 +36,16 @@ class SavedPosts extends Component {
         };
         this.arr = [];
         //console.error(this.props.FavoritedPosts);
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigation.navigate('Home');
+            return true;
+        });
+    }    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress');
     }
    
 	componentDidMount() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid, AlertIOS, BackHandler } from "react-native";
 
 // import Moment from 'moment';
 import { connect } from 'react-redux';
@@ -146,7 +146,17 @@ class ClonePost extends Component {
         this.onOpen = this.onOpen.bind(this);
         this.goBack = this.goBack.bind(this);
         this.checkingBookmark = this.checkingBookmark.bind(this);
-       
+        
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigation.navigate('Home');
+            return true;
+        });
+    }  
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress');
     }
     onCancel() {
         this.setState({ visible: false });

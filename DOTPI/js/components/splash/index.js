@@ -12,6 +12,7 @@ import StoragePosts from '../../api/storagePosts';
 import Home from '../../components/home';
 import NetInfoHelper from '../../utilities/netInfoHelper'
 import NotificationHelper from '../../utilities/notificationHelper'
+import EncryptHelper from '../../utilities/encryptHelper'
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -74,17 +75,20 @@ class SplashScreen extends Component {
   			if(settings.WebsiteUrl==null){
  				settings.WebsiteUrl = 'http://monanngon.tk';
   			}
-  			fetch(settings.ApiUrl+ '/configuration')
+  			fetch(settings.ApiUrl+ '/info')
   					.then((response) => response.json())
 					.then((responseJson) => {
 
 						if (responseJson != null) {
 							this.setState({
-								isLoadingDataStorage: false,
+							isLoadingDataStorage: false,
 							});	
-							var serverSettings = responseJson;
-							StoragePosts.saveSettings(responseJson);
-							this.props.saveSettings(responseJson);
+							
+							var settings = JSON.parse(EncryptHelper.decode_base(responseJson.key)); 
+							
+							var serverSettings = settings;
+							StoragePosts.saveSettings(responseJson.key);
+							this.props.saveSettings(settings);
 							
 							if(serverSettings.ShowNotification!=null && serverSettings.ShowNotification== true){
 								if(serverSettings.Notification.Reopened ==true || 
@@ -93,7 +97,7 @@ class SplashScreen extends Component {
 									setTimeout(() => {
 										this.setState({											
 											isShowPopup:true,
-											Notification:responseJson.Notification
+											Notification:serverSettings.Notification
 										});
 									}, 1000);
 								}else{
@@ -170,7 +174,7 @@ class SplashScreen extends Component {
 							</View>
 							<View style={{ width:40, height:40, backgroundColor: 'black', opacity:0.7, alignContent:'center', alignItems:'center' }}>
 								{this.state.isShowPopup && this.state.Notification!=null && this.state.Notification.CanClose==true && <TouchableOpacity onPress={() => this.onCloseNotification()}>
-								<Icon name='md-close' style={{alignSelf:'center', paddingTop:5, color:'#FFF' }} />
+								<Icon name='md-close'  style={{alignSelf:'center', paddingTop:5, color:'#FFF' }} />
 							</TouchableOpacity>}
 							
 							</View>

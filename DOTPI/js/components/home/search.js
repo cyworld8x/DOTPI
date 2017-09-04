@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, ListView, TouchableOpacity, StyleSheet, TextInput, Platform, ToastAndroid, AlertIOS } from "react-native";
+import { Image, Dimensions, ListView, TouchableOpacity, StyleSheet, TextInput, Platform, ToastAndroid, AlertIOS,BackHandler } from "react-native";
 
 import {
     Container, Header, Title, Content, Button,
@@ -36,6 +36,16 @@ class Search extends Component {
             txtSearch: ''
         };
         this.arr = [];
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigation.navigate('Home');
+            return true;
+        });
+    }    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress');
     }
 
     componentDidMount() {

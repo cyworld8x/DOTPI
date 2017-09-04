@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid, AlertIOS, BackHandler } from "react-native";
 
 import {
   Container,
@@ -38,6 +38,15 @@ class Youtube extends Component {
       
     }
     
+    componentWillMount() {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        this.props.navigation.navigate('TransitionHome');
+        return true;
+      });
+    } 
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress');
+    }
     togglePlay(){
       
       this.setState({

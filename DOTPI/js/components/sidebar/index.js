@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image,BackAndroid, Platform, ToastAndroid, AlertIOS } from "react-native";
+import { Image,BackHandler, Platform, ToastAndroid, AlertIOS } from "react-native";
 import Share, {ShareSheet} from 'react-native-share';
 import Favorite from "./favorite";
 import {
@@ -78,7 +78,7 @@ export  default class SideBar extends Component {
 
 	actionHandler(routedata){
 		switch(routedata.route){
-			case 'Exit': BackAndroid.exitApp();break;
+			case 'Exit': BackHandler.exitApp();break;
 			case 'Share': this.onOpenShares(); break;
 			default:
 				this.props.navigation.navigate(routedata.route); break;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS,BackHandler } from "react-native";
 
 // import Moment from 'moment';
 import { connect } from 'react-redux';
@@ -148,6 +148,16 @@ class Post extends Component {
         this.checkingBookmark = this.checkingBookmark.bind(this);
        
     }
+    
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigation.navigate('TransitionHome');
+            return true;
+        });
+    }    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress');
+    }
     onCancel() {
         this.setState({ visible: false });
     }
@@ -206,6 +216,7 @@ class Post extends Component {
     }
 
     componentDidMount() {
+       
         var url = this.props.navigation.state.params.post.api;
         
         return fetch(url)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
-
+import EncryptHelper from '../utilities/encryptHelper';
 const deletePost = async (post) => {
         
         let posts = await getPosts().then((data)=> {return JSON.parse(data);});
@@ -93,18 +93,21 @@ const checkingExistedPost = (obj, list) => {
 };
 
 const saveSettings =async (setting) => {
-    
-        await AsyncStorage.setItem('@Settings:key', JSON.stringify(setting), (err, result) => { console.log(err); });        
+        // saving string not object
+        await AsyncStorage.setItem('@MAN-Setting:key', setting, (err, result) => { console.log(err); });        
         return true;
 };
 
-const saveUserSettings =async (setting) => {
-    await AsyncStorage.setItem('@UsersSettings:key', JSON.stringify(setting), (err, result) => { console.log(err); });        
-    return true;
-};
 const loadingSettings = () => {
     try {
-        return AsyncStorage.getItem('@Settings:key').then((data) => { return JSON.parse(data); })
+        return AsyncStorage.getItem('@MAN-Setting:key').then((data) => { 
+            if(data!=null) {
+               
+                return JSON.parse(EncryptHelper.decode_base(data)); 
+            }
+            return null;
+                
+        });
 
     } catch (error) {
         // Error retrieving data
@@ -122,6 +125,5 @@ module.exports =
     checkingExistedPost:checkingExistedPost,
     getAllPosts:getAllPosts,
     saveSettings:saveSettings,
-    loadingSettings:loadingSettings,
-    saveUserSettings:saveUserSettings
+    loadingSettings:loadingSettings
 } ;
