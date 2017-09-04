@@ -119,7 +119,8 @@ class Home extends Component {
 
                         <Tab activeTabStyle={{  backgroundColor: '#ffcc33',  }}  textStyle={{color:'#FFF',borderBottomColor:'green'}}
                           tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id) }} key={item.key} heading={item.name}>
-                          <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''}  
+                          <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                          showFacebookAd={this.props.Settings!=null && this.props.Settings.ShowFacebookAd !=null?this.props.Settings.ShowFacebookAd :false}  
                           name={item.name} 
                           navigation={this.props.navigation} url={item.url} categoryid={item.id} />
                         </Tab>
@@ -130,6 +131,7 @@ class Home extends Component {
                         <Tab activeTabStyle={{ backgroundColor: '#ffcc33' }} textStyle={{color:'#FFF'}}
                         tabStyle={{ backgroundColor: ColorHelper.getHexColor(item.id+100) }} key={item.key} heading={item.name}>
                           <VideoTab placementid={this.props.Settings != null && this.props.Settings.FacebookBannerPlacementId != null ? this.props.Settings.FacebookBannerPlacementId : ''}
+                            showfacebookAd={this.props.Settings!=null && this.props.Settings.ShowFacebookAd !=null?this.props.Settings.ShowFacebookAd :false}  
                             name={'Video'}
                             navigation={this.props.navigation} url={item.url}   />
                         </Tab>

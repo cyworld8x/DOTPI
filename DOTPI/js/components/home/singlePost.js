@@ -57,7 +57,7 @@ export default class SinglePost extends Component{
 
 
             </View>
-            {this.props.placementid.length>0 && !__DEV__
+            {this.props.placementid.length>0 && this.props.showfacebookad ==true && !__DEV__ 
                         &&
                         <BannerView style={styles.bannerFullRow}
                         placementId={this.props.placementid}

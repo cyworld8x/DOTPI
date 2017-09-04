@@ -9,6 +9,10 @@ import {
     Toast,
     Spinner
 } from 'native-base';
+
+import { InterstitialAdManager } from 'react-native-fbads';
+
+import { BannerView } from 'react-native-fbads';
 import DateHelper from '../../utilities/dateHelper';
 import NotificationHelper from '../../utilities/notificationHelper';
 import SinglePost from './singlePost';
@@ -19,6 +23,7 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 const logo = require("../../../img/logo.png");
 const playicon = require("../../../img/play.png");
+
 class VideoTab extends Component {
     //eslint-disable-line
     constructor(props) {
@@ -32,8 +37,8 @@ class VideoTab extends Component {
             notificationData:{}
         };
         this.arr = [];
-        
-        //this.placementid = this.props.placementid
+        this.placementid = this.props.placementid;
+        this.showfacebookad = this.props.showfacebookAd;
     }
 
     componentDidMount() {
@@ -117,7 +122,7 @@ class VideoTab extends Component {
         return (
             <View style={styles.videocontainer}>
                  <View style={styles.videowrapper}>
-                    <ListView style={{ paddingLeft:10, paddingRight:10, paddingTop:10, paddingBottom:10}}
+                    <ListView style={{ paddingLeft:10, paddingRight:10, paddingTop:10, paddingBottom:20}}
                         keyExtractor={post => { return ('FlatItem-' + post.id); }}
                         enableEmptySections={true}
                         dataSource={this.state.listPosts}
@@ -126,7 +131,8 @@ class VideoTab extends Component {
                             let post = item;
                             if (post != null) {
                                 return(
-                                <View key={post.id} style={styles.video_item}>
+                                <View key={post.id} style={styles.video_item_container}>
+                                    <View key={post.id} style={styles.video_item}>
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Youtube', { post: post.sections[0] })}>
                                         <View style={styles.video_item_left}>
                                            
@@ -190,6 +196,38 @@ class VideoTab extends Component {
                                         </View>
                                     </TouchableOpacity>) : (<View></View>)}
 
+                                    </View>
+                                   
+                                    {this.placementid.length > 0 && this.showfacebookad == true
+                                    && !__DEV__ && pos%4 == 0 &&
+                                            (<View style={{
+                                                    width: deviceWidth,
+                                                    flex: 1,
+                                                    paddingTop:10,
+                                                    height: 60,
+                                                    alignSelf: 'center',
+                                                    flexDirection: 'column'
+                                                }}>
+                                                    
+                                                    <BannerView style={{
+                                                        width: deviceWidth,
+                                                        flex: 1,
+                                                        paddingTop: 10,
+                                                        height: 50,
+                                                        left: -10,
+                                                        right: -10,
+                                                        marginLeft: -10,
+                                                        marginRight: -10,
+                                                        alignSelf: 'center',
+                                                        flexDirection: 'column'
+                                                    }}
+                                                        placementId={this.props.placementid}
+                                                        type="standard"
+                                                        onPress={() => NotificationHelper.Notify('Like!')}
+                                                        onError={(err) => { NotificationHelper.Notify('Code:1') }}
+                                                    /></View>)
+                                            
+                                       }
                                 </View>
                                 )
                             }

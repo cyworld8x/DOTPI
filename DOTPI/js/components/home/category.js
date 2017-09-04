@@ -60,11 +60,13 @@ class Category extends Component {
                     this.props.navigation.state.params.categorytype ==null || 
                     this.props.navigation.state.params.categorytype =='post'?
                     <CategoryTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                    showfacebookad={this.props.Settings!=null && this.props.Settings.ShowFacebookAd !=null?this.props.Settings.ShowFacebookAd :false} 
                     navigation={this.props.navigation} url={this.props.navigation.state.params.url}  
                     categoryid={this.props.navigation.state.params.categoryid}  />
                     :
                     
                     <VideoTab placementid={this.props.Settings!=null && this.props.Settings.FacebookBannerPlacementId !=null?this.props.Settings.FacebookBannerPlacementId :''} 
+                    showfacebookad={this.props.Settings!=null && this.props.Settings.ShowFacebookAd !=null?this.props.Settings.ShowFacebookAd :false} 
                     navigation={this.props.navigation} url={this.props.navigation.state.params.url}  
                     categoryid={this.props.navigation.state.params.categoryid}  />
                 }

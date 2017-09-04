@@ -14,6 +14,7 @@ import About from "./components/about/";
 import SavedPosts from "./components/home/savedPosts";
 import Category from "./components/home/category";
 import Search from "./components/home/search";
+import PromotionPage from "./components/home/promotionPage";
 
 class AppNavigator extends Component {
   render() {

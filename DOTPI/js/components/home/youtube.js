@@ -12,8 +12,8 @@ import {
   Button,
   Icon,
   Text,
-  Spinner
-
+  Spinner,
+  Fab
 } from "native-base";
 import YouTube from 'react-native-youtube';
 import { YouTubeStandaloneAndroid } from 'react-native-youtube';
@@ -76,7 +76,7 @@ class Youtube extends Component {
           });
   }
   play(){
-    NotificationHelper.Notify(this.props.Settings.ApiKey);
+    //NotificationHelper.Notify(this.props.Settings.ApiKey);
     YouTubeStandaloneAndroid.playVideo({
       apiKey: this.props.Settings.ApiKey,     // Your YouTube Developer API Key
       videoId: this.state.video.videoid,     // YouTube video ID
@@ -308,6 +308,15 @@ class Youtube extends Component {
                                       <Spinner style={{ paddingTop: 160, paddingBottom:10 }} color='white' /></View>)}
             
             </ScrollView> 
+            <Fab
+              direction="up"
+              containerStyle={{}}
+              style={{ backgroundColor: '#34B089' }}
+              position="bottomRight"
+              onPress={() => this.play()}>
+              <Icon name="md-expand" color='#FFF'/>
+
+            </Fab>
           </View>
          
         </View>

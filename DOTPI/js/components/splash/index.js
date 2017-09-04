@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Image, View, StatusBar,NetInfo,ProgressBar } from "react-native";
+import { Image, View, StatusBar,NetInfo,ProgressBar,Modal,Dimensions,TouchableOpacity,WebView } from "react-native";
 
-import { Container, Button, H3, Text, Header, Title,Spinner } from "native-base";
+import { Container, Button, H3, Text, Header, Title,Spinner,Icon } from "native-base";
 import PushNotification from 'react-native-push-notification';
 import styles from "./styles";
 import { connect } from 'react-redux';
@@ -12,6 +12,10 @@ import StoragePosts from '../../api/storagePosts';
 import Home from '../../components/home';
 import NetInfoHelper from '../../utilities/netInfoHelper'
 import NotificationHelper from '../../utilities/notificationHelper'
+
+const deviceHeight = Dimensions.get("window").height;
+
+const deviceWidth = Dimensions.get("window").width;
 class SplashScreen extends Component {
 	// eslint-disable-line
     constructor(props){
@@ -19,6 +23,7 @@ class SplashScreen extends Component {
 		this.state= {
 			isLoadingDataStorage:true,
 			isLoadingSetting:true,
+			isShowPopup:false,			
 			networkError:false
 		};
 		this.loadingServerSettings = this.loadingServerSettings.bind(this);
@@ -42,10 +47,9 @@ class SplashScreen extends Component {
 			let posts = JSON.parse(data);
 			posts = posts!=null? posts:[];
 			
-			
 			this.props.loadingDataStorage(posts);
 			this.setState({
-				isLoadingDataStorage: false
+				isLoadingDataStorage: false,
 			});		
 
 		});
@@ -75,15 +79,38 @@ class SplashScreen extends Component {
 					.then((responseJson) => {
 
 						if (responseJson != null) {
-
+							this.setState({
+								isLoadingDataStorage: false,
+							});	
+							var serverSettings = responseJson;
 							StoragePosts.saveSettings(responseJson);
-							this.props.saveSettings(responseJson)
-							setTimeout(() => {
-								this.setState({
-									isLoadingSetting: false
-								});
-							}, 1000);
-
+							this.props.saveSettings(responseJson);
+							
+							if(serverSettings.ShowNotification!=null && serverSettings.ShowNotification== true){
+								if(serverSettings.Notification.Reopened ==true || 
+									(serverSettings.Notification.Reopened ==false && 
+											(settings.Notification.Version==null ||   settings.Notification.Version != serverSettings.Notification.Version) )){
+									setTimeout(() => {
+										this.setState({											
+											isShowPopup:true,
+											Notification:responseJson.Notification
+										});
+									}, 1000);
+								}else{
+									setTimeout(() => {
+										this.setState({
+											isLoadingSetting: false
+										});
+									}, 1000);
+								}
+							}
+							else{
+								setTimeout(() => {
+									this.setState({
+										isLoadingSetting: false
+									});
+								}, 1000);
+							}
 						}
 
 					})
@@ -96,8 +123,15 @@ class SplashScreen extends Component {
 
 		});
 	}
+
+	onCloseNotification(){
+		if(this.state.Notification.CanClose== true){
+			this.props.navigation.navigate('Home');
+		}		
+	}
+
 	render() {
-		if(this.state.isLoading || this.state.isLoadingSetting){
+		if(this.state.isLoadingSetting){
 			return (
 				<Container style={{backgroundColor:'#34B089'}}> 
 					<StatusBar barStyle="light-content" />
@@ -121,11 +155,58 @@ class SplashScreen extends Component {
 								</View>
 							</View>}
 					</View>
+					
+					<Modal 
+					animationType="slide"
+					transparent={false}
+					visible={this.state.isShowPopup}
+					onRequestClose={() => {this.onCloseNotification()}}
+					>
+				   <View style={{ flex:1,backgroundColor: '#09aa77', flexDirection:'column'}}>
+						<View style={{ width:deviceWidth, height:40, backgroundColor: '#09aa77', flexDirection: 'row', alignItems:'flex-end' }}>
+							
+							<View style={{ width:deviceWidth-40, height:40, backgroundColor: 'black', opacity:0.5, flexDirection: 'column', alignContent:'flex-end' }}>
+								<Text style={{textAlign:'center',color:'#FFF', alignSelf:'center', paddingTop:10,fontWeight: '400',fontFamily: 'Avenir'}}>THÔNG BÁO</Text>
+							</View>
+							<View style={{ width:40, height:40, backgroundColor: 'black', opacity:0.7, alignContent:'center', alignItems:'center' }}>
+								{this.state.isShowPopup && this.state.Notification!=null && this.state.Notification.CanClose==true && <TouchableOpacity onPress={() => this.onCloseNotification()}>
+								<Icon name='md-close' style={{alignSelf:'center', paddingTop:5, color:'#FFF' }} />
+							</TouchableOpacity>}
+							
+							</View>
+							
+						</View>
+						<View style={{ width:deviceWidth, height:deviceHeight-40, flexDirection: 'column' }}>
+							{this.state.isShowPopup && this.state.Notification.Type=='web' && (<WebView source={{ uri: this.state.Notification.Source  }} domStorageEnabled={true}
+									style={{ padding: 10 }}
+									automaticallyAdjustContentInsets={false}
+									renderLoading={() => {
+										return (<View style={{ flex: 1 }}>
+											<Spinner style={{ paddingTop: 200 }} color='green' />
+										</View>)
+									}} />)}
+							{this.state.isShowPopup && this.state.Notification.Type=='image' && 
+								(<TouchableOpacity style={{ flex:1, width:deviceWidth, height:deviceHeight-40}} onPress={
+									() => 
+										{
+											if(this.state.Notification.HasNavigate)
+											{
+												this.props.navigation.navigate(this.state.Notification.Navigation.RouteName,this.state.Notification.Navigation.Data);	
+											}
+										}
+									}>
+									<Image style={{ flex:1, width:deviceWidth, height:deviceHeight-40, resizeMode:'cover'}} source={{ uri:this.state.Notification.Source}} />
+								</TouchableOpacity>)
+							}	
+						</View>
+				   </View>
+				  </Modal>
 				</Container>
 			);
 		}
 		else{
 			return (<Home navigation={this.props.navigation} />);
+			
 		}
 		
 	}

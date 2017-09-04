@@ -17,14 +17,36 @@ export default {
         alignSelf:'center',
         backgroundColor: '#34B089' 
     },
+    logoContainer: {
+        flex: 1,
+    },
+    image_background_full: {
+        
+        top: 0,
+        width: deviceWidth,
+        height: deviceHeight-40
+    },
+    logo: {
+        //position: "absolute",
+        left: Platform.OS === "android" ? ((deviceHeight > deviceWidth) ? deviceWidth / 2 - 120 / 2 : deviceWidth / 2 - 120 / 2) : deviceWidth / 2 - 120 / 2,
+        top: deviceHeight / 2 - 160,
+        width: 120,
+        height: 142
+    },
+    video_item_container: {
+        width: deviceWidth,
+        flex: 1,
+        flexDirection: 'column',
+        borderBottomColor: '#34B089',
+        borderBottomWidth: 10,
+        justifyContent: 'space-between',
+    },
     video_item: {        
         borderRadius:5,
         
         width: deviceWidth-20,
         flex: 1,
         flexDirection: 'row',
-        borderBottomColor: 'silver',
-        borderBottomWidth: 10,
         justifyContent: 'space-between',
     },
     
@@ -692,12 +714,12 @@ export default {
     bannerFullRow: {
        
         width: deviceWidth,
-        alignSelf: 'stretch',
-        textAlign: 'center',       
+        alignSelf: 'stretch',    
         flex: 1,
         flexDirection:'column'
     },
     single_post_text_view:{
+        fontFamily: 'Avenir',
         fontSize:12, 
         fontStyle:'italic', 
         paddingLeft:10,
@@ -709,6 +731,7 @@ export default {
         alignSelf:'flex-end'
     },
     single_post_text_date:{
+        fontFamily: 'Avenir',
         fontSize:12, 
         color:'#FFF',
         fontWeight: '400',
@@ -759,6 +782,7 @@ export default {
         textShadowOffset:{width:1, height:1},
     },
     detail_post_text_date:{
+        fontFamily: 'Avenir',
         fontSize:12, fontStyle:'italic', 
         color:'silver',
         fontWeight: '400'

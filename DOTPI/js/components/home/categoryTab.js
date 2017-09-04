@@ -33,7 +33,8 @@ class CategoryTab extends Component {
             notificationData:{}
         };
         this.arr = [];
-        this.placementid = this.props.placementid
+        this.placementid = this.props.placementid;
+        this.showFacebookAd=this.props.showFacebookAd;
     }
 
     componentDidMount() {
@@ -145,7 +146,7 @@ class CategoryTab extends Component {
                         if (post != null) {
 
                             if (pos == 1) {
-                                return (<SinglePost placementid={this.placementid} post={post.sections[0]} navigation={this.props.navigation} />)
+                                return (<SinglePost placementid={this.placementid} showfacebookad = {this.showFacebookAd} post={post.sections[0]} navigation={this.props.navigation} />)
                             } else {
                                 if (pos % 4 == 1 || pos % 4 == 2|| pos % 4 == 3) {
                                     return (<TwinPostColumn post={post} navigation={this.props.navigation} />)

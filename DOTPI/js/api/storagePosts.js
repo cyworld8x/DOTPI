@@ -48,12 +48,13 @@ const addPost =async (post) => {
 };
 const getPosts = async () => {
         try {
-            return await AsyncStorage.getItem('@Posts:key')
+            let posts = await AsyncStorage.getItem('@Posts:key')
+            return posts;
            
         } catch (error) {
         // Error retrieving data
             
-            return [];
+            return {};
         }
         
     }
@@ -92,8 +93,14 @@ const checkingExistedPost = (obj, list) => {
 };
 
 const saveSettings =async (setting) => {
+    
         await AsyncStorage.setItem('@Settings:key', JSON.stringify(setting), (err, result) => { console.log(err); });        
         return true;
+};
+
+const saveUserSettings =async (setting) => {
+    await AsyncStorage.setItem('@UsersSettings:key', JSON.stringify(setting), (err, result) => { console.log(err); });        
+    return true;
 };
 const loadingSettings = () => {
     try {
@@ -115,5 +122,6 @@ module.exports =
     checkingExistedPost:checkingExistedPost,
     getAllPosts:getAllPosts,
     saveSettings:saveSettings,
-    loadingSettings:loadingSettings
+    loadingSettings:loadingSettings,
+    saveUserSettings:saveUserSettings
 } ;

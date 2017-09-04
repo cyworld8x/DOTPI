@@ -7,7 +7,7 @@ export function unbookmarkPost(post) {
 }
 
 export function loadingDataStorage(posts) {
-    return { type: 'LOAD_DATA_STORAGE',posts };
+    return { type: 'LOAD_DATA_STORAGE', posts };
 }
 
 export function saveSettings(settings) {
