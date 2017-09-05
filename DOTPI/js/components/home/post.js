@@ -138,7 +138,7 @@ class Post extends Component {
             isLoading: true,
             isShowAd:true,
             loadAnotherPost:false,
-            Height:deviceHeight
+            Height: deviceHeight/2,
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         
@@ -509,7 +509,7 @@ class Post extends Component {
                             : <View></View>
                         }
 
-                        {this.state.Height != deviceHeight && this.state.post.posts != null && this.state.post.posts.length > 0 ?
+                        {this.state.Height != deviceHeight/2 && this.state.post.posts != null && this.state.post.posts.length > 0 ?
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <View style={styles.singlePostContainer}>
                                     <Badge style={{ marginTop: 10, backgroundColor: '#34B089' }}>

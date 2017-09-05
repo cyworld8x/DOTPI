@@ -189,7 +189,7 @@ class VideoTab extends Component {
                                             <View style={styles.block_video_mirror} >
 
                                                 <View style={styles.block_video_bottom} >
-                                                    <Text style={styles.txtMediumVideoTitle}>{post.sections[0].title}</Text>
+                                                    <Text style={styles.txtMediumVideoTitle}>{post.sections[1].title}</Text>
                                                 </View>
                                             </View>
 

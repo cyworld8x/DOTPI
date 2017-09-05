@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid, AlertIOS, BackHandler } from "react-native";
+import { Image, Dimensions, WebView, ActivityIndicator, ListView, TouchableOpacity, RefreshControl, ScrollView, StyleSheet,Clipboard, Platform, ToastAndroid,AlertIOS,BackHandler } from "react-native";
 
 // import Moment from 'moment';
 import { connect } from 'react-redux';
@@ -138,7 +138,7 @@ class ClonePost extends Component {
             isLoading: true,
             isShowAd:true,
             loadAnotherPost:false,
-            Height:deviceHeight
+            Height: deviceHeight/2,
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         
@@ -146,15 +146,15 @@ class ClonePost extends Component {
         this.onOpen = this.onOpen.bind(this);
         this.goBack = this.goBack.bind(this);
         this.checkingBookmark = this.checkingBookmark.bind(this);
-        
+       
     }
-
+    
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', () => {
-            this.props.navigation.navigate('Home');
+            this.props.navigation.navigate('TransitionHome');
             return true;
         });
-    }  
+    }    
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress');
     }
@@ -216,6 +216,7 @@ class ClonePost extends Component {
     }
 
     componentDidMount() {
+       
         var url = this.props.navigation.state.params.post.api;
         
         return fetch(url)
@@ -508,7 +509,7 @@ class ClonePost extends Component {
                             : <View></View>
                         }
 
-                        {this.state.Height != deviceHeight && this.state.post.posts != null && this.state.post.posts.length > 0 ?
+                        {this.state.Height != deviceHeight/2 && this.state.post.posts != null && this.state.post.posts.length > 0 ?
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <View style={styles.singlePostContainer}>
                                     <Badge style={{ marginTop: 10, backgroundColor: '#34B089' }}>
