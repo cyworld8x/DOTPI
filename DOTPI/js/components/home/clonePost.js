@@ -138,6 +138,7 @@ class ClonePost extends Component {
             isLoading: true,
             isShowAd:true,
             loadAnotherPost:false,
+            complete:false,
             Height: deviceHeight/2,
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
@@ -286,9 +287,15 @@ class ClonePost extends Component {
     }
 
     onNavigationStateChange(event) {
-        if (event.title) {
+        
+        if (event.title && this.state.complete==false) {
             const htmlHeight = Number(event.title);//convert to number
-            this.setState({Height:htmlHeight});
+            if(htmlHeight>0){
+                
+                this.setState({Height:htmlHeight});
+                this.setState({complete:true});
+            }
+            
         }
 
      }
@@ -319,7 +326,7 @@ class ClonePost extends Component {
                         </Right >
 
                     </Header>
-                    <View style={{ flex: 1, }}>
+                    <View style={{ flex: 1, backgroundColor:'#34B089' }}>
                         <Spinner style={{ paddingTop: deviceHeight / 2 }} color='green' />
                     </View>
                 </View>
@@ -543,7 +550,8 @@ class ClonePost extends Component {
 
 
                 </ScrollView>
-
+                {!this.state.complete  && <View style={{zIndex:2, position:'absolute', width:deviceWidth, height:deviceHeight, backgroundColor:'#34B089'}} ></View>}
+               
             </View>
         );
         
