@@ -57,7 +57,7 @@ class CategoryTab extends Component {
                    
                     
                     try {
-                        let notificationId = this.props.categoryid;
+                        let notificationId = Number(this.props.categoryid) % 3;
                         PushNotification.cancelLocalNotifications({id: notificationId});
                         PushNotification.localNotificationSchedule({
                             id: notificationId,

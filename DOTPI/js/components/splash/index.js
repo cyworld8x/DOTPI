@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, StatusBar,NetInfo,ProgressBar,Modal,Dimensions,TouchableOpacity,WebView } from "react-native";
+import { Image, View, StatusBar,NetInfo,ProgressBar,Modal,Dimensions,TouchableOpacity,WebView,Linking } from "react-native";
 
 import { Container, Button, H3, Text, Header, Title,Spinner,Icon } from "native-base";
 import PushNotification from 'react-native-push-notification';
@@ -197,6 +197,24 @@ class SplashScreen extends Component {
 											{
 												this.props.navigation.navigate(this.state.Notification.Navigation.RouteName,this.state.Notification.Navigation.Data);	
 											}
+										}
+									}>
+									<Image style={{ flex:1, width:deviceWidth, height:deviceHeight-40, resizeMode:'cover'}} source={{ uri:this.state.Notification.Source}} />
+								</TouchableOpacity>)
+							}
+							{this.state.isShowPopup 
+							&& this.state.Notification.Type=='deeplink'
+							&& (<TouchableOpacity style={{ flex:1, width:deviceWidth, height:deviceHeight-40}} onPress={
+									() => 
+										{
+										Linking.canOpenURL(this.state.Notification.url).then(supported => {
+											if (!supported) {
+												return;
+											} else {
+												return Linking.openURL(NotificationHelper.Notify('Code:3'));
+											}
+										}).catch(err => {return;});
+											
 										}
 									}>
 									<Image style={{ flex:1, width:deviceWidth, height:deviceHeight-40, resizeMode:'cover'}} source={{ uri:this.state.Notification.Source}} />
