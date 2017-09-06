@@ -56,6 +56,7 @@ const script = `<script>
                             window.location.hash = ++i;
                         }
                         updateHeight();
+                       
                         window.addEventListener("load", function() {
                             updateHeight();
                             setTimeout(updateHeight, 1000);
@@ -138,8 +139,7 @@ class ClonePost extends Component {
             isLoading: true,
             isShowAd:true,
             loadAnotherPost:false,
-            complete:false,
-            Height: deviceHeight/2,
+            Height: deviceHeight,
         };
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         
@@ -287,13 +287,12 @@ class ClonePost extends Component {
     }
 
     onNavigationStateChange(event) {
-        
-        if (event.title && this.state.complete==false) {
+       
+        if (event.title ) {
             const htmlHeight = Number(event.title);//convert to number
             if(htmlHeight>0){
-                
                 this.setState({Height:htmlHeight});
-                this.setState({complete:true});
+                
             }
             
         }
@@ -516,7 +515,7 @@ class ClonePost extends Component {
                             : <View></View>
                         }
 
-                        {this.state.Height != deviceHeight/2 && this.state.post.posts != null && this.state.post.posts.length > 0 ?
+                        {this.state.Height != deviceHeight && this.state.post.posts != null && this.state.post.posts.length > 0 ?
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <View style={styles.singlePostContainer}>
                                     <Badge style={{ marginTop: 10, backgroundColor: '#34B089' }}>
@@ -550,7 +549,7 @@ class ClonePost extends Component {
 
 
                 </ScrollView>
-                {!this.state.complete  && <View style={{zIndex:2, position:'absolute', width:deviceWidth, height:deviceHeight, backgroundColor:'#34B089'}} ></View>}
+                
                
             </View>
         );
