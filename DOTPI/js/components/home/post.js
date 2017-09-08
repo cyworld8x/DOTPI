@@ -89,15 +89,13 @@ const htmlStyle = `<style>
             font-size: 32px
         }
         img {
-            width:100%;
+            width:100% !important;
+            height:auto !important;
+            max-width: 100%
         }
         td {
             display: block !important;
             width: 95% !important;
-        }
-        img {
-            width:100%;
-            radius:5px;
         }
         hr {
             width: 98%;
