@@ -89,9 +89,9 @@ const htmlStyle = `<style>
             font-size: 32px
         }
         img {
-            width:100% !important;
+            //width:100% !important;
             height:auto !important;
-            max-width: 100%
+            max-width: 100% !important;
         }
         td {
             display: block !important;
